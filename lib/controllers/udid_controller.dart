@@ -1,15 +1,19 @@
 // ignore_for_file: avoid_print, unnecessary_overrides
 
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:device_info/device_info.dart';
+import 'package:http/http.dart' as http;
 
 class UdidController extends GetxController {
-  RxString myUdid = ''.obs;
+  static RxString myUdid = ''.obs;
+  static RxString myToken = ''.obs;
 
-  Future<String?> getUdid() async {
+  static Future<String?> getUdid() async {
     final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     try {
       if (Platform.isAndroid) {
@@ -26,17 +30,32 @@ class UdidController extends GetxController {
     }
   }
 
-  Future<void> sendUdidToServer() async {}
+  static getToken() async {
+    String? token = await FirebaseMessaging.instance.getToken();
+    UdidController.myToken(token);
+  }
+
+  static Future<void> sendUdidToServer() async {
+    getToken();
+    getUdid();
+    final response = await http
+        .post(Uri.parse('http://10.0.2.2:8000/api/v1/svae'),
+            headers: {
+              HttpHeaders.contentTypeHeader: 'application/json',
+            },
+            body: jsonEncode({"udid": myUdid.value, "token": myToken.value}))
+        .then((res) => print("=============== SET RESPONSE : ==> ${res.body}"));
+  }
+
+  // static setGetUdIdSP() async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   pref.setBool('udid', true);
+  // }
 
   @override
   void onInit() {
     super.onInit();
     getUdid()
         .then((udid) => print('================== $udid ================='));
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
   }
 }
