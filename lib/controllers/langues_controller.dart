@@ -1,58 +1,91 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, must_be_immutable
+// ignore_for_file: prefer_const_constructors, unused_local_variable, unnecessary_cast, unnecessary_overrides
 
-import 'package:covid_19_tracer/screens/widgets/dialogues/langues%20dialog/langues_dialog.dart';
-import 'package:flutter/material.dart';
+import 'dart:ui';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import './capitalize.dart';
 
-class LangueDialog extends StatelessWidget {
-  // Widget myChild;
-  int duration;
-  LangueDialog(this.duration);
+class LanguesController extends GetxController {
+  final isVisible = false.obs;
+  final langue = 'En'.obs;
+  final locales = [
+    {'name': 'English', 'ab': 'En', 'locale': Locale('en', 'US')},
+    {'name': 'Arabic', 'ab': 'Ar', 'locale': Locale('ar', 'MA')},
+    {'name': 'Français', 'ab': 'Fr', 'locale': Locale('fr', 'FR')},
+  ];
 
-  LanguesController fadeCtr = Get.find();
+  SharedPreferences? preferences;
 
   @override
-  Widget build(BuildContext context) {
-    return Obx(() {
-      bool visible = fadeCtr.isVisible.value;
-      return AnimatedOpacity(
-        duration: Duration(milliseconds: duration),
-        opacity: visible ? 1 : 0,
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          // width: 100,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(color: Colors.grey.withOpacity(0.2), blurRadius: 8)
-              ]),
-          child: Column(
-            children: fadeCtr.locales
-                .map((e) => Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(6),
-                          child: GestureDetector(
-                            onTap: () {
-                              fadeCtr.changeLang(e);
-                            },
-                            child: Text(
-                              e['name'] as String,
-                              style: GoogleFonts.poppins(
-                                fontSize: 16,
-                                color: Color(0xFF6374F8),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ))
-                .toList(),
-          ),
-        ),
-      );
+  void onClose() {
+    super.onClose();
+  }
+
+  @override
+  void onInit() {
+    initializePreference().whenComplete(() {
+      changeLangPref(getLocale());
     });
+    super.onInit();
+  }
+
+  void toggleIsVisible() {
+    isVisible(!(isVisible.value));
+  }
+
+  void changeLang(Map<String, Object> obj) {
+    langue(obj['ab'] as String);
+    changeLangPref(obj['locale'] as Locale);
+    toggleIsVisible();
+  }
+
+  Future<void> changeLangPref(Locale locale) async {
+    preferences = await SharedPreferences.getInstance();
+    await preferences?.setString('locale_language', locale.languageCode);
+    await preferences?.setString(
+        'locale_country', locale.countryCode as String);
+    Get.updateLocale(locale);
+    String? lc2 = locale.languageCode as String?;
+    langue(lc2.capitalize() as String);
+  }
+
+  Locale checkLocalLanguage() {
+    Locale myLocal =
+        Locale(Get.deviceLocale!.languageCode, Get.deviceLocale!.countryCode);
+
+    List locals = [];
+    List langs = [];
+    locales.forEach((element) {
+      locals.add(element['locale']);
+      langs.add((element['locale'] as Locale).languageCode);
+    });
+
+    if (locals.contains(myLocal)) {
+      return myLocal;
+    } else if (langs.contains(myLocal.languageCode)) {
+      if (myLocal.languageCode == 'ar') {
+        return Locale(myLocal.languageCode, 'MA');
+      }
+      if (myLocal.languageCode == 'fr') {
+        return Locale(myLocal.languageCode, 'FR');
+      }
+      if (myLocal.languageCode == 'en') {
+        return Locale(myLocal.languageCode, 'US');
+      }
+    }
+
+    return locals[0];
+  }
+
+  Locale getLocale() {
+    String language = preferences?.getString('locale_language') ??
+        checkLocalLanguage().languageCode;
+    String? country = preferences?.getString('locale_country') ??
+        checkLocalLanguage().countryCode;
+    return Locale(language, country);
+  }
+
+  Future<void> initializePreference() async {
+    preferences = await SharedPreferences.getInstance();
   }
 }

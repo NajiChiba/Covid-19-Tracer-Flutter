@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_final_fields, unused_field, unnecessary_new, unused_local_variable, prefer_const_constructors
+// ignore_for_file: prefer_final_fields, unused_field, unnecessary_new, unused_local_variable, prefer_const_constructors, avoid_print
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,7 +22,7 @@ class LocalNotificationService {
         onSelectNotification: (String? route) async {
       // on select notif function
       if (route != null) {
-        print('=========== LocalNotification  $route');
+        // print('=========== LocalNotification  $route');
 
         Get.toNamed(route);
         // Navigator.of(context).pushNamed(route);

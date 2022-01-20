@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unrelated_type_equality_checks, prefer_const_constructors_in_immutables, use_key_in_widget_constructors, prefer_typing_uninitialized_variables, avoid_print, unnecessary_null_comparison, unused_element, must_be_immutable, non_constant_identifier_names
+// ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unrelated_type_equality_checks, prefer_const_constructors_in_immutables, use_key_in_widget_constructors, prefer_typing_uninitialized_variables, avoid_print, unnecessary_null_comparison, unused_element, must_be_immutable, non_constant_identifier_names, library_prefixes
 
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/screens/wallet/wallet.dart';
@@ -245,12 +245,13 @@ class _CreateCertificatState extends State<CreateCertificat> {
         }
       },
       child: Container(
-          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 25),
           decoration: BoxDecoration(
               color: Color(0xFF4CBC6E),
               borderRadius: BorderRadius.circular(14)),
           child: Text(
             "save".tr,
+            textAlign: TextAlign.center,
             style: GoogleFonts.poppins(fontSize: 20, color: Colors.white),
           )),
     );
@@ -310,7 +311,7 @@ class _CreateCertificatState extends State<CreateCertificat> {
           child: child as Widget),
     );
 
-    if (picked != null && picked != selectedDate) {
+    if (picked != null) {
       setState(() {
         selectedDate = DateFormat('dd-MM-yyyy').format(picked);
         selectedDate_df = picked;

@@ -1,12 +1,11 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, unused_local_variable, prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, avoid_print, unused_import
+// ignore_for_file: prefer_const_literals_to_create_immutables, unused_local_variable, prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, avoid_print, unused_import, unused_field
 
+import 'package:covid_19_tracer/controllers/langues_controller.dart';
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
+import 'package:covid_19_tracer/controllers/udid_controller.dart';
 import 'package:covid_19_tracer/models/push_notification.dart';
-import 'package:covid_19_tracer/screens/alert_screen/alert_page.dart';
 import 'package:covid_19_tracer/screens/scan_page/scan_screen.dart';
 import 'package:covid_19_tracer/screens/wallet/wallet.dart';
-import 'package:covid_19_tracer/screens/widgets/dialogues/back%20dialog/back_dialog.dart';
-import 'package:covid_19_tracer/controllers/langues_controller.dart';
 import 'package:covid_19_tracer/screens/widgets/dialogues/langues%20dialog/langues_dialog.dart';
 import 'package:covid_19_tracer/services/local_notification.dart';
 import 'package:flutter/material.dart';
@@ -31,11 +30,13 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final QrController qrController = Get.put(QrController());
   final LanguesController ldController = Get.put(LanguesController());
+  final UdidController udidController = Get.put(UdidController());
 
   // notifications
   // 1
   late final FirebaseMessaging _messaging;
   String token_ = '';
+  String? udid;
 
   // 2
   void registerNotification() async {
@@ -55,10 +56,10 @@ class _HomeState extends State<Home> {
       );
 
       // actions to do:
-      print('Notif on forground');
-      print('========================== ${notification.title}');
-      print('========================== ${notification.body}');
-      print('========================== ${notification.dataBody}');
+      // print('Notif on forground');
+      // print('========================== ${notification.title}');
+      // print('========================== ${notification.body}');
+      // print('========================== ${notification.dataBody}');
 
       // show notification
       LocalNotificationService.display(message);
@@ -76,19 +77,19 @@ class _HomeState extends State<Home> {
       );
 
       // actions to do:
-      print('Notif on background');
-      print('========================== ${notification.title}');
-      print('========================== ${notification.body}');
-      print('========================== ${notification.dataBody}');
+      // print('Notif on background');
+      // print('========================== ${notification.title}');
+      // print('========================== ${notification.body}');
+      // print('========================== ${notification.dataBody}');
       // Get.to(() => AlertPage());
       Get.toNamed(notification.dataBody ?? 'wallet');
     });
 
-    String? token = await FirebaseMessaging.instance.getToken();
-    setState(() {
-      token_ = token!;
-    });
-    print(token);
+    // String? token = await FirebaseMessaging.instance.getToken();
+    // setState(() {
+    //   token_ = token!;
+    // });
+    // print(token);
   }
 
   // 4
@@ -110,19 +111,24 @@ class _HomeState extends State<Home> {
     }
   }
 
-  // get token
-  // Future<String?> getToken() async {
-  //   String? token = await FirebaseMessaging.instance.getToken();
-  //   print('token $token');
-  //   return token;
-  // }
-
   @override
   void initState() {
     super.initState();
-
     registerNotification();
     checkForInitialMessage();
+    udidController.getUdid().then((res) {
+      setState(() {
+        udid = res;
+      });
+      print('================== $udid =================');
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    qrController.onClose();
+    ldController.onClose();
   }
 
   @override
@@ -583,7 +589,7 @@ class _HomeState extends State<Home> {
           Positioned(
             top: (height_ < 684) ? height_ * 0.22 : height_ * 0.24,
             right: width_ * 0.22,
-            child: LangueDialog(500),
+            child: LangueDialog(400),
           )
         ],
       ),

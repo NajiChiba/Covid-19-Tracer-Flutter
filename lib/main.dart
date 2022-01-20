@@ -1,12 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:covid_19_tracer/screens/alert_screen/alert_page.dart';
 import 'package:covid_19_tracer/screens/home/home.dart';
 import 'package:covid_19_tracer/screens/wallet/wallet.dart';
 import 'package:covid_19_tracer/translation/app_transtaltion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+
+import 'screens/alert_page/alert_page.dart';
 
 void main() {
   runApp(const MyApp());

@@ -1,55 +1,58 @@
-// ignore_for_file: prefer_const_constructors, unused_local_variable, unnecessary_cast
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, must_be_immutable
 
-import 'dart:ui';
+import 'package:covid_19_tracer/controllers/langues_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../capitalize.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class LanguesController extends GetxController {
-  final isVisible = false.obs;
-  final langue = 'En'.obs;
-  final locales = [
-    {'name': 'English', 'ab': 'En', 'locale': Locale('en', 'US')},
-    {'name': 'Arabic', 'ab': 'Ar', 'locale': Locale('ar', 'MA')},
-  ];
+class LangueDialog extends StatelessWidget {
+  // Widget myChild;
+  int duration;
+  LangueDialog(this.duration);
 
-  SharedPreferences? preferences;
+  LanguesController fadeCtr = Get.find();
 
   @override
-  void onInit() {
-    initializePreference().whenComplete(() {
-      changeLangPref(getLocale());
+  Widget build(BuildContext context) {
+    return Obx(() {
+      bool visible = fadeCtr.isVisible.value;
+      return AnimatedOpacity(
+        duration: Duration(milliseconds: duration),
+        opacity: visible ? 1 : 0,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          // width: 100,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(color: Colors.grey.withOpacity(0.2), blurRadius: 8)
+              ]),
+          child: Column(
+            children: fadeCtr.locales
+                .map((e) => Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: GestureDetector(
+                            onTap: () {
+                              fadeCtr.changeLang(e);
+                            },
+                            child: Text(
+                              e['name'] as String,
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                color: Color(0xFF6374F8),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ))
+                .toList(),
+          ),
+        ),
+      );
     });
-    super.onInit();
-  }
-
-  void toggleIsVisible() {
-    isVisible(!(isVisible.value));
-  }
-
-  void changeLang(Map<String, Object> obj) {
-    langue(obj['ab'] as String);
-    changeLangPref(obj['locale'] as Locale);
-    toggleIsVisible();
-  }
-
-  Future<void> changeLangPref(Locale locale) async {
-    preferences = await SharedPreferences.getInstance();
-    await preferences?.setString('locale_language', locale.languageCode);
-    await preferences?.setString(
-        'locale_country', locale.countryCode as String);
-    Get.updateLocale(locale);
-    String? lc2 = locale.languageCode as String?;
-    langue(lc2.capitalize() as String);
-  }
-
-  Locale getLocale() {
-    String language = preferences?.getString('locale_language') ?? 'en';
-    String country = preferences?.getString('locale_country') ?? 'US';
-    return Locale(language, country);
-  }
-
-  Future<void> initializePreference() async {
-    preferences = await SharedPreferences.getInstance();
   }
 }

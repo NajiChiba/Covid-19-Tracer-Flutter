@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, prefer_final_fields, unnecessary_cast
+// ignore_for_file: unused_local_variable, prefer_final_fields, unnecessary_cast, avoid_init_to_null, unnecessary_null_comparison, avoid_print
 
 import 'package:covid_19_tracer/models/qr_code.dart';
 import 'package:get/get.dart';
@@ -14,6 +14,12 @@ class QrController extends GetxController {
   void onInit() {
     super.onInit();
     initializeQrOB();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    store.close();
   }
 
   // initialiser l'object box

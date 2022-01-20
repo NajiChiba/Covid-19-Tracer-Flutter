@@ -57,6 +57,33 @@ class AppTranslation extends Translations {
           'yes': 'نعم',
           'no': 'لا',
         },
+        'fr_FR': {
+          'health_pass': 'Passe Vaccinal',
+          'card1_title': 'Ouvrir mon Portefeuille',
+          'card1_subtitle': 'Mes Certificats de tests\net vaccinations',
+          'statistics1': 'Couverture vaccinale',
+          'statistics2': 'اAutres statistiques clés',
+          'update': 'Nouveautés',
+          'completed': 'Vaccination complète',
+          'new_cases': 'Nouveaux\ncas',
+          'cases': 'Cas',
+          'news': 'Nouveautés',
+          'contact_tracing': 'Recherche de contacts',
+          'wallet': 'Portefeuille',
+          'add_certif': 'Ajouter certificat',
+          'display_certif': 'Afficher le qr code',
+          'delete': 'Supprimer',
+          'certificates': 'Certificat',
+          'save': 'Enregistrer certificat',
+          'positive': 'Positif',
+          'upload': 'Ajouter un fichier',
+          'cancel': 'Annuler',
+          'delete_title': 'Êtes-vous sûr ?',
+          'delete_subtitle': 'Un certificat sera supprimé',
+          'discard_title': 'Annuler\nles modifications ?',
+          'yes': 'Oui',
+          'no': 'Non',
+        }
       };
 }
 

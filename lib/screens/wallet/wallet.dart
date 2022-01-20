@@ -1,8 +1,8 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, must_be_immutable, unused_local_variable, sized_box_for_whitespace, avoid_unnecessary_containers, avoid_print
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, must_be_immutable, unused_local_variable, sized_box_for_whitespace, avoid_unnecessary_containers, avoid_print, library_prefixes
 
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/models/qr_code.dart' as myQ;
-import 'package:covid_19_tracer/screens/certif_details/certificat_details.dart';
+import 'package:covid_19_tracer/screens/certificat_details/certificat_details.dart';
 import 'package:covid_19_tracer/screens/home/home.dart';
 import 'package:covid_19_tracer/screens/scan_page/scan_screen.dart';
 import 'package:flutter/material.dart';
