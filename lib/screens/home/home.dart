@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, unused_local_variable, prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, avoid_print, unused_import
 
-import 'package:covid_contact_tracer/controllers/qr_controller.dart';
-import 'package:covid_contact_tracer/screens/certiificat_det_test.dart';
+import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -75,6 +74,11 @@ class _HomeState extends State<Home> {
       }
     ];
 
+    final locales = [
+      {'name': 'English', 'locale': Locale('en', 'US')},
+      {'name': 'Arabic', 'locale': Locale('ar', 'MA')},
+    ];
+
     void navToWallete() {
       Get.to(Wallet());
     }
@@ -116,7 +120,7 @@ class _HomeState extends State<Home> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                title('Health pass'),
+                title('health_pass'.tr),
                 space(15),
                 card(
                   context,
@@ -125,19 +129,19 @@ class _HomeState extends State<Home> {
                     Color(0xFF6374F8),
                     Color(0xFF697AFF),
                   ],
-                  'Open my wallet',
-                  'Your test and vaccination\ncertificates',
+                  'card1_title'.tr,
+                  'card1_subtitle'.tr,
                   'wallet',
                   true,
                   navToWallete,
                 ),
                 space(20),
-                title('News'),
+                title('news'.tr),
                 space(15),
                 vaccinationPrc(size),
                 statistics(size),
                 space(20),
-                title('Contact tracing'),
+                title('contact_tracing'.tr),
                 space(25),
                 Column(
                   children: cards
@@ -204,12 +208,12 @@ class _HomeState extends State<Home> {
                 SizedBox(
                   width: 8,
                 ),
-                newsTitle("Vaccination converage", Color(0xFF52AEBC), 20,
-                    FontWeight.w600),
+                newsTitle(
+                    "statistics1".tr, Color(0xFF52AEBC), 20, FontWeight.w600),
               ],
             ),
             space(2),
-            newsTitle('Update', Color(0xFF4B4848), 16, FontWeight.normal),
+            newsTitle('update'.tr, Color(0xFF4B4848), 16, FontWeight.normal),
             space(8),
             newsTitle('89,7%', Colors.black, 48, FontWeight.w600),
           ],
@@ -248,8 +252,8 @@ class _HomeState extends State<Home> {
                 SizedBox(
                   width: 8,
                 ),
-                newsTitle("Other key figures", Color(0xFFED7470), 20,
-                    FontWeight.w600),
+                newsTitle(
+                    "statistics2".tr, Color(0xFFED7470), 20, FontWeight.w600),
               ],
             ),
             space(4),
@@ -263,8 +267,8 @@ class _HomeState extends State<Home> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        newsTitle("Completed vaccination", Color(0xFF6FC76D),
-                            14, FontWeight.w500),
+                        newsTitle("completed".tr, Color(0xFF6FC76D), 14,
+                            FontWeight.w500),
                         newsTitle("51,74M", Colors.black, 24, FontWeight.w700),
                       ],
                     ),
@@ -275,7 +279,7 @@ class _HomeState extends State<Home> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        newsTitle("New cases", Color(0xFFFF536D), 16,
+                        newsTitle("new_cases".tr, Color(0xFFFF536D), 16,
                             FontWeight.w500),
                         newsTitle("195 790", Colors.black, 24, FontWeight.w700),
                       ],
@@ -288,7 +292,7 @@ class _HomeState extends State<Home> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         newsTitle(
-                            "Cases", Color(0xFF5364FF), 16, FontWeight.w500),
+                            "cases".tr, Color(0xFF5364FF), 16, FontWeight.w500),
                         newsTitle("195 720", Colors.black, 24, FontWeight.w700),
                       ],
                     ),
@@ -394,6 +398,10 @@ class _HomeState extends State<Home> {
     );
   }
 
+  updateLocale(Locale locale, BuildContext context) {
+    Get.updateLocale(locale);
+  }
+
   Widget header(double height_, double width_) {
     return Container(
       // header
@@ -442,6 +450,45 @@ class _HomeState extends State<Home> {
                     "Contact Tracing",
                     style:
                         GoogleFonts.poppins(fontSize: 24, color: Colors.white),
+                  ),
+                ],
+              )),
+          Positioned(
+              top: height_ * 0.38,
+              right: width_ * 0.03,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      updateLocale(Locale('en', 'US'), context);
+                    },
+                    child: Text(
+                      "En",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                          fontSize: 24,
+                          color: Color(0xFF6374F8),
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Container(
+                    width: 2,
+                    height: 18,
+                    color: Color(0xFF6374F8),
+                  ),
+                  SizedBox(width: 8),
+                  GestureDetector(
+                    onTap: () {
+                      updateLocale(Locale('ar', 'Ma'), context);
+                    },
+                    child: Text(
+                      "Ar",
+                      style: GoogleFonts.poppins(
+                          fontSize: 24, color: Color(0xFF6374F8)),
+                    ),
                   ),
                 ],
               )),

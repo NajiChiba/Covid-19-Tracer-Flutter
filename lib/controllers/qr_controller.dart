@@ -1,6 +1,6 @@
 // ignore_for_file: unused_local_variable, prefer_final_fields, unnecessary_cast
 
-import 'package:covid_contact_tracer/models/qr_code.dart';
+import 'package:covid_19_tracer/models/qr_code.dart';
 import 'package:get/get.dart';
 
 import '../objectbox.g.dart';

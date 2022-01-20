@@ -1,10 +1,10 @@
 // ignore_for_file: avoid_init_to_null, unused_local_variable, prefer_const_constructors, avoid_print, import_of_legacy_library_into_null_safe, sized_box_for_whitespace, avoid_unnecessary_containers
 
 import 'dart:io';
-import 'package:covid_contact_tracer/controllers/qr_controller.dart';
-import 'package:covid_contact_tracer/models/qr_code.dart';
-import 'package:covid_contact_tracer/objectbox.g.dart';
-import 'package:covid_contact_tracer/screens/create_certificat/create_certificat.dart';
+import 'package:covid_19_tracer/controllers/qr_controller.dart';
+import 'package:covid_19_tracer/models/qr_code.dart';
+import 'package:covid_19_tracer/objectbox.g.dart';
+import 'package:covid_19_tracer/screens/create_certificat/create_certificat.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -69,7 +69,7 @@ class _ScanPageState extends State<ScanPage> {
                         Get.back();
                       },
                       child: Container(
-                        child: Text('Cancel',
+                        child: Text('cancel'.tr,
                             style: GoogleFonts.poppins(
                               fontSize: 18,
                               color: Colors.white,
@@ -108,7 +108,7 @@ class _ScanPageState extends State<ScanPage> {
                         }
                       },
                       child: Container(
-                        child: Text('Upload File',
+                        child: Text('upload'.tr,
                             style: GoogleFonts.poppins(
                               fontSize: 18,
                               color: Colors.white,

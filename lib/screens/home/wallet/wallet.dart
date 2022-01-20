@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, must_be_immutable, unused_local_variable, sized_box_for_whitespace, avoid_unnecessary_containers, avoid_print
 
-import 'package:covid_contact_tracer/controllers/qr_controller.dart';
-import 'package:covid_contact_tracer/models/qr_code.dart' as myQ;
-import 'package:covid_contact_tracer/screens/home/Certif%20details/certificat_details.dart';
-import 'package:covid_contact_tracer/screens/home/home.dart';
-import 'package:covid_contact_tracer/screens/home/scan_page/scan_screen.dart';
+import 'package:covid_19_tracer/controllers/qr_controller.dart';
+import 'package:covid_19_tracer/models/qr_code.dart' as myQ;
+import 'package:covid_19_tracer/screens/home/Certif%20details/certificat_details.dart';
+import 'package:covid_19_tracer/screens/home/home.dart';
+import 'package:covid_19_tracer/screens/home/scan_page/scan_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -73,7 +73,7 @@ class Wallet extends StatelessWidget {
                                 ),
                                 Center(
                                   child: Text(
-                                    "Add Certificat",
+                                    "add_certif".tr,
                                     style: GoogleFonts.poppins(
                                         fontSize: 23,
                                         fontWeight: FontWeight.w600,
@@ -136,7 +136,7 @@ class Wallet extends StatelessWidget {
             flex: 7,
             child: Center(
               child: Text(
-                'Wallet',
+                'wallet'.tr,
                 style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontSize: 36,
@@ -269,7 +269,7 @@ class Certif extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            "Display the QR Code",
+            "display_certif".tr,
             style: GoogleFonts.poppins(
                 color: Color(0xFF4156FF),
                 fontSize: 20,
