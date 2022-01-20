@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/models/qr_code.dart';
 import 'package:covid_19_tracer/objectbox.g.dart';
-import 'package:covid_19_tracer/screens/create_certificat/create_certificat.dart';
+import 'package:covid_19_tracer/screens/createCertificat/create_certificat.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

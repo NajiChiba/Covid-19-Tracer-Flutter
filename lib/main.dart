@@ -1,19 +1,28 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, use_key_in_widget_constructors
 
+import 'package:covid_19_tracer/screens/alertPage/alert_page.dart';
 import 'package:covid_19_tracer/screens/home/home.dart';
+import 'package:covid_19_tracer/screens/onBoarding/on_boarding.dart';
 import 'package:covid_19_tracer/screens/wallet/wallet.dart';
 import 'package:covid_19_tracer/translation/app_transtaltion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'screens/alert_page/alert_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  final bool? onBoard = preferences.getBool('onBoard');
+  Widget _screen =
+      (onBoard == null || onBoard == false) ? OnBoarding() : Home();
+  print("onBoard: $onBoard");
+  runApp(MyApp(_screen));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final Widget _screen;
+  MyApp(this._screen);
 
   // This widget is the root of your application.
   @override
@@ -24,7 +33,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primaryColor: Color(0xFF5668F5)),
-      home: const Home(),
+      home: _screen,
+      // home: const Home(),
       translations: AppTranslation(),
       locale: Get.deviceLocale,
       debugShowCheckedModeBanner: false,

@@ -5,7 +5,7 @@ import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/controllers/statistics.dart';
 import 'package:covid_19_tracer/controllers/udid_controller.dart';
 import 'package:covid_19_tracer/models/push_notification.dart';
-import 'package:covid_19_tracer/screens/scan_page/scan_screen.dart';
+import 'package:covid_19_tracer/screens/scanPage/scan_screen.dart';
 import 'package:covid_19_tracer/screens/wallet/wallet.dart';
 import 'package:covid_19_tracer/screens/widgets/dialogues/langues%20dialog/langues_dialog.dart';
 import 'package:covid_19_tracer/services/local_notification.dart';
@@ -169,7 +169,10 @@ class _HomeState extends State<Home> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(() => ScanPage());
+          Get.to(() => ScanPage(),
+              transition: Transition.rightToLeftWithFade,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.bounceOut);
         },
         backgroundColor: Colors.transparent,
         elevation: 4,
@@ -256,7 +259,10 @@ class _HomeState extends State<Home> {
   }
 
   void navToWallete() {
-    Get.to(() => Wallet());
+    Get.to(() => Wallet(),
+        transition: Transition.fadeIn,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeIn);
   }
 
   Widget newsTitle(

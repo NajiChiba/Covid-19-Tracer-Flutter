@@ -236,7 +236,10 @@ class _CreateCertificatState extends State<CreateCertificat> {
         if (qrController.box != null && qrCode != null) {
           try {
             qrController.addQr(qrCode);
-            Get.off(Wallet());
+            Get.off(Wallet(),
+                transition: Transition.rightToLeft,
+                duration: Duration(milliseconds: 300),
+                curve: Curves.easeIn);
           } catch (e) {
             print(e);
           }

@@ -2,9 +2,9 @@
 
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/models/qr_code.dart' as myQ;
-import 'package:covid_19_tracer/screens/certificat_details/certificat_details.dart';
+import 'package:covid_19_tracer/screens/certificatDetails/certificat_details.dart';
 import 'package:covid_19_tracer/screens/home/home.dart';
-import 'package:covid_19_tracer/screens/scan_page/scan_screen.dart';
+import 'package:covid_19_tracer/screens/scanPage/scan_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -26,7 +26,10 @@ class Wallet extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(() => ScanPage());
+          Get.to(() => ScanPage(),
+              transition: Transition.rightToLeft,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeIn);
         },
         backgroundColor: Colors.transparent,
         elevation: 4,
@@ -85,7 +88,10 @@ class Wallet extends StatelessWidget {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    Get.to(() => ScanPage());
+                                    Get.to(() => ScanPage(),
+                                        transition: Transition.rightToLeft,
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.easeIn);
                                   },
                                   child: Container(
                                     height: height_ * 0.3,
@@ -128,7 +134,10 @@ class Wallet extends StatelessWidget {
             flex: 1,
             child: GestureDetector(
               onTap: () {
-                Get.to(() => Home());
+                Get.offAll(() => Home(),
+                    transition: Transition.leftToRight,
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeIn);
               },
               child: Icon(
                 Icons.arrow_back_ios,
@@ -261,7 +270,10 @@ class Certif extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // navigate to qr details page
-        Get.to(() => CertificatDetails(qrCode));
+        Get.to(() => CertificatDetails(qrCode),
+            transition: Transition.rightToLeft,
+            duration: Duration(milliseconds: 300),
+            curve: Curves.easeIn);
       },
       child: Container(
         width: width_,
