@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
+import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -170,6 +171,7 @@ class _OnBoardingState extends State<OnBoarding> {
                           duration: Duration(milliseconds: 300),
                           curve: Curves.easeIn);
                     }
+                    print(nameController.text);
                     _controller.nextPage(
                         duration: Duration(milliseconds: 200),
                         curve: Curves.bounceIn);
@@ -263,8 +265,10 @@ class _OnBoardingState extends State<OnBoarding> {
 
 void updateSharedPref(String userName) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  preferences.setBool("onBoard", true);
-  preferences.setString("user", userName);
+  print('=================== SET NAME ONBOARDING =====================');
+  await preferences.setBool("onBoard", true);
+  await preferences.setString('user', userName);
+  QrController.initUserName();
 }
 
 class PageElem extends StatelessWidget {

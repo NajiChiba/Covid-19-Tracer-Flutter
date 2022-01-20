@@ -112,7 +112,7 @@ class Wallet extends StatelessWidget {
                               : qrList.reversed
                                   .map((e) => Certif(
                                       e,
-                                      qrController.userName.value
+                                      QrController.userName.value
                                           .toUpperCase()))
                                   .toList(),
                         );

@@ -146,7 +146,7 @@ class CertificatDetails extends StatelessWidget {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Text(
-                                              qrController.userName.value
+                                              QrController.userName.value
                                                   .toUpperCase(),
                                               style: TextStyle(
                                                   fontSize: 24,

@@ -15,7 +15,7 @@ class QrController extends GetxController {
   var qrCodeBox = null;
   var contactBox = null;
   var store = null;
-  var userName = ''.obs;
+  static var userName = ''.obs;
 
   @override
   void onInit() {
@@ -38,8 +38,8 @@ class QrController extends GetxController {
     if (store == null) {
       print('============= open Store');
       store = await openStore();
-      qrCodeBox = store.qrCodeBox<QrCode>();
-      contactBox = store.contactBox<Contact>();
+      qrCodeBox = store.box<QrCode>();
+      contactBox = store.box<Contact>();
     }
 
     // ajouter la liste des qrcodes dans notre liste _qrDataList a partir de l'OB
@@ -54,9 +54,14 @@ class QrController extends GetxController {
     initUserName();
   }
 
-  Future<void> initUserName() async {
+  static Future<void> initUserName() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    var un = pref.getString("user");
+    var un = pref.getString('user');
+
+    print('=================== SET NAME ONBOARDING =====================');
+    print("=========================================");
+    print(un);
+    print("=========================================");
     userName(un);
   }
 
@@ -72,7 +77,7 @@ class QrController extends GetxController {
       if (qrCode != null) {
         qrCodeBox.put(qrCode);
         _qrDataList.assignAll(qrCodeBox.getAll());
-        checkTest(qrCode);
+        // checkTest(qrCode);
       } else {
         print('Null $qrCode');
       }
