@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, unused_local_variable, prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, avoid_print
 
+import 'package:covid_19_tracer/screens/certificat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -69,7 +70,39 @@ class _HomeState extends State<Home> {
       }
     ];
 
+    void navToWallete() {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Cerificat()));
+    }
+
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // navigat to scan page
+          print('Scan');
+        },
+        backgroundColor: Colors.transparent,
+        elevation: 4,
+        child: Container(
+          width: width_,
+          height: height_,
+          padding: EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFF3BB2B8),
+                  Color(0xFF42E695),
+                ]),
+            // image: DecorationImage(
+            //   image: AssetImage("assets/images/scan_icon.png"),
+            // )
+          ),
+          child: SvgPicture.asset("assets/svgs/scan.svg"),
+        ),
+      ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -150,7 +183,7 @@ class _HomeState extends State<Home> {
                     'Your test and vaccination\ncertificates',
                     'wallet',
                     true,
-                    func),
+                    navToWallete),
                 SizedBox(
                   height: 20,
                 ),
@@ -202,7 +235,11 @@ class _HomeState extends State<Home> {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
-        func(svgName);
+        try {
+          func(svgName);
+        } catch (e) {
+          func();
+        }
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 20),
