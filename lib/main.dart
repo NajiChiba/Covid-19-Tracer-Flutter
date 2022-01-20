@@ -16,7 +16,6 @@ void main() async {
   final bool? onBoard = preferences.getBool('onBoard');
   Widget _screen =
       (onBoard == null || onBoard == false) ? OnBoarding() : Home();
-  print("onBoard: $onBoard");
   runApp(MyApp(_screen));
 }
 
@@ -34,7 +33,6 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(primaryColor: Color(0xFF5668F5)),
       home: _screen,
-      // home: const Home(),
       translations: AppTranslation(),
       locale: Get.deviceLocale,
       debugShowCheckedModeBanner: false,

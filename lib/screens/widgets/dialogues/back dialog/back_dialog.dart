@@ -56,6 +56,7 @@ class BackDialog extends StatelessWidget {
                                 Get.back();
                               } else {
                                 // yes
+                                Get.back();
                                 Get.off(Wallet());
                               }
                             },

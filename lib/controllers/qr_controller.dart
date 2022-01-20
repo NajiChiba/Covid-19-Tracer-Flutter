@@ -19,16 +19,19 @@ class QrController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    store.close();
+    // store.close();
+    print('============= onClose Store');
   }
 
   // initialiser l'object box
   Future<void> initializeQrOB() async {
     _qrDataList.clear();
     if (box == null && store == null) {
+      print('============= open Store');
       store = await openStore();
       box = store.box<QrCode>();
     }
+
     List<QrCode> lst = box.getAll();
 
     // ajouter la liste des qrcodes dans notre liste _qrDataList a partir de l'OB
@@ -42,11 +45,16 @@ class QrController extends GetxController {
 
   // inserer un qrcode dans l'OB
   void addQr(QrCode qrCode) {
-    if (qrCode != null) {
-      box.put(qrCode);
-      _qrDataList.assignAll(box.getAll());
-    } else {
-      print('Null $qrCode');
+    try {
+      if (qrCode != null) {
+        box.put(qrCode);
+        _qrDataList.assignAll(box.getAll());
+      } else {
+        print('Null $qrCode');
+      }
+    } catch (e) {
+      // initializeQrOB();
+      print(store);
     }
   }
 

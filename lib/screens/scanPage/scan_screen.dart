@@ -143,7 +143,7 @@ class _ScanPageState extends State<ScanPage> {
               date: DateTime.now(),
               type: 'qrCode',
               id: 0);
-          Get.to(() => CreateCertificat(qrCode));
+          Get.off(() => CreateCertificat(qrCode));
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("Key already exists")));

@@ -1,6 +1,7 @@
 // ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unrelated_type_equality_checks, prefer_const_constructors_in_immutables, use_key_in_widget_constructors, prefer_typing_uninitialized_variables, avoid_print, unnecessary_null_comparison, unused_element, must_be_immutable, non_constant_identifier_names, library_prefixes
 
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
+import 'package:covid_19_tracer/screens/wallet/wallet.dart';
 import 'package:covid_19_tracer/screens/widgets/dialogues/delete%20dialog/delete_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -52,7 +53,7 @@ class CertificatDetails extends StatelessWidget {
                           flex: 1,
                           child: GestureDetector(
                             onTap: () {
-                              Get.back();
+                              Get.off(Wallet());
                             },
                             child: Icon(
                               Icons.arrow_back_ios,
