@@ -4,33 +4,33 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:7347410087349668253",
-      "lastPropertyId": "5:7446401354786117270",
+      "id": "1:740113200043341254",
+      "lastPropertyId": "5:1824424455027273363",
       "name": "QrCode",
       "properties": [
         {
-          "id": "1:1819235291552296534",
+          "id": "1:7776747658857357559",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:6423960895110976686",
+          "id": "2:6146768134645726475",
           "name": "content",
           "type": 9
         },
         {
-          "id": "3:4993701272188256912",
+          "id": "3:3099489436104971177",
           "name": "type",
           "type": 9
         },
         {
-          "id": "4:8170133697041624590",
+          "id": "4:8163257254909597001",
           "name": "pcr",
           "type": 1
         },
         {
-          "id": "5:7446401354786117270",
+          "id": "5:1824424455027273363",
           "name": "date",
           "type": 10
         }
@@ -38,7 +38,7 @@
       "relations": []
     }
   ],
-  "lastEntityId": "1:7347410087349668253",
+  "lastEntityId": "1:740113200043341254",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

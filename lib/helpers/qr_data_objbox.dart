@@ -2,4 +2,4 @@
 
 import 'package:covid_19_tracer/helpers/qr_data_instance.dart';
 
-QrData qr_data = QrData();
+// QrData qr_data = QrData();

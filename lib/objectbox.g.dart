@@ -15,33 +15,33 @@ export 'package:objectbox/objectbox.dart'; // so that callers only have to impor
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(1, 7347410087349668253),
+      id: const IdUid(1, 740113200043341254),
       name: 'QrCode',
-      lastPropertyId: const IdUid(5, 7446401354786117270),
+      lastPropertyId: const IdUid(5, 1824424455027273363),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 1819235291552296534),
+            id: const IdUid(1, 7776747658857357559),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 6423960895110976686),
+            id: const IdUid(2, 6146768134645726475),
             name: 'content',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 4993701272188256912),
+            id: const IdUid(3, 3099489436104971177),
             name: 'type',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 8170133697041624590),
+            id: const IdUid(4, 8163257254909597001),
             name: 'pcr',
             type: 1,
             flags: 0),
         ModelProperty(
-            id: const IdUid(5, 7446401354786117270),
+            id: const IdUid(5, 1824424455027273363),
             name: 'date',
             type: 10,
             flags: 0)
@@ -70,7 +70,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(1, 7347410087349668253),
+      lastEntityId: const IdUid(1, 740113200043341254),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),

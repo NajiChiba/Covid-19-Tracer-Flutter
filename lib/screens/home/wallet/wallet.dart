@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Cerificat extends StatelessWidget {
+class Wallet extends StatelessWidget {
   final QrController qrController = Get.put(QrController());
 
   @override
   Widget build(BuildContext context) {
-    qrController.initData();
+    // qrController.initData();
     var qrList = qrController.qrDataList;
 
     double width_ = MediaQuery.of(context).size.width;
@@ -38,14 +38,13 @@ class Cerificat extends StatelessWidget {
                 height: 20,
               ),
               Expanded(
-                  child: Obx(
-                () => Container(
+                child: Container(
                     width: width_,
                     child: ListView.builder(
                       itemBuilder: (context, index) => Certif(qrList[index]),
                       itemCount: qrList.length,
                     )),
-              ))
+              )
             ],
           ),
         ),

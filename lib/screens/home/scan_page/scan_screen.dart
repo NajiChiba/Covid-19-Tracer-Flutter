@@ -1,8 +1,10 @@
 // ignore_for_file: avoid_init_to_null, unused_local_variable, prefer_const_constructors, avoid_print, import_of_legacy_library_into_null_safe, sized_box_for_whitespace, avoid_unnecessary_containers
 
 import 'dart:io';
-import 'package:covid_19_tracer/helpers/qr_data_objbox.dart';
+import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/models/qr_code.dart';
+import 'package:covid_19_tracer/objectbox.g.dart';
+import 'package:covid_19_tracer/screens/create_certificat/create_certificat.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,21 +12,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_code_tools/qr_code_tools.dart';
 
-import '../objectbox.g.dart';
-
-class QrCodeScreen extends StatefulWidget {
-  // final Function callback;
-  const QrCodeScreen({Key? key}) : super(key: key);
+class ScanPage extends StatefulWidget {
+  const ScanPage({Key? key}) : super(key: key);
 
   @override
-  _QrCodeScreenState createState() => _QrCodeScreenState();
+  _ScanPageState createState() => _ScanPageState();
 }
 
-class _QrCodeScreenState extends State<QrCodeScreen> {
+class _ScanPageState extends State<ScanPage> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
   var lastScan = null;
   QRViewController? controller;
+
+  QrController qrController = Get.put(QrController());
 
   @override
   void reassemble() {
@@ -41,9 +42,6 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
     double height_ = MediaQuery.of(context).size.height;
     double width_ = MediaQuery.of(context).size.width;
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text("Qr Code Scanner"),
-      // ),
       body: Container(
         height: height_,
         width: width_,
@@ -52,6 +50,11 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
             QRView(
               key: qrKey,
               onQRViewCreated: _onQRViewCreated,
+              overlay: QrScannerOverlayShape(
+                  borderWidth: 10,
+                  borderRadius: 12,
+                  cutOutSize: width_ * 0.7,
+                  borderColor: Colors.greenAccent),
             ),
             Positioned(
               top: height_ * 0.05,
@@ -99,12 +102,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                               id: 0);
 
                           print(qrCode);
-                          // Navigator.pushReplacement(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) => DetailsScreen(
-                          //           qrCode: qrCode, callback: widget.callback)),
-                          // );
+                          Get.off(() => CreateCertificat(qrCode));
                         } else {
                           // User canceled the picker
                         }
@@ -135,7 +133,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
           currentScan.difference(lastScan!) > const Duration(seconds: 3)) {
         lastScan = currentScan;
         result = scanData;
-        final query = qr_data.box
+        final query = qrController.box
             .query(QrCode_.content.equals(result!.code.toString()))
             .build();
         final qrCodes = query.find();
@@ -145,12 +143,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
               date: DateTime.now(),
               type: 'qrCode',
               id: 0);
-          // Navigator.pushReplacement(
-          //   context,
-          //   MaterialPageRoute(
-          //       builder: (context) =>
-          //           DetailsScreen(qrCode: qrCode, callback: widget.callback)),
-          // );
+          Get.to(() => CreateCertificat(qrCode));
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("Key already exists")));

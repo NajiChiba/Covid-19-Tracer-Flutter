@@ -1,4 +1,6 @@
-import 'package:covid_19_tracer/screens/home.dart';
+// ignore_for_file: prefer_const_constructors
+
+import 'package:covid_19_tracer/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -18,9 +20,7 @@ class MyApp extends StatelessWidget {
     ));
     return GetMaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primaryColor: Color(0xFF5668F5)),
       home: const Home(),
       debugShowCheckedModeBanner: false,
     );

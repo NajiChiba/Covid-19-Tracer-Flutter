@@ -1,11 +1,12 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, unused_local_variable, prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, avoid_print, unused_import
 
-import 'package:covid_19_tracer/screens/certificat.dart';
-import 'package:covid_19_tracer/screens/scan_screen.dart';
+import 'package:covid_19_tracer/screens/certiificat_det_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'scan_page/scan_screen.dart';
+import 'wallet/wallet.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -73,16 +74,12 @@ class _HomeState extends State<Home> {
     ];
 
     void navToWallete() {
-      Get.to(Cerificat());
-
-      // Navigator.of(context)
-      //     .push(MaterialPageRoute(builder: (context) => Cerificat()));
+      Get.to(Wallet());
     }
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Get.to(ScanPage());
           Get.to(() => ScanPage());
           print('Scan');
         },
@@ -105,78 +102,17 @@ class _HomeState extends State<Home> {
           child: SvgPicture.asset("assets/svgs/scan.svg"),
         ),
       ),
-      // backgroundColor: Colors.white,
       backgroundColor: Color(0xFFFAF9FF),
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          header(height_, width_),
           Container(
-            // header
-            height: height_ * 0.5,
-            child: Stack(
-              children: [
-                Container(
-                  width: width_,
-                  height: height_ * 0.45,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/bg.png'),
-                          fit: BoxFit.fill)),
-                ),
-                Positioned(
-                    top: height_ * 0.1,
-                    right: width_ * 0.1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          "COVID-19",
-                          style: GoogleFonts.poppins(
-                              fontSize: 38,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        Text(
-                          "Contact Tracing",
-                          style: GoogleFonts.poppins(
-                              fontSize: 24, color: Colors.white),
-                        ),
-                      ],
-                    )),
-                Positioned(
-                  right: width_ * 0.35,
-                  bottom: -3,
-                  child: Container(
-                    width: width_ * 0.6,
-                    height: height_ * 0.45,
-                    decoration: BoxDecoration(
-                        // color: Colors.red,
-                        image: DecorationImage(
-                            image: AssetImage('assets/images/doctor.png'),
-                            fit: BoxFit.fitHeight)),
-                  ),
-
-                  // left: 10,
-                  // top: 30,
-                  // child: SvgPicture.asset(
-                  //   "assets/svgs/doc.svg",
-                  //   // width: ,
-                  //   height: 300,
-                  // ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            // Body
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 title('Health pass'),
-                SizedBox(
-                  height: 15,
-                ),
+                space(15),
                 card(
                     context,
                     [
@@ -189,22 +125,14 @@ class _HomeState extends State<Home> {
                     'wallet',
                     true,
                     navToWallete),
-                SizedBox(
-                  height: 20,
-                ),
+                space(20),
                 title('News'),
-                SizedBox(
-                  height: 15,
-                ),
+                space(15),
                 vaccinationPrc(size),
-                statics(size),
-                SizedBox(
-                  height: 20,
-                ),
+                statistics(size),
+                space(20),
                 title('Contact tracing'),
-                SizedBox(
-                  height: 15,
-                ),
+                space(25),
                 Column(
                   children: cards
                       .map((card_) => card(
@@ -217,9 +145,7 @@ class _HomeState extends State<Home> {
                           card_['func']))
                       .toList(),
                 ),
-                SizedBox(
-                  height: 60,
-                )
+                space(60)
               ],
             ),
           )
@@ -268,26 +194,20 @@ class _HomeState extends State<Home> {
                     size: 20,
                   ),
                 ),
-                SizedBox(
-                  width: 10,
-                ),
+                space(10),
                 newsTitle("Vaccination converage", Color(0xFF52AEBC), 20,
                     FontWeight.w600),
               ],
             ),
-            SizedBox(
-              height: 2,
-            ),
+            space(2),
             newsTitle('Update', Color(0xFF4B4848), 16, FontWeight.normal),
-            SizedBox(
-              height: 8,
-            ),
+            space(8),
             newsTitle('89,7%', Colors.black, 48, FontWeight.w600),
           ],
         ));
   }
 
-  Widget statics(Size size) {
+  Widget statistics(Size size) {
     return Container(
         decoration: BoxDecoration(
             color: Colors.white,
@@ -316,16 +236,12 @@ class _HomeState extends State<Home> {
                     size: 20,
                   ),
                 ),
-                SizedBox(
-                  width: 8,
-                ),
+                space(8),
                 newsTitle("Other key figures", Color(0xFFED7470), 20,
                     FontWeight.w600),
               ],
             ),
-            SizedBox(
-              height: 4,
-            ),
+            space(4),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -373,9 +289,9 @@ class _HomeState extends State<Home> {
         ));
   }
 
-  Widget space() {
+  Widget space(double h) {
     return SizedBox(
-      height: 30,
+      height: h,
     );
   }
 
@@ -421,9 +337,7 @@ class _HomeState extends State<Home> {
             reverse
                 ? textColumn(title, description)
                 : svgImg(svgName, size.width),
-            SizedBox(
-              width: 8,
-            ),
+            space(8),
             !reverse
                 ? textColumn(title, description)
                 : svgImg(svgName, size.width),
@@ -445,7 +359,6 @@ class _HomeState extends State<Home> {
             style: GoogleFonts.poppins(
                 color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
           ),
-          // SizedBox(height:10),
           Text(
             description,
             style: GoogleFonts.poppins(
@@ -462,6 +375,67 @@ class _HomeState extends State<Home> {
       child: Container(
           padding: EdgeInsets.only(bottom: (svgName == 'wallet') ? 20 : 0),
           child: SvgPicture.asset("assets/svgs/$svgName.svg")),
+    );
+  }
+
+  Widget header(double height_, double width_) {
+    return Container(
+      // header
+      height: height_ * 0.5,
+      child: Stack(
+        children: [
+          Container(
+            width: width_,
+            height: height_ * 0.42,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/images/bg4.png'),
+                    fit: BoxFit.fill)),
+          ),
+          Positioned(
+              top: height_ * 0.1,
+              right: width_ * 0.1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "COVID-19",
+                    style: GoogleFonts.poppins(
+                        fontSize: 38,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  Text(
+                    "Contact Tracing",
+                    style:
+                        GoogleFonts.poppins(fontSize: 24, color: Colors.white),
+                  ),
+                ],
+              )),
+          Positioned(
+            right: width_ * 0.35,
+            bottom: -3,
+            child: Container(
+              width: width_ * 0.6,
+              height: height_ * 0.45,
+              decoration: BoxDecoration(
+                  // color: Colors.red,
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/doctor.png'),
+                      fit: BoxFit.fitHeight)),
+            ),
+
+            // left: 10,
+            // top: 30,
+            // child: SvgPicture.asset(
+            //   "assets/svgs/doc.svg",
+            //   // width: ,
+            //   height: 300,
+            // ),
+          ),
+        ],
+      ),
     );
   }
 }
