@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:covid_19_tracer/screens/alert_screen/alert_page.dart';
 import 'package:covid_19_tracer/screens/home/home.dart';
+import 'package:covid_19_tracer/screens/wallet/wallet.dart';
 import 'package:covid_19_tracer/translation/app_transtaltion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,6 +28,10 @@ class MyApp extends StatelessWidget {
       translations: AppTranslation(),
       locale: Get.deviceLocale,
       debugShowCheckedModeBanner: false,
+      routes: {
+        "alertPage": (_) => AlertPage(),
+        "wallet": (_) => Wallet(),
+      },
     );
   }
 }

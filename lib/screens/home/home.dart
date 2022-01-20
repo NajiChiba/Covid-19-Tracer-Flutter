@@ -1,15 +1,25 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, unused_local_variable, prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, avoid_print, unused_import
 
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
+import 'package:covid_19_tracer/models/push_notification.dart';
+import 'package:covid_19_tracer/screens/alert_screen/alert_page.dart';
+import 'package:covid_19_tracer/screens/scan_page/scan_screen.dart';
+import 'package:covid_19_tracer/screens/wallet/wallet.dart';
 import 'package:covid_19_tracer/screens/widgets/dialogues/back%20dialog/back_dialog.dart';
-import 'package:covid_19_tracer/screens/widgets/dialogues/langues%20dialog/langue_dialog.dart';
-import 'package:covid_19_tracer/screens/widgets/dialogues/langues%20dialog/langue_dialog_controller.dart';
+import 'package:covid_19_tracer/controllers/langues_controller.dart';
+import 'package:covid_19_tracer/screens/widgets/dialogues/langues%20dialog/langues_dialog.dart';
+import 'package:covid_19_tracer/services/local_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'scan_page/scan_screen.dart';
-import 'wallet/wallet.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+// 3 for background notif
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Handling a background message: ${message.messageId}");
+}
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -20,7 +30,100 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final QrController qrController = Get.put(QrController());
-  final LangueDialogController ldController = Get.put(LangueDialogController());
+  final LanguesController ldController = Get.put(LanguesController());
+
+  // notifications
+  // 1
+  late final FirebaseMessaging _messaging;
+  String token_ = '';
+
+  // 2
+  void registerNotification() async {
+    // 2-1 initialize firebase app
+    await Firebase.initializeApp();
+    _messaging = FirebaseMessaging.instance;
+
+    // 2-2 For handling the received notifications "forground"
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      LocalNotificationService.initialize(context);
+
+      // Parse the message received
+      PushNotification notification = PushNotification(
+        title: message.notification?.title,
+        body: message.notification?.body,
+        dataBody: message.data['route'],
+      );
+
+      // actions to do:
+      print('Notif on forground');
+      print('========================== ${notification.title}');
+      print('========================== ${notification.body}');
+      print('========================== ${notification.dataBody}');
+
+      // show notification
+      LocalNotificationService.display(message);
+    });
+
+    // 3 to handle notification when the app is runing on background
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+    // 3-2 onClick open notif when the app is on "background" or "terminated"
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      PushNotification notification = PushNotification(
+        title: message.notification?.title,
+        body: message.notification?.body,
+        dataBody: message.data['route'],
+      );
+
+      // actions to do:
+      print('Notif on background');
+      print('========================== ${notification.title}');
+      print('========================== ${notification.body}');
+      print('========================== ${notification.dataBody}');
+      // Get.to(() => AlertPage());
+      Get.toNamed(notification.dataBody ?? 'wallet');
+    });
+
+    String? token = await FirebaseMessaging.instance.getToken();
+    setState(() {
+      token_ = token!;
+    });
+    print(token);
+  }
+
+  // 4
+  // For handling notification when the app is in terminated state
+  checkForInitialMessage() async {
+    await Firebase.initializeApp();
+    RemoteMessage? message =
+        await FirebaseMessaging.instance.getInitialMessage();
+
+    if (message != null) {
+      PushNotification notification = PushNotification(
+        title: message.notification?.title,
+        body: message.notification?.body,
+        dataBody: message.data['route'],
+      );
+      print('========================== ${notification.title}');
+      print('========================== ${notification.body}');
+      print('========================== ${notification.dataBody}');
+    }
+  }
+
+  // get token
+  // Future<String?> getToken() async {
+  //   String? token = await FirebaseMessaging.instance.getToken();
+  //   print('token $token');
+  //   return token;
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+
+    registerNotification();
+    checkForInitialMessage();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -453,16 +556,17 @@ class _HomeState extends State<Home> {
               )),
           // langue button
           Positioned(
-              top: height_ * 0.22,
-              right: width_ * 0.1,
+              top: height_ * 0.23,
+              right: width_ * 0.11,
               child: GestureDetector(
                 onTap: () {
                   ldController.toggleIsVisible();
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.white),
-                  padding: EdgeInsets.all(8),
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.white),
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                   child: Obx(() {
                     return Text(
                       ldController.langue.value,
@@ -478,7 +582,7 @@ class _HomeState extends State<Home> {
           // langue dialog
           Positioned(
             top: (height_ < 684) ? height_ * 0.22 : height_ * 0.24,
-            right: width_ * 0.21,
+            right: width_ * 0.22,
             child: LangueDialog(500),
           )
         ],

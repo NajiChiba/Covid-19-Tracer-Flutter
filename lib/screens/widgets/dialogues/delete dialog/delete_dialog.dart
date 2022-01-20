@@ -2,8 +2,8 @@
 
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/models/qr_code.dart';
-import 'package:covid_19_tracer/screens/home/wallet/wallet.dart';
-import 'package:covid_19_tracer/screens/widgets/dialogues/langues%20dialog/langue_dialog_controller.dart';
+import 'package:covid_19_tracer/screens/wallet/wallet.dart';
+import 'package:covid_19_tracer/screens/widgets/dialogues/langues%20dialog/langues_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -13,7 +13,7 @@ class DeleteDialog extends StatelessWidget {
   QrCode qrCode;
   DeleteDialog(this.qrCode);
   QrController qrController = Get.find();
-  LangueDialogController lgctrl = Get.put(LangueDialogController());
+  LanguesController lgctrl = Get.put(LanguesController());
 
   @override
   Widget build(BuildContext context) {

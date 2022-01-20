@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, must_be_immutable
 
-import 'package:covid_19_tracer/screens/widgets/dialogues/langues%20dialog/langue_dialog_controller.dart';
+import 'package:covid_19_tracer/screens/widgets/dialogues/langues%20dialog/langues_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,7 +10,7 @@ class LangueDialog extends StatelessWidget {
   int duration;
   LangueDialog(this.duration);
 
-  LangueDialogController fadeCtr = Get.find();
+  LanguesController fadeCtr = Get.find();
 
   @override
   Widget build(BuildContext context) {
