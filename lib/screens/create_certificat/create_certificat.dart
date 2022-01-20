@@ -2,6 +2,7 @@
 
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/screens/home/wallet/wallet.dart';
+import 'package:covid_19_tracer/screens/widgets/dialogues/back%20dialog/back_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -52,6 +53,7 @@ class _CreateCertificatState extends State<CreateCertificat> {
       body: SingleChildScrollView(
         child: Container(
           width: width_,
+          height: height_,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -77,7 +79,12 @@ class _CreateCertificatState extends State<CreateCertificat> {
                           flex: 1,
                           child: GestureDetector(
                             onTap: () {
-                              Get.back();
+                              // dialog
+                              Get.defaultDialog(
+                                title: '',
+                                backgroundColor: Colors.transparent,
+                                content: BackDialog(),
+                              );
                             },
                             child: Icon(
                               Icons.arrow_back_ios,
@@ -105,105 +112,109 @@ class _CreateCertificatState extends State<CreateCertificat> {
                 ]),
                 // body
               ),
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 76),
-                width: width_,
-                height: height_ * 0.68,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // date picker
-                    GestureDetector(
-                      onTap: () async {
-                        // open date picker
-                        await showDateDialog(context);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset("assets/svgs/date.svg"),
-                          SizedBox(
-                            width: 12,
-                          ),
-                          Text(
-                            selectedDate,
-                            style: GoogleFonts.poppins(
-                                fontSize: 20, color: Color(0xFF5668F5)),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    // QrImage
-                    Container(
-                      padding: EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color(0xFF5668F5).withOpacity(0.1),
-                              blurRadius: 8,
-                            )
-                          ]),
-                      child: QrImage(
-                        data: qrCode.content as String,
-                        size: width_ * 0.4,
-                      ),
-                    ),
-
-                    SizedBox(
-                      height: 25,
-                    ),
-                    // dropdown
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 30, vertical: 4),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                                color: Color(0xFF5668F5).withOpacity(0.1),
-                                blurRadius: 8)
-                          ]),
-                      child: DropdownButton<String>(
-                        value: qrTypeValue,
-                        isExpanded: true,
-                        icon: const Icon(Icons.arrow_drop_down),
-                        elevation: 16,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            qrTypeValue = newValue!;
-                          });
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 76),
+                  width: width_,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      // date picker
+                      GestureDetector(
+                        onTap: () async {
+                          // open date picker
+                          await showDateDialog(context);
                         },
-                        items: <String>[
-                          'Test PCR',
-                          'Pass Covid',
-                          'Autorisation',
-                        ].map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Center(
-                              child: Text(value,
-                                  style: GoogleFonts.poppins(fontSize: 18)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset("assets/svgs/date.svg"),
+                            SizedBox(
+                              width: 12,
                             ),
-                          );
-                        }).toList(),
+                            Text(
+                              selectedDate,
+                              style: GoogleFonts.poppins(
+                                  fontSize: 20, color: Color(0xFF5668F5)),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
+                      SizedBox(height: 20),
+                      // QrImage
+                      Container(
+                        padding: EdgeInsets.all(6),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color(0xFF5668F5).withOpacity(0.1),
+                                blurRadius: 8,
+                              )
+                            ]),
+                        child: QrImage(
+                          data: qrCode.content as String,
+                          size: (height_ < 684) ? width_ * 0.35 : width_ * 0.4,
+                        ),
+                      ),
 
-                    SizedBox(
-                      height: 15,
-                    ),
-                    qrTypeValue == 'Test PCR'
-                        ? testResult()
-                        : SizedBox(
-                            height: 10,
-                          ),
-                    saveButton(qrCode),
-                  ],
+                      SizedBox(
+                        height: 25,
+                      ),
+                      // dropdown
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 30, vertical: 4),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Color(0xFF5668F5).withOpacity(0.1),
+                                  blurRadius: 8)
+                            ]),
+                        child: DropdownButton<String>(
+                          value: qrTypeValue,
+                          isExpanded: true,
+                          icon: const Icon(Icons.arrow_drop_down),
+                          elevation: 16,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              qrTypeValue = newValue!;
+                            });
+                          },
+                          items: <String>[
+                            'Test PCR',
+                            'Pass Covid',
+                            'Autorisation',
+                          ].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Center(
+                                child: Text(value,
+                                    style: GoogleFonts.poppins(fontSize: 18)),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+
+                      SizedBox(
+                        height: 15,
+                      ),
+                      qrTypeValue == 'Test PCR'
+                          ? testResult()
+                          : SizedBox(
+                              height: 10,
+                            ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      saveButton(qrCode),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -251,7 +262,8 @@ class _CreateCertificatState extends State<CreateCertificat> {
 
   Widget testResult() {
     return Container(
-      margin: EdgeInsets.only(bottom: 25),
+      // fix
+      // margin: EdgeInsets.only(bottom: 25),
       padding: EdgeInsets.symmetric(vertical: 15),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
@@ -287,6 +299,68 @@ class _CreateCertificatState extends State<CreateCertificat> {
         ],
       ),
     );
+  }
+
+  Future<void> showDateDialog(BuildContext context) async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2022, 1),
+      lastDate: DateTime(2101, 1),
+      builder: (context, child) => Theme(
+          data: ThemeData().copyWith(
+              colorScheme: ColorScheme.light(
+                  surface: Color(0xFF7B8AFF), onSurface: Colors.black)),
+          child: child as Widget),
+    );
+
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = DateFormat('dd-MM-yyyy').format(picked);
+        selectedDate_df = picked;
+      });
+    }
+  }
+}
+
+/* Widget textFieald(String hint, TextEditingController txtController) {
+    TextStyle hintS =
+        GoogleFonts.poppins(fontSize: 18, color: Color(0xFF9FACFF));
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(color: Color(0xFF5668F5).withOpacity(0.1), blurRadius: 8)
+          ]),
+      child: TextField(
+        controller: txtController,
+        decoration: InputDecoration(
+            border: InputBorder.none, hintText: hint, hintStyle: hintS),
+      ),
+    );
+  }
+
+  Future<void> showBirthDateDialog(BuildContext context) async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime(1999, 1),
+      firstDate: DateTime(1960, 1),
+      lastDate: DateTime(2101, 1),
+      builder: (context, child) => Theme(
+          data: ThemeData().copyWith(
+              colorScheme: ColorScheme.light(
+                  surface: Color(0xFF7B8AFF), onSurface: Colors.black)),
+          child: child as Widget),
+    );
+
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        birthDate = DateFormat('dd-MM-yyyy').format(picked);
+      });
+    }
   }
 
   Widget bdPicker(String date) {
@@ -331,64 +405,4 @@ class _CreateCertificatState extends State<CreateCertificat> {
     );
   }
 
-  Widget textFieald(String hint, TextEditingController txtController) {
-    TextStyle hintS =
-        GoogleFonts.poppins(fontSize: 18, color: Color(0xFF9FACFF));
-
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(color: Color(0xFF5668F5).withOpacity(0.1), blurRadius: 8)
-          ]),
-      child: TextField(
-        controller: txtController,
-        decoration: InputDecoration(
-            border: InputBorder.none, hintText: hint, hintStyle: hintS),
-      ),
-    );
-  }
-
-  Future<void> showDateDialog(BuildContext context) async {
-    final picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2022, 1),
-      lastDate: DateTime(2101, 1),
-      builder: (context, child) => Theme(
-          data: ThemeData().copyWith(
-              colorScheme: ColorScheme.light(
-                  surface: Color(0xFF7B8AFF), onSurface: Colors.black)),
-          child: child as Widget),
-    );
-
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        selectedDate = DateFormat('dd-MM-yyyy').format(picked);
-        selectedDate_df = picked;
-      });
-    }
-  }
-
-  Future<void> showBirthDateDialog(BuildContext context) async {
-    final picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime(1999, 1),
-      firstDate: DateTime(1960, 1),
-      lastDate: DateTime(2101, 1),
-      builder: (context, child) => Theme(
-          data: ThemeData().copyWith(
-              colorScheme: ColorScheme.light(
-                  surface: Color(0xFF7B8AFF), onSurface: Colors.black)),
-          child: child as Widget),
-    );
-
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        birthDate = DateFormat('dd-MM-yyyy').format(picked);
-      });
-    }
-  }
-}
+*/

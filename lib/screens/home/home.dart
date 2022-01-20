@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, unused_local_variable, prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, avoid_print, unused_import
 
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
+import 'package:covid_19_tracer/screens/widgets/dialogues/back%20dialog/back_dialog.dart';
+import 'package:covid_19_tracer/screens/widgets/dialogues/langues%20dialog/langue_dialog.dart';
+import 'package:covid_19_tracer/screens/widgets/dialogues/langues%20dialog/langue_dialog_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -17,15 +20,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final QrController qrController = Get.put(QrController());
+  final LangueDialogController ldController = Get.put(LangueDialogController());
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     var height_ = size.height;
     var width_ = size.width;
-
-    void func(String svgName, double height) {
-      print('height = $height');
-    }
 
     List cards = [
       {
@@ -74,20 +75,10 @@ class _HomeState extends State<Home> {
       }
     ];
 
-    final locales = [
-      {'name': 'English', 'locale': Locale('en', 'US')},
-      {'name': 'Arabic', 'locale': Locale('ar', 'MA')},
-    ];
-
-    void navToWallete() {
-      Get.to(Wallet());
-    }
-
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.to(() => ScanPage());
-          print('Scan');
         },
         backgroundColor: Colors.transparent,
         elevation: 4,
@@ -163,6 +154,14 @@ class _HomeState extends State<Home> {
         ]),
       ),
     );
+  }
+
+  void func(String svgName, {double height = 600}) {
+    print('height = $height');
+  }
+
+  void navToWallete() {
+    Get.to(() => Wallet());
   }
 
   Widget newsTitle(
@@ -398,16 +397,13 @@ class _HomeState extends State<Home> {
     );
   }
 
-  updateLocale(Locale locale, BuildContext context) {
-    Get.updateLocale(locale);
-  }
-
   Widget header(double height_, double width_) {
     return Container(
       // header
       height: height_ * 0.5,
       child: Stack(
         children: [
+          //background
           Container(
             width: width_,
             height: height_ * 0.4,
@@ -416,6 +412,7 @@ class _HomeState extends State<Home> {
                     image: AssetImage('assets/images/bg4.png'),
                     fit: BoxFit.fill)),
           ),
+          // svgs
           Positioned(
             right: width_ * 0.4,
             bottom: -(height_ * 0.06),
@@ -432,8 +429,9 @@ class _HomeState extends State<Home> {
               child: SvgPicture.asset("assets/svgs/doc2.svg"),
             ),
           ),
+          // title
           Positioned(
-              top: height_ * 0.1,
+              top: (height_ < 684) ? height_ * 0.06 : height_ * 0.1,
               right: width_ * 0.1,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -453,45 +451,36 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               )),
+          // langue button
           Positioned(
-              top: height_ * 0.38,
-              right: width_ * 0.03,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      updateLocale(Locale('en', 'US'), context);
-                    },
-                    child: Text(
-                      "En",
+              top: height_ * 0.22,
+              right: width_ * 0.1,
+              child: GestureDetector(
+                onTap: () {
+                  ldController.toggleIsVisible();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: Colors.white),
+                  padding: EdgeInsets.all(8),
+                  child: Obx(() {
+                    return Text(
+                      ldController.langue.value,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
-                          fontSize: 24,
+                          fontSize: 18,
                           color: Color(0xFF6374F8),
                           fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  SizedBox(width: 8),
-                  Container(
-                    width: 2,
-                    height: 18,
-                    color: Color(0xFF6374F8),
-                  ),
-                  SizedBox(width: 8),
-                  GestureDetector(
-                    onTap: () {
-                      updateLocale(Locale('ar', 'Ma'), context);
-                    },
-                    child: Text(
-                      "Ar",
-                      style: GoogleFonts.poppins(
-                          fontSize: 24, color: Color(0xFF6374F8)),
-                    ),
-                  ),
-                ],
+                    );
+                  }),
+                ),
               )),
+          // langue dialog
+          Positioned(
+            top: (height_ < 684) ? height_ * 0.22 : height_ * 0.24,
+            right: width_ * 0.21,
+            child: LangueDialog(500),
+          )
         ],
       ),
     );

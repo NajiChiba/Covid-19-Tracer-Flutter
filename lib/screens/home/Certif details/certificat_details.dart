@@ -1,14 +1,12 @@
 // ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unrelated_type_equality_checks, prefer_const_constructors_in_immutables, use_key_in_widget_constructors, prefer_typing_uninitialized_variables, avoid_print, unnecessary_null_comparison, unused_element, must_be_immutable, non_constant_identifier_names
 
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
-import 'package:covid_19_tracer/screens/home/wallet/wallet.dart';
+import 'package:covid_19_tracer/screens/widgets/dialogues/delete%20dialog/delete_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:covid_19_tracer/models/qr_code.dart' as myQ;
 
 class CertificatDetails extends StatelessWidget {
@@ -34,54 +32,53 @@ class CertificatDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // header
-              Expanded(
-                flex: 1,
-                child: Container(
-                  width: width_,
-                  // height: height_ * 0.25,
-                  child: Stack(children: [
-                    Container(
-                      height: height_ * 0.25,
-                      width: width_,
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/images/appbar.png"),
-                              fit: BoxFit.fill)),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: GestureDetector(
-                              onTap: () {
-                                Get.back();
-                              },
-                              child: Icon(
-                                Icons.arrow_back_ios,
-                                color: Colors.white,
-                                size: 34,
-                              ),
+              Container(
+                width: width_,
+                height: height_ * 0.25,
+                child: Stack(children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/appbar.png"),
+                            fit: BoxFit.cover)),
+                  ),
+                  Container(
+                    height: height_ * 0.25,
+                    width: width_,
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.white,
+                              size: 34,
                             ),
                           ),
-                          Expanded(
-                            flex: 7,
-                            child: Center(
-                              child: Text(
-                                'certificates'.tr,
-                                style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontSize: 36,
-                                    fontWeight: FontWeight.w500),
-                              ),
+                        ),
+                        Expanded(
+                          flex: 7,
+                          child: Center(
+                            child: Text(
+                              'certificates'.tr,
+                              style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 36,
+                                  fontWeight: FontWeight.w500),
                             ),
                           ),
-                          Expanded(flex: 1, child: SizedBox()),
-                        ],
-                      ),
+                        ),
+                        Expanded(flex: 1, child: SizedBox()),
+                      ],
                     ),
-                  ]),
-                  // body
-                ),
+                  ),
+                ]),
+                // body
               ),
               Expanded(
                 flex: 3,
@@ -97,7 +94,7 @@ class CertificatDetails extends StatelessWidget {
                       ),
                       Container(
                         height:
-                            (height_ < 684) ? height_ * 0.68 : height_ * 0.62,
+                            (height_ < 684) ? height_ * 0.68 : height_ * 0.6,
                         margin: EdgeInsets.symmetric(
                           horizontal: 30,
                         ),
@@ -191,8 +188,13 @@ class CertificatDetails extends StatelessWidget {
                             GestureDetector(
                               onTap: () {
                                 // remove certif
-                                qrController.removeQr(qrCode);
-                                Get.off(() => Wallet());
+                                Get.defaultDialog(
+                                  title: '',
+                                  backgroundColor: Colors.transparent,
+                                  content: DeleteDialog(qrCode),
+                                );
+                                // qrController.removeQr(qrCode);
+                                // Get.off(() => Wallet());
                               },
                               child: Container(
                                 height: height_ * 0.1,
