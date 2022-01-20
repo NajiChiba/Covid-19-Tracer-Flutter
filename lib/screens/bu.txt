@@ -1,0 +1,66 @@
+// card(
+                //     context,
+                //     [
+                //       Color(0xFF6374F8),
+                //       Color(0xFF6374F8),
+                //       Color(0xFF697AFF),
+                //     ],
+                //     'Open my wallet',
+                //     'Your test and vaccination\ncertificates',
+                //     'wallet',
+                //     true,
+                //     func),
+                // SizedBox(
+                //   height: 30,
+                // ),
+                // title('Contact tracing'),
+                // SizedBox(
+                //   height: 15,
+                // ),
+                // card(
+                //     context,
+                //     [
+                //       Color(0xFFFFB251),
+                //       Color(0xFFFFD166),
+                //     ],
+                //     'Scan a venue QR code',
+                //     'Be aletred in case of\nexpoure in venue',
+                //     'phone_qr',
+                //     false,
+                //     func),
+                // space(),
+                // card(
+                //     context,
+                //     [
+                //       Color(0xFFEF476F),
+                //       Color(0xFFFF6086),
+                //     ],
+                //     'You are COVID-19\npositive ?',
+                //     'Tap here to scan the QR code',
+                //     'test',
+                //     true,
+                //     func),
+                // space(),
+                // card(
+                //     context,
+                //     [
+                //       Color(0xFF00CDAC),
+                //       Color(0xFF06D6A0),
+                //     ],
+                //     'You are COVID-19\npositive ?',
+                //     'Tap here to scan the QR code',
+                //     'phone_verif',
+                //     false,
+                //     func),
+                // space(),
+                // card(
+                //     context,
+                //     [
+                //       Color(0xFF00B9F6),
+                //       Color(0xFF40CFFF),
+                //     ],
+                //     'Scan a venue QR code',
+                //     'Be aletred in case of\nexpoure in venue',
+                //     'phone_qr',
+                //     true,
+                //     func),
