@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable, prefer_final_fields, unnecessary_cast, avoid_init_to_null, unnecessary_null_comparison, avoid_print
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:covid_19_tracer/models/contact.dart';
 import 'package:covid_19_tracer/models/qr_code.dart';
@@ -119,14 +120,22 @@ class QrController extends GetxController {
   // send data to the server
   Future<void> sendContactListToServer() async {
     // post _contactDataList to the server
-    http.post(Uri.parse("10.0.2.2:8000/api/v1/test-post"),
-        headers: {
-          'Cotent-Type': 'application/json',
-        },
-        body: jsonEncode(<String, List<QrCode>>{
-          // TODO: send _contactDataList
-          'contactList': _qrDataList,
-        }));
+    final response = await http
+        .post(Uri.parse('http://10.0.2.2:8000/api/v1/test-post'),
+            headers: {
+              HttpHeaders.contentTypeHeader: 'application/json',
+            },
+            body: jsonEncode({
+              // TODO: send _contactDataList
+              'contactList': _contactDataList,
+            }))
+        .then((res) => print("=============== SET RESPONSE : ==> ${res.body}"));
+  }
+
+  Future<void> getTest() async {
+    http
+        .get(Uri.parse('http://10.0.2.2:8000/api/v1/get-test'))
+        .then((res) => print("=============== GET RESPONSE : ==> ${res.body}"));
   }
 
   // supprimer contact
