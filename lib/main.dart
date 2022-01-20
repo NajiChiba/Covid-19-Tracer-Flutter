@@ -19,7 +19,6 @@ void main() async {
   final bool? onBoard = preferences.getBool('onBoard');
   Widget _screen =
       (onBoard == null || onBoard == false) ? OnBoarding() : Home();
-
   runApp(MyApp(_screen));
 }
 
