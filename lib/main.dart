@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, use_key_in_widget_constructors
 
+import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/screens/alertPage/alert_page.dart';
 import 'package:covid_19_tracer/screens/home/home.dart';
 import 'package:covid_19_tracer/screens/onBoarding/on_boarding.dart';
@@ -12,17 +13,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // show onboard or no
   SharedPreferences preferences = await SharedPreferences.getInstance();
   final bool? onBoard = preferences.getBool('onBoard');
   Widget _screen =
       (onBoard == null || onBoard == false) ? OnBoarding() : Home();
-  print("onBoard: $onBoard");
+
   runApp(MyApp(_screen));
 }
 
 class MyApp extends StatelessWidget {
   final Widget _screen;
   MyApp(this._screen);
+  final QrController qrController = Get.put(QrController());
 
   // This widget is the root of your application.
   @override
@@ -34,7 +38,6 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(primaryColor: Color(0xFF5668F5)),
       home: _screen,
-      // home: const Home(),
       translations: AppTranslation(),
       locale: Get.deviceLocale,
       debugShowCheckedModeBanner: false,

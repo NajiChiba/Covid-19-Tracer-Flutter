@@ -59,6 +59,7 @@ class _OnBoardingState extends State<OnBoarding> {
   Widget build(BuildContext context) {
     double height_ = MediaQuery.of(context).size.height;
     double width_ = MediaQuery.of(context).size.width;
+    Size size = MediaQuery.of(context).size;
     Color darkPurple = Color(0xFF4152F3);
     Color lightPurple = Color(0xFF8995FF);
 
@@ -78,44 +79,48 @@ class _OnBoardingState extends State<OnBoarding> {
                 flex: 3,
                 child: PageView.builder(
                     controller: _controller,
-                    physics: NeverScrollableScrollPhysics(),
+                    // physics: NeverScrollableScrollPhysics(),
                     onPageChanged: (int index) {
                       setState(() {
                         currentIndex = index;
                       });
                     },
                     itemCount: pages.length,
-                    itemBuilder: (_, index) => Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/svgs/${pages[index]["svg"]}',
-                              height:
-                                  index != 0 ? height_ * 0.32 : height_ * 0.26,
-                            ),
-                            SizedBox(
-                              height: height_ * 0.07,
-                            ),
-                            Text(
-                              pages[index]["title"] as String,
-                              style: GoogleFonts.poppins(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w600,
-                                  color: darkPurple),
-                            ),
-                            SizedBox(
-                              height: index != 0 ? 10 : 25,
-                            ),
-                            index != 0
-                                ? Text(
-                                    pages[index]["subtitle"] as String,
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 22, color: lightPurple),
-                                  )
-                                : myTextField(height_, width_)
-                          ],
-                        )),
+                    itemBuilder: (_, index) => PageElem(pages[index], index,
+                        size, myTextField, [darkPurple, lightPurple])
+                    // Column(
+                    //       crossAxisAlignment: CrossAxisAlignment.center,
+                    //       children: [
+                    //         SvgPicture.asset(
+                    //           'assets/svgs/${pages[index]["svg"]}',
+                    //           height:
+                    //               index != 0 ? height_ * 0.32 : height_ * 0.26,
+                    //         ),
+                    //         SizedBox(
+                    //           height: height_ * 0.07,
+                    //         ),
+                    //         Text(
+                    //           pages[index]["title"] as String,
+                    //           style: GoogleFonts.poppins(
+                    //               fontSize: 28,
+                    //               fontWeight: FontWeight.w600,
+                    //               color: darkPurple),
+                    //         ),
+                    //         SizedBox(
+                    //           height: index != 0 ? 10 : 25,
+                    //         ),
+                    //         index != 0
+                    //             ? Text(
+                    //                 pages[index]["subtitle"] as String,
+                    //                 textAlign: TextAlign.center,
+                    //                 style: GoogleFonts.poppins(
+                    //                     fontSize: 22, color: lightPurple),
+                    //               )
+                    //             : myTextField(height_, width_)
+                    //       ],
+                    //     )
+
+                    ),
               ),
               Expanded(
                 flex: 1,
@@ -159,8 +164,8 @@ class _OnBoardingState extends State<OnBoarding> {
                 GestureDetector(
                   onTap: () {
                     if (currentIndex == 3) {
-                      // save name in shared preferences
-                      // set onBoard viewd in sharedpreferences
+                      //TODO: save name in shared preferences
+                      //TODO: set onBoard viewd in sharedpreferences
                       updateSharedPref(nameController.text);
                       Get.offAll(Home(),
                           transition: Transition.rightToLeft,
@@ -239,31 +244,19 @@ class _OnBoardingState extends State<OnBoarding> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(
             pages.length,
-            (index) => GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      setState(() {
-                        currentIndex = index;
-                      });
-                      _controller.animateToPage(index,
-                          duration: Duration(milliseconds: 200),
-                          curve: Curves.bounceInOut);
-                    });
-                  },
-                  child: AnimatedContainer(
-                    height: 14,
-                    width: index == currentIndex ? 55 : 14,
-                    margin: EdgeInsets.only(right: 6),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: lightPurple,
-                      gradient: index == currentIndex
-                          ? LinearGradient(
-                              colors: [Color(0xFF5063FF), Color(0xFF5F6EE3)])
-                          : null,
-                    ),
-                    duration: Duration(milliseconds: 200),
+            (index) => AnimatedContainer(
+                  height: 14,
+                  width: index == currentIndex ? 55 : 14,
+                  margin: EdgeInsets.only(right: 6),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: lightPurple,
+                    gradient: index == currentIndex
+                        ? LinearGradient(
+                            colors: [Color(0xFF5063FF), Color(0xFF5F6EE3)])
+                        : null,
                   ),
+                  duration: Duration(milliseconds: 200),
                 )),
       ),
     );
@@ -274,4 +267,47 @@ void updateSharedPref(String userName) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   preferences.setBool("onBoard", true);
   preferences.setString("user", userName);
+}
+
+class PageElem extends StatelessWidget {
+  Map<String, String> page;
+  int index;
+  Size size;
+  Widget Function(double height_, double width_) myTextField;
+  List<Color> colors;
+
+  PageElem(this.page, this.index, this.size, this.myTextField, this.colors,
+      {Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SvgPicture.asset(
+          'assets/svgs/${page["svg"]}',
+          height: index != 0 ? size.height * 0.32 : size.height * 0.26,
+        ),
+        SizedBox(
+          height: size.height * 0.07,
+        ),
+        Text(
+          page["title"] as String,
+          style: GoogleFonts.poppins(
+              fontSize: 28, fontWeight: FontWeight.w600, color: colors[0]),
+        ),
+        SizedBox(
+          height: index != 0 ? 10 : 25,
+        ),
+        index != 0
+            ? Text(
+                page["subtitle"] as String,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.poppins(fontSize: 22, color: colors[1]),
+              )
+            : myTextField(size.height, size.width)
+      ],
+    );
+  }
 }

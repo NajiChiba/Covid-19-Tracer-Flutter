@@ -69,7 +69,11 @@ class DeleteDialog extends StatelessWidget {
                               } else {
                                 // delete
                                 qrController.removeQr(qrCode);
-                                Get.off(() => Wallet());
+                                Get.back();
+                                Get.off(() => Wallet(),
+                                    transition: Transition.leftToRight,
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.easeIn);
                               }
                             },
                             child: Obx(() {

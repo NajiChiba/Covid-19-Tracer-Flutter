@@ -56,7 +56,11 @@ class BackDialog extends StatelessWidget {
                                 Get.back();
                               } else {
                                 // yes
-                                Get.off(Wallet());
+                                Get.back();
+                                Get.off(Wallet(),
+                                    transition: Transition.leftToRight,
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.easeIn);
                               }
                             },
                             child: Obx(() {

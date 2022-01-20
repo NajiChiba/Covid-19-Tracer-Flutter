@@ -44,176 +44,187 @@ class _CreateCertificatState extends State<CreateCertificat> {
     double width_ = MediaQuery.of(context).size.width;
     myQ.QrCode qrCode = widget.qrCode;
 
-    return Scaffold(
-      backgroundColor: Color(0xFFF8F9FF),
-      body: SingleChildScrollView(
-        child: Container(
-          width: width_,
-          height: height_,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // header
-              Container(
-                width: width_,
-                height: height_ * 0.25,
-                child: Stack(children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage("assets/images/appbar.png"),
-                            fit: BoxFit.cover)),
-                  ),
-                  Container(
-                    height: height_ * 0.25,
+    return WillPopScope(
+      onWillPop: () {
+        Get.defaultDialog(
+          title: '',
+          backgroundColor: Colors.transparent,
+          content: BackDialog(),
+        );
+        return Future.value(false);
+      },
+      child: Scaffold(
+        backgroundColor: Color(0xFFF8F9FF),
+        body: SingleChildScrollView(
+          child: Container(
+            width: width_,
+            height: height_,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // header
+                Container(
+                  width: width_,
+                  height: height_ * 0.25,
+                  child: Stack(children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage("assets/images/appbar.png"),
+                              fit: BoxFit.cover)),
+                    ),
+                    Container(
+                      height: height_ * 0.25,
+                      width: width_,
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: GestureDetector(
+                              onTap: () {
+                                // dialog
+                                Get.defaultDialog(
+                                  title: '',
+                                  backgroundColor: Colors.transparent,
+                                  content: BackDialog(),
+                                );
+                              },
+                              child: Icon(
+                                Icons.arrow_back_ios,
+                                color: Colors.white,
+                                size: 34,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 7,
+                            child: Center(
+                              child: Text(
+                                'certificates'.tr,
+                                style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontSize: 36,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ),
+                          Expanded(flex: 1, child: SizedBox()),
+                        ],
+                      ),
+                    ),
+                  ]),
+                  // body
+                ),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 76),
                     width: width_,
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Expanded(
-                          flex: 1,
-                          child: GestureDetector(
-                            onTap: () {
-                              // dialog
-                              Get.defaultDialog(
-                                title: '',
-                                backgroundColor: Colors.transparent,
-                                content: BackDialog(),
-                              );
-                            },
-                            child: Icon(
-                              Icons.arrow_back_ios,
+                        // date picker
+                        GestureDetector(
+                          onTap: () async {
+                            // open date picker
+                            await showDateDialog(context);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset("assets/svgs/date.svg"),
+                              SizedBox(
+                                width: 12,
+                              ),
+                              Text(
+                                selectedDate,
+                                style: GoogleFonts.poppins(
+                                    fontSize: 20, color: Color(0xFF5668F5)),
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 20),
+                        // QrImage
+                        Container(
+                          padding: EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
                               color: Colors.white,
-                              size: 34,
-                            ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color(0xFF5668F5).withOpacity(0.1),
+                                  blurRadius: 8,
+                                )
+                              ]),
+                          child: QrImage(
+                            data: qrCode.content as String,
+                            size:
+                                (height_ < 684) ? width_ * 0.35 : width_ * 0.4,
                           ),
                         ),
-                        Expanded(
-                          flex: 7,
-                          child: Center(
-                            child: Text(
-                              'certificates'.tr,
-                              style: GoogleFonts.poppins(
-                                  color: Colors.white,
-                                  fontSize: 36,
-                                  fontWeight: FontWeight.w500),
-                            ),
+
+                        SizedBox(
+                          height: 25,
+                        ),
+                        // dropdown
+                        Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 30, vertical: 4),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Color(0xFF5668F5).withOpacity(0.1),
+                                    blurRadius: 8)
+                              ]),
+                          child: DropdownButton<String>(
+                            value: qrTypeValue,
+                            isExpanded: true,
+                            icon: const Icon(Icons.arrow_drop_down),
+                            elevation: 16,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                qrTypeValue = newValue!;
+                              });
+                            },
+                            items: <String>[
+                              'Test PCR',
+                              'Pass Covid',
+                              'Autorisation',
+                            ].map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Center(
+                                  child: Text(value,
+                                      style: GoogleFonts.poppins(fontSize: 18)),
+                                ),
+                              );
+                            }).toList(),
                           ),
                         ),
-                        Expanded(flex: 1, child: SizedBox()),
+
+                        SizedBox(
+                          height: 15,
+                        ),
+                        qrTypeValue == 'Test PCR'
+                            ? testResult()
+                            : SizedBox(
+                                height: 10,
+                              ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        saveButton(qrCode),
                       ],
                     ),
                   ),
-                ]),
-                // body
-              ),
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 76),
-                  width: width_,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      // date picker
-                      GestureDetector(
-                        onTap: () async {
-                          // open date picker
-                          await showDateDialog(context);
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset("assets/svgs/date.svg"),
-                            SizedBox(
-                              width: 12,
-                            ),
-                            Text(
-                              selectedDate,
-                              style: GoogleFonts.poppins(
-                                  fontSize: 20, color: Color(0xFF5668F5)),
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      // QrImage
-                      Container(
-                        padding: EdgeInsets.all(6),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color(0xFF5668F5).withOpacity(0.1),
-                                blurRadius: 8,
-                              )
-                            ]),
-                        child: QrImage(
-                          data: qrCode.content as String,
-                          size: (height_ < 684) ? width_ * 0.35 : width_ * 0.4,
-                        ),
-                      ),
-
-                      SizedBox(
-                        height: 25,
-                      ),
-                      // dropdown
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 4),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Color(0xFF5668F5).withOpacity(0.1),
-                                  blurRadius: 8)
-                            ]),
-                        child: DropdownButton<String>(
-                          value: qrTypeValue,
-                          isExpanded: true,
-                          icon: const Icon(Icons.arrow_drop_down),
-                          elevation: 16,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              qrTypeValue = newValue!;
-                            });
-                          },
-                          items: <String>[
-                            'Test PCR',
-                            'Pass Covid',
-                            'Autorisation',
-                          ].map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Center(
-                                child: Text(value,
-                                    style: GoogleFonts.poppins(fontSize: 18)),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-
-                      SizedBox(
-                        height: 15,
-                      ),
-                      qrTypeValue == 'Test PCR'
-                          ? testResult()
-                          : SizedBox(
-                              height: 10,
-                            ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      saveButton(qrCode),
-                    ],
-                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

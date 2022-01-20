@@ -2,6 +2,7 @@
 
 import 'package:covid_19_tracer/models/qr_code.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../objectbox.g.dart';
 
@@ -9,6 +10,7 @@ class QrController extends GetxController {
   final _qrDataList = <QrCode>[].obs;
   var box = null;
   var store = null;
+  var userName = ''.obs;
 
   @override
   void onInit() {
@@ -16,23 +18,33 @@ class QrController extends GetxController {
     initializeQrOB();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-    store.close();
-  }
+  // @override
+  // void onClose() {
+  //   super.onClose();
+  //   store.close();
+  //   print('============= onClose Store');
+  // }
 
   // initialiser l'object box
   Future<void> initializeQrOB() async {
     _qrDataList.clear();
     if (box == null && store == null) {
+      print('============= open Store');
       store = await openStore();
       box = store.box<QrCode>();
     }
+
     List<QrCode> lst = box.getAll();
 
     // ajouter la liste des qrcodes dans notre liste _qrDataList a partir de l'OB
     _qrDataList.assignAll(lst);
+    initUserName();
+  }
+
+  Future<void> initUserName() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var un = pref.getString("user");
+    userName(un);
   }
 
   // getter
@@ -40,13 +52,27 @@ class QrController extends GetxController {
     return _qrDataList;
   }
 
+  Future<void> restartStore() async {
+    try {
+      // store.close();
+      initializeQrOB();
+    } catch (e) {
+      initializeQrOB();
+    }
+  }
+
   // inserer un qrcode dans l'OB
   void addQr(QrCode qrCode) {
-    if (qrCode != null) {
-      box.put(qrCode);
-      _qrDataList.assignAll(box.getAll());
-    } else {
-      print('Null $qrCode');
+    // restartStore();
+    try {
+      if (qrCode != null) {
+        box.put(qrCode);
+        _qrDataList.assignAll(box.getAll());
+      } else {
+        print('Null $qrCode');
+      }
+    } catch (e) {
+      print("================== add catch");
     }
   }
 

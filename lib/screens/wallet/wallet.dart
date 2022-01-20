@@ -23,98 +23,113 @@ class Wallet extends StatelessWidget {
     double height_ = MediaQuery.of(context).size.height;
     List itm = [1, 2, 3, 4];
 
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.to(() => ScanPage(),
-              transition: Transition.rightToLeft,
-              duration: Duration(milliseconds: 300),
-              curve: Curves.easeIn);
-        },
-        backgroundColor: Colors.transparent,
-        elevation: 4,
-        child: Container(
+    return WillPopScope(
+      onWillPop: () {
+        Get.off(() => Home(),
+            transition: Transition.leftToRight,
+            duration: Duration(milliseconds: 300),
+            curve: Curves.easeIn);
+        print('============================== here =====');
+        return Future.value(false);
+      },
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Get.to(() => ScanPage(),
+                transition: Transition.rightToLeft,
+                duration: Duration(milliseconds: 300),
+                curve: Curves.easeIn);
+          },
+          backgroundColor: Colors.transparent,
+          elevation: 4,
+          child: Container(
+            width: width_,
+            height: height_,
+            padding: EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color(0xFF5063FF),
+                    Color(0xFF5F6EE3),
+                  ]),
+            ),
+            child: Icon(Icons.add),
+          ),
+        ),
+        backgroundColor: Color(0xFFF8F9FF),
+        body: Container(
           width: width_,
           height: height_,
-          padding: EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color(0xFF5063FF),
-                  Color(0xFF5F6EE3),
-                ]),
-          ),
-          child: Icon(Icons.add),
-        ),
-      ),
-      backgroundColor: Color(0xFFF8F9FF),
-      body: Container(
-        width: width_,
-        height: height_,
-        child: Stack(children: [
-          Positioned(
-            top: height_ * 0.22,
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20,
-              ),
-              height: height_ * 0.8,
-              width: width_,
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Column(
-                  children: [
-                    Obx(() {
-                      return Column(
-                        children: (qrList.isEmpty)
-                            ? [
-                                SizedBox(
-                                  height: height_ * 0.1,
-                                ),
-                                Center(
-                                  child: Text(
-                                    "add_certif".tr,
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 23,
-                                        fontWeight: FontWeight.w600,
-                                        color: Color(0xFF4755BE)),
+          child: Stack(children: [
+            Positioned(
+              top: height_ * 0.22,
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                height: height_ * 0.8,
+                width: width_,
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    children: [
+                      Obx(() {
+                        return Column(
+                          children: (qrList.isEmpty)
+                              ? [
+                                  SizedBox(
+                                    height: height_ * 0.1,
                                   ),
-                                ),
-                                SizedBox(
-                                  height: height_ * 0.09,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.to(() => ScanPage(),
-                                        transition: Transition.rightToLeft,
-                                        duration: Duration(milliseconds: 300),
-                                        curve: Curves.easeIn);
-                                  },
-                                  child: Container(
-                                    height: height_ * 0.3,
-                                    child: SvgPicture.asset(
-                                        "assets/svgs/add_data.svg"),
+                                  Center(
+                                    child: Text(
+                                      "add_certif".tr,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 23,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xFF4755BE)),
+                                    ),
                                   ),
-                                )
-                              ]
-                            : qrList.reversed.map((e) => Certif(e)).toList(),
-                      );
-                    }),
-                    SizedBox(
-                      height: 80,
-                    )
-                  ],
+                                  SizedBox(
+                                    height: height_ * 0.09,
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => ScanPage(),
+                                          transition: Transition.rightToLeft,
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.easeIn);
+                                    },
+                                    child: Container(
+                                      height: height_ * 0.3,
+                                      child: SvgPicture.asset(
+                                          "assets/svgs/add_data.svg"),
+                                    ),
+                                  )
+                                ]
+                              : qrList.reversed
+                                  .map((e) => Certif(
+                                      e,
+                                      qrController.userName.value
+                                          .toUpperCase()))
+                                  .toList(),
+                        );
+                      }),
+                      SizedBox(
+                        height: 80,
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          // app bar
-          customAppBar(width_, height_),
-        ]),
-        // body
+            // app bar
+            customAppBar(width_, height_),
+          ]),
+          // body
+        ),
       ),
     );
   }
@@ -167,7 +182,8 @@ class Wallet extends StatelessWidget {
 
 class Certif extends StatelessWidget {
   myQ.QrCode qrCode;
-  Certif(this.qrCode);
+  String userName;
+  Certif(this.qrCode, this.userName);
 
   @override
   Widget build(BuildContext context) {
@@ -178,90 +194,99 @@ class Certif extends StatelessWidget {
       fontSize: 18,
     );
 
-    return Container(
-      margin: EdgeInsets.only(top: 30),
-      width: width_,
-      height: (height_ < 684) ? height_ * 0.38 : height_ * 0.35,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: [
-          BoxShadow(color: Color(0xFF5668F5).withOpacity(0.1), blurRadius: 8)
-        ],
-      ),
-      child: Column(
-        children: [
-          Expanded(
-            flex: 3,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: QrImage(
-                          data: qrCode.content as String,
-                          size: 100,
+    return WillPopScope(
+      onWillPop: () {
+        Get.to(Home(),
+            transition: Transition.leftToRight,
+            duration: Duration(milliseconds: 300),
+            curve: Curves.easeIn);
+        return Future.value(true);
+      },
+      child: Container(
+        margin: EdgeInsets.only(top: 30),
+        width: width_,
+        height: (height_ < 684) ? height_ * 0.38 : height_ * 0.35,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [
+            BoxShadow(color: Color(0xFF5668F5).withOpacity(0.1), blurRadius: 8)
+          ],
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: QrImage(
+                            data: qrCode.content as String,
+                            size: 100,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: height_ * 0.006,
-                            ),
-                            Text(
-                              "AYMANE OULAD BENHAMMOU",
-                              style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.w800),
-                            ),
-                            SizedBox(
-                              height: 6,
-                            ),
-                            Text(
-                                "Date:  ${DateFormat('dd MMM yyyy').format(qrCode.date)}",
-                                style: ts),
-                            Text("Type:  ${qrCode.type}", style: ts),
-                            (qrCode.type == "Test PCR")
-                                ? ((qrCode.pcr as bool)
-                                    ? Text("Positive - PCR",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w600,
-                                            color: Color(0xFFFF536D)))
-                                    : Text("Negative - PCR",
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w600,
-                                            color: Color(0xFF0ACB57))))
-                                : SizedBox(
-                                    height: 0,
-                                  ),
-                          ],
+                        SizedBox(
+                          width: 10,
                         ),
-                      )
-                    ],
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: height_ * 0.006,
+                              ),
+                              Text(
+                                userName,
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.w800),
+                              ),
+                              SizedBox(
+                                height: 6,
+                              ),
+                              Text(
+                                  "Date:  ${DateFormat('dd MMM yyyy').format(qrCode.date)}",
+                                  style: ts),
+                              Text("Type:  ${qrCode.type}", style: ts),
+                              (qrCode.type == "Test PCR")
+                                  ? ((qrCode.pcr as bool)
+                                      ? Text("Positive - PCR",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xFFFF536D)))
+                                      : Text("Negative - PCR",
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xFF0ACB57))))
+                                  : SizedBox(
+                                      height: 0,
+                                    ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            flex: 1,
-            child: displayQrBtn(width_, height_, qrCode),
-          )
-        ],
+            Expanded(
+              flex: 1,
+              child: displayQrBtn(width_, height_, qrCode),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -270,7 +295,7 @@ class Certif extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // navigate to qr details page
-        Get.to(() => CertificatDetails(qrCode),
+        Get.off(() => CertificatDetails(qrCode),
             transition: Transition.rightToLeft,
             duration: Duration(milliseconds: 300),
             curve: Curves.easeIn);

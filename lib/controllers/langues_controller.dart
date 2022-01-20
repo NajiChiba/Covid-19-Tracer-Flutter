@@ -55,10 +55,10 @@ class LanguesController extends GetxController {
 
     List locals = [];
     List langs = [];
-    locales.forEach((element) {
+    for (var element in locales) {
       locals.add(element['locale']);
       langs.add((element['locale'] as Locale).languageCode);
-    });
+    }
 
     if (locals.contains(myLocal)) {
       return myLocal;

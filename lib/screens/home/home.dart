@@ -29,7 +29,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final QrController qrController = Get.put(QrController());
   final LanguesController ldController = Get.put(LanguesController());
   final UdidController udidController = Get.put(UdidController());
   final StatisticsController statisticsController =
@@ -74,11 +73,11 @@ class _HomeState extends State<Home> {
       Get.toNamed(notification.dataBody ?? 'wallet');
     });
 
-    // String? token = await FirebaseMessaging.instance.getToken();
+    String? token = await FirebaseMessaging.instance.getToken();
     // setState(() {
     //   token_ = token!;
     // });
-    // print(token);
+    print('====================== $token ');
   }
 
   // 4
@@ -107,7 +106,6 @@ class _HomeState extends State<Home> {
   @override
   void dispose() {
     super.dispose();
-    qrController.onClose();
     ldController.onClose();
     udidController.onClose();
     statisticsController.onClose();
@@ -170,7 +168,7 @@ class _HomeState extends State<Home> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.to(() => ScanPage(),
-              transition: Transition.rightToLeftWithFade,
+              transition: Transition.rightToLeft,
               duration: Duration(milliseconds: 300),
               curve: Curves.bounceOut);
         },
@@ -259,8 +257,8 @@ class _HomeState extends State<Home> {
   }
 
   void navToWallete() {
-    Get.to(() => Wallet(),
-        transition: Transition.fadeIn,
+    Get.off(() => Wallet(),
+        transition: Transition.rightToLeft,
         duration: Duration(milliseconds: 300),
         curve: Curves.easeIn);
   }
