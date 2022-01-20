@@ -123,7 +123,7 @@ class Wallet extends StatelessWidget {
             flex: 1,
             child: GestureDetector(
               onTap: () {
-                Get.to(Home());
+                Get.to(() => Home());
               },
               child: Icon(
                 Icons.arrow_back_ios,
@@ -256,8 +256,7 @@ class Certif extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // navigate to qr details page
-        Get.to(CertificatDetails(qrCode));
-        print("show certif details");
+        Get.to(() => CertificatDetails(qrCode));
       },
       child: Container(
         width: width_,

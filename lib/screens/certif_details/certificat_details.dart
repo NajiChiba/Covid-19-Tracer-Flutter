@@ -193,8 +193,6 @@ class CertificatDetails extends StatelessWidget {
                                   backgroundColor: Colors.transparent,
                                   content: DeleteDialog(qrCode),
                                 );
-                                // qrController.removeQr(qrCode);
-                                // Get.off(() => Wallet());
                               },
                               child: Container(
                                 height: height_ * 0.1,

@@ -4,33 +4,57 @@
   "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
   "entities": [
     {
-      "id": "1:740113200043341254",
-      "lastPropertyId": "5:1824424455027273363",
-      "name": "QrCode",
+      "id": "1:3325652003035704549",
+      "lastPropertyId": "3:1810473976595498552",
+      "name": "Contact",
       "properties": [
         {
-          "id": "1:7776747658857357559",
+          "id": "1:509516372953712788",
           "name": "id",
           "type": 6,
           "flags": 1
         },
         {
-          "id": "2:6146768134645726475",
+          "id": "2:5928742694332399514",
+          "name": "udid",
+          "type": 9
+        },
+        {
+          "id": "3:1810473976595498552",
+          "name": "token",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:7794803111300532211",
+      "lastPropertyId": "5:646521135451415367",
+      "name": "QrCode",
+      "properties": [
+        {
+          "id": "1:9109725555901419564",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8345901615804924015",
           "name": "content",
           "type": 9
         },
         {
-          "id": "3:3099489436104971177",
+          "id": "3:5697689425803051344",
           "name": "type",
           "type": 9
         },
         {
-          "id": "4:8163257254909597001",
+          "id": "4:2203895487119076660",
           "name": "pcr",
           "type": 1
         },
         {
-          "id": "5:1824424455027273363",
+          "id": "5:646521135451415367",
           "name": "date",
           "type": 10
         }
@@ -38,7 +62,7 @@
       "relations": []
     }
   ],
-  "lastEntityId": "1:740113200043341254",
+  "lastEntityId": "2:7794803111300532211",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",

@@ -9,39 +9,64 @@ import 'package:objectbox/internal.dart'; // generated code can access "internal
 import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import 'models/contact.dart';
 import 'models/qr_code.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(1, 740113200043341254),
-      name: 'QrCode',
-      lastPropertyId: const IdUid(5, 1824424455027273363),
+      id: const IdUid(1, 3325652003035704549),
+      name: 'Contact',
+      lastPropertyId: const IdUid(3, 1810473976595498552),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
-            id: const IdUid(1, 7776747658857357559),
+            id: const IdUid(1, 509516372953712788),
             name: 'id',
             type: 6,
             flags: 1),
         ModelProperty(
-            id: const IdUid(2, 6146768134645726475),
+            id: const IdUid(2, 5928742694332399514),
+            name: 'udid',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 1810473976595498552),
+            name: 'token',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(2, 7794803111300532211),
+      name: 'QrCode',
+      lastPropertyId: const IdUid(5, 646521135451415367),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 9109725555901419564),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 8345901615804924015),
             name: 'content',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(3, 3099489436104971177),
+            id: const IdUid(3, 5697689425803051344),
             name: 'type',
             type: 9,
             flags: 0),
         ModelProperty(
-            id: const IdUid(4, 8163257254909597001),
+            id: const IdUid(4, 2203895487119076660),
             name: 'pcr',
             type: 1,
             flags: 0),
         ModelProperty(
-            id: const IdUid(5, 1824424455027273363),
+            id: const IdUid(5, 646521135451415367),
             name: 'date',
             type: 10,
             flags: 0)
@@ -70,7 +95,7 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(1, 740113200043341254),
+      lastEntityId: const IdUid(2, 7794803111300532211),
       lastIndexId: const IdUid(0, 0),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
@@ -83,8 +108,41 @@ ModelDefinition getObjectBoxModel() {
       version: 1);
 
   final bindings = <Type, EntityDefinition>{
-    QrCode: EntityDefinition<QrCode>(
+    Contact: EntityDefinition<Contact>(
         model: _entities[0],
+        toOneRelations: (Contact object) => [],
+        toManyRelations: (Contact object) => {},
+        getId: (Contact object) => object.id,
+        setId: (Contact object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Contact object, fb.Builder fbb) {
+          final udidOffset =
+              object.udid == null ? null : fbb.writeString(object.udid!);
+          final tokenOffset =
+              object.token == null ? null : fbb.writeString(object.token!);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, udidOffset);
+          fbb.addOffset(2, tokenOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Contact(
+              id: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              udid: const fb.StringReader()
+                  .vTableGetNullable(buffer, rootOffset, 6),
+              token: const fb.StringReader()
+                  .vTableGetNullable(buffer, rootOffset, 8));
+
+          return object;
+        }),
+    QrCode: EntityDefinition<QrCode>(
+        model: _entities[1],
         toOneRelations: (QrCode object) => [],
         toManyRelations: (QrCode object) => {},
         getId: (QrCode object) => object.id,
@@ -127,21 +185,33 @@ ModelDefinition getObjectBoxModel() {
   return ModelDefinition(model, bindings);
 }
 
+/// [Contact] entity fields to define ObjectBox queries.
+class Contact_ {
+  /// see [Contact.id]
+  static final id = QueryIntegerProperty<Contact>(_entities[0].properties[0]);
+
+  /// see [Contact.udid]
+  static final udid = QueryStringProperty<Contact>(_entities[0].properties[1]);
+
+  /// see [Contact.token]
+  static final token = QueryStringProperty<Contact>(_entities[0].properties[2]);
+}
+
 /// [QrCode] entity fields to define ObjectBox queries.
 class QrCode_ {
   /// see [QrCode.id]
-  static final id = QueryIntegerProperty<QrCode>(_entities[0].properties[0]);
+  static final id = QueryIntegerProperty<QrCode>(_entities[1].properties[0]);
 
   /// see [QrCode.content]
   static final content =
-      QueryStringProperty<QrCode>(_entities[0].properties[1]);
+      QueryStringProperty<QrCode>(_entities[1].properties[1]);
 
   /// see [QrCode.type]
-  static final type = QueryStringProperty<QrCode>(_entities[0].properties[2]);
+  static final type = QueryStringProperty<QrCode>(_entities[1].properties[2]);
 
   /// see [QrCode.pcr]
-  static final pcr = QueryBooleanProperty<QrCode>(_entities[0].properties[3]);
+  static final pcr = QueryBooleanProperty<QrCode>(_entities[1].properties[3]);
 
   /// see [QrCode.date]
-  static final date = QueryIntegerProperty<QrCode>(_entities[0].properties[4]);
+  static final date = QueryIntegerProperty<QrCode>(_entities[1].properties[4]);
 }

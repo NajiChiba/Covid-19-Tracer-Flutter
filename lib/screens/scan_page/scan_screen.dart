@@ -91,18 +91,18 @@ class _ScanPageState extends State<ScanPage> {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(content: Text("No code found")));
                             return '';
-                          });
-                          if (code == '') {
-                            return;
-                          }
-                          QrCode qrCode = QrCode(
-                              content: code,
-                              date: DateTime.now(),
-                              type: 'qrCode',
-                              id: 0);
+                          }).then((code) {
+                            if (code == '') {
+                              return;
+                            }
+                            QrCode qrCode = QrCode(
+                                content: code,
+                                date: DateTime.now(),
+                                type: 'qrCode',
+                                id: 0);
 
-                          print(qrCode);
-                          Get.off(() => CreateCertificat(qrCode));
+                            Get.off(() => CreateCertificat(qrCode));
+                          });
                         } else {
                           // User canceled the picker
                         }
