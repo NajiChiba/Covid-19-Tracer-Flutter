@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, unused_local_variable, prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, avoid_print, unused_import
 
-import 'package:covid_19_tracer/screens/certiificat_det_test.dart';
+import 'package:covid_contact_tracer/controllers/qr_controller.dart';
+import 'package:covid_contact_tracer/screens/certiificat_det_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -16,14 +17,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final QrController qrController = Get.put(QrController());
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     var height_ = size.height;
     var width_ = size.width;
 
-    void func(String svgName) {
-      print('$svgName executed');
+    void func(String svgName, double height) {
+      print('height = $height');
     }
 
     List cards = [
@@ -88,15 +90,18 @@ class _HomeState extends State<Home> {
         child: Container(
           width: width_,
           height: height_,
-          padding: EdgeInsets.all(12),
+          padding: EdgeInsets.all(14),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Color(0xFF3BB2B8),
-                  Color(0xFF42E695),
+                  // Color(0xFF3BB2B8),
+                  // Color(0xFF42E695),
+
+                  Color(0xFF5063FF),
+                  Color(0xFF5F6EE3),
                 ]),
           ),
           child: SvgPicture.asset("assets/svgs/scan.svg"),
@@ -114,17 +119,18 @@ class _HomeState extends State<Home> {
                 title('Health pass'),
                 space(15),
                 card(
-                    context,
-                    [
-                      Color(0xFF6374F8),
-                      Color(0xFF6374F8),
-                      Color(0xFF697AFF),
-                    ],
-                    'Open my wallet',
-                    'Your test and vaccination\ncertificates',
-                    'wallet',
-                    true,
-                    navToWallete),
+                  context,
+                  [
+                    Color(0xFF6374F8),
+                    Color(0xFF6374F8),
+                    Color(0xFF697AFF),
+                  ],
+                  'Open my wallet',
+                  'Your test and vaccination\ncertificates',
+                  'wallet',
+                  true,
+                  navToWallete,
+                ),
                 space(20),
                 title('News'),
                 space(15),
@@ -136,13 +142,14 @@ class _HomeState extends State<Home> {
                 Column(
                   children: cards
                       .map((card_) => card(
-                          context,
-                          card_['color'],
-                          card_['title'],
-                          card_['description'],
-                          card_['svgImg'],
-                          card_['reverse'],
-                          card_['func']))
+                            context,
+                            card_['color'],
+                            card_['title'],
+                            card_['description'],
+                            card_['svgImg'],
+                            card_['reverse'],
+                            card_['func'],
+                          ))
                       .toList(),
                 ),
                 space(60)
@@ -173,7 +180,7 @@ class _HomeState extends State<Home> {
             ]),
         margin: EdgeInsets.only(bottom: 20),
         width: size.width,
-        height: size.height * 0.25,
+        height: (size.height < 684) ? size.height * 0.26 : size.height * 0.22,
         padding: EdgeInsets.symmetric(
           horizontal: 20,
         ),
@@ -219,7 +226,7 @@ class _HomeState extends State<Home> {
             ]),
         margin: EdgeInsets.only(bottom: 20),
         width: size.width,
-        height: size.height * 0.25,
+        height: (size.height < 684) ? size.height * 0.26 : size.height * 0.22,
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -309,8 +316,15 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget card(BuildContext context, List<Color> colors, String title,
-      String description, String svgName, bool reverse, Function func) {
+  Widget card(
+    BuildContext context,
+    List<Color> colors,
+    String title,
+    String description,
+    String svgName,
+    bool reverse,
+    Function func,
+  ) {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
@@ -323,9 +337,8 @@ class _HomeState extends State<Home> {
       child: Container(
         margin: EdgeInsets.only(bottom: 20),
         width: size.width,
-        height: size.height * 0.20,
+        height: (size.height < 684) ? size.height * 0.2 : size.height * 0.18,
         decoration: BoxDecoration(
-            color: Colors.red,
             borderRadius: BorderRadius.circular(16),
             gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -341,7 +354,9 @@ class _HomeState extends State<Home> {
             reverse
                 ? textColumn(title, description)
                 : svgImg(svgName, size.width),
-            space(8),
+            SizedBox(
+              width: 8,
+            ),
             !reverse
                 ? textColumn(title, description)
                 : svgImg(svgName, size.width),
@@ -352,24 +367,21 @@ class _HomeState extends State<Home> {
   }
 
   Widget textColumn(String title, String description) {
-    return Expanded(
-      flex: 4,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            title,
-            style: GoogleFonts.poppins(
-                color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
-          ),
-          Text(
-            description,
-            style: GoogleFonts.poppins(
-                color: Colors.white.withOpacity(0.65), fontSize: 16),
-          ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          title,
+          style: GoogleFonts.poppins(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
+        ),
+        Text(
+          description,
+          style: GoogleFonts.poppins(
+              color: Colors.white.withOpacity(0.65), fontSize: 16),
+        ),
+      ],
     );
   }
 
@@ -390,11 +402,27 @@ class _HomeState extends State<Home> {
         children: [
           Container(
             width: width_,
-            height: height_ * 0.42,
+            height: height_ * 0.4,
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('assets/images/bg4.png'),
                     fit: BoxFit.fill)),
+          ),
+          Positioned(
+            right: width_ * 0.4,
+            bottom: -(height_ * 0.06),
+            child: Container(
+              width: width_ * 0.7,
+              child: SvgPicture.asset("assets/svgs/virus.svg"),
+            ),
+          ),
+          Positioned(
+            right: width_ * 0.3,
+            bottom: (height_ < 684) ? -(height_ * 0.1) : -(height_ * 0.06),
+            child: Container(
+              width: (height_ < 684) ? width_ * 0.7 : width_ * 0.75,
+              child: SvgPicture.asset("assets/svgs/doc2.svg"),
+            ),
           ),
           Positioned(
               top: height_ * 0.1,
@@ -417,27 +445,6 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               )),
-          Positioned(
-            right: width_ * 0.35,
-            bottom: -3,
-            child: Container(
-              width: width_ * 0.6,
-              height: height_ * 0.45,
-              decoration: BoxDecoration(
-                  // color: Colors.red,
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/doctor.png'),
-                      fit: BoxFit.fitHeight)),
-            ),
-
-            // left: 10,
-            // top: 30,
-            // child: SvgPicture.asset(
-            //   "assets/svgs/doc.svg",
-            //   // width: ,
-            //   height: 300,
-            // ),
-          ),
         ],
       ),
     );

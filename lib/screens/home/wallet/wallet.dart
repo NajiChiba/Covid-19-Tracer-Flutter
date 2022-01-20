@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors, must_be_immutable, unused_local_variable, sized_box_for_whitespace, avoid_unnecessary_containers, avoid_print
 
-import 'package:covid_19_tracer/controllers/qr_controller.dart';
-import 'package:covid_19_tracer/models/qr_code.dart' as myQ;
-import 'package:covid_19_tracer/screens/home/Certif%20details/certificat_details.dart';
-import 'package:covid_19_tracer/screens/home/home.dart';
-import 'package:covid_19_tracer/screens/home/scan_page/scan_screen.dart';
+import 'package:covid_contact_tracer/controllers/qr_controller.dart';
+import 'package:covid_contact_tracer/models/qr_code.dart' as myQ;
+import 'package:covid_contact_tracer/screens/home/Certif%20details/certificat_details.dart';
+import 'package:covid_contact_tracer/screens/home/home.dart';
+import 'package:covid_contact_tracer/screens/home/scan_page/scan_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -13,7 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class Wallet extends StatelessWidget {
-  final QrController qrController = Get.put(QrController());
+  final QrController qrController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +167,7 @@ class Certif extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 30),
       width: width_,
-      height: height_ * 0.4,
+      height: (height_ < 684) ? height_ * 0.38 : height_ * 0.35,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(18),
@@ -179,62 +179,68 @@ class Certif extends StatelessWidget {
         children: [
           Expanded(
             flex: 3,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: QrImage(
-                      data: qrCode.content as String,
-                      size: 100,
-                    ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: QrImage(
+                          data: qrCode.content as String,
+                          size: 100,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: height_ * 0.006,
+                            ),
+                            Text(
+                              "AYMANE OULAD BENHAMMOU",
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.w800),
+                            ),
+                            SizedBox(
+                              height: 6,
+                            ),
+                            Text(
+                                "Date:  ${DateFormat('dd MMM yyyy').format(qrCode.date)}",
+                                style: ts),
+                            Text("Type:  ${qrCode.type}", style: ts),
+                            (qrCode.type == "Test PCR")
+                                ? ((qrCode.pcr as bool)
+                                    ? Text("Positive - PCR",
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0xFFFF536D)))
+                                    : Text("Negative - PCR",
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0xFF0ACB57))))
+                                : SizedBox(
+                                    height: 0,
+                                  ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: height_ * 0.006,
-                        ),
-                        Text(
-                          "AYMANE OULAD BENHAMMOU",
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.w800),
-                        ),
-                        SizedBox(
-                          height: 6,
-                        ),
-                        Text(
-                            "Date:  ${DateFormat('dd MMM yyyy').format(qrCode.date)}",
-                            style: ts),
-                        Text("Type:  ${qrCode.type}", style: ts),
-                        (qrCode.type == "Test PCR")
-                            ? ((qrCode.pcr as bool)
-                                ? Text("Positive - PCR",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                        color: Color(0xFFFF536D)))
-                                : Text("Negative - PCR",
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                        color: Color(0xFF6FC76D))))
-                            : SizedBox(
-                                height: 0,
-                              ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           Expanded(
@@ -267,7 +273,7 @@ class Certif extends StatelessWidget {
             style: GoogleFonts.poppins(
                 color: Color(0xFF4156FF),
                 fontSize: 20,
-                fontWeight: FontWeight.w700),
+                fontWeight: FontWeight.w600),
           ),
         ),
       ),

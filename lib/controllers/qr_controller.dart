@@ -1,6 +1,6 @@
 // ignore_for_file: unused_local_variable, prefer_final_fields, unnecessary_cast
 
-import 'package:covid_19_tracer/models/qr_code.dart';
+import 'package:covid_contact_tracer/models/qr_code.dart';
 import 'package:get/get.dart';
 
 import '../objectbox.g.dart';
@@ -8,6 +8,7 @@ import '../objectbox.g.dart';
 class QrController extends GetxController {
   final _qrDataList = <QrCode>[].obs;
   var box = null;
+  var store = null;
 
   @override
   void onInit() {
@@ -18,8 +19,8 @@ class QrController extends GetxController {
   // initialiser l'object box
   Future<void> initializeQrOB() async {
     _qrDataList.clear();
-    if (box == null) {
-      final store = await openStore();
+    if (box == null && store == null) {
+      store = await openStore();
       box = store.box<QrCode>();
     }
     List<QrCode> lst = box.getAll();
