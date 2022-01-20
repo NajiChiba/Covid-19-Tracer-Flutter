@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
 
 import 'package:covid_19_tracer/screens/home/home.dart';
 import 'package:flutter/material.dart';
@@ -164,8 +164,6 @@ class _OnBoardingState extends State<OnBoarding> {
                 GestureDetector(
                   onTap: () {
                     if (currentIndex == 3) {
-                      //TODO: save name in shared preferences
-                      //TODO: set onBoard viewd in sharedpreferences
                       updateSharedPref(nameController.text);
                       Get.offAll(Home(),
                           transition: Transition.rightToLeft,

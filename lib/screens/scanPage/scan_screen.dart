@@ -133,7 +133,7 @@ class _ScanPageState extends State<ScanPage> {
           currentScan.difference(lastScan!) > const Duration(seconds: 3)) {
         lastScan = currentScan;
         result = scanData;
-        final query = qrController.box
+        final query = qrController.qrCodeBox
             .query(QrCode_.content.equals(result!.code.toString()))
             .build();
         final qrCodes = query.find();

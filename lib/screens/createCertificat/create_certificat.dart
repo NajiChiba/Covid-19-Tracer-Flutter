@@ -244,7 +244,7 @@ class _CreateCertificatState extends State<CreateCertificat> {
         print(qrCode);
 
         // qrController.addQr(qrCode);
-        if (qrController.box != null && qrCode != null) {
+        if (qrController.qrCodeBox != null && qrCode != null) {
           try {
             qrController.addQr(qrCode);
             Get.off(Wallet(),
@@ -255,7 +255,7 @@ class _CreateCertificatState extends State<CreateCertificat> {
             print(e);
           }
         } else {
-          print('Null ${qrController.box}');
+          print('Null ${qrController.qrCodeBox}');
         }
       },
       child: Container(
