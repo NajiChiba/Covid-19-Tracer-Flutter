@@ -64,5 +64,7 @@ flutter {
 }
 
 dependencies {
+    apply plugin: 'com.google.gms.google-services'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.google.firebase:firebase-analytics'
 }

@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "841429250060",
+    "project_id": "covid-19-iot-project",
+    "storage_bucket": "covid-19-iot-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841429250060:android:d936bce11eb250b483fe29",
+        "android_client_info": {
+          "package_name": "com.example.covid_19_tracer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "841429250060-r4muhicd2gutobubt6mge5smfnqabam0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQGx-pjJgSATA6UmhcbjVsduj7FW5vnJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "841429250060-r4muhicd2gutobubt6mge5smfnqabam0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841429250060:android:546f7ec03fa9346083fe29",
+        "android_client_info": {
+          "package_name": "com.example.covid_contact_tracer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "841429250060-r4muhicd2gutobubt6mge5smfnqabam0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQGx-pjJgSATA6UmhcbjVsduj7FW5vnJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "841429250060-r4muhicd2gutobubt6mge5smfnqabam0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
