@@ -83,10 +83,15 @@ class Wallet extends StatelessWidget {
                                 SizedBox(
                                   height: height_ * 0.09,
                                 ),
-                                Container(
-                                  height: height_ * 0.3,
-                                  child: SvgPicture.asset(
-                                      "assets/svgs/add_data.svg"),
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.to(() => ScanPage());
+                                  },
+                                  child: Container(
+                                    height: height_ * 0.3,
+                                    child: SvgPicture.asset(
+                                        "assets/svgs/add_data.svg"),
+                                  ),
                                 )
                               ]
                             : qrList.reversed.map((e) => Certif(e)).toList(),

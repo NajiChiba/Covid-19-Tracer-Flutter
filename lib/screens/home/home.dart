@@ -2,6 +2,7 @@
 
 import 'package:covid_19_tracer/controllers/langues_controller.dart';
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
+import 'package:covid_19_tracer/controllers/statistics.dart';
 import 'package:covid_19_tracer/controllers/udid_controller.dart';
 import 'package:covid_19_tracer/models/push_notification.dart';
 import 'package:covid_19_tracer/screens/scan_page/scan_screen.dart';
@@ -31,12 +32,12 @@ class _HomeState extends State<Home> {
   final QrController qrController = Get.put(QrController());
   final LanguesController ldController = Get.put(LanguesController());
   final UdidController udidController = Get.put(UdidController());
+  final StatisticsController statisticsController =
+      Get.put(StatisticsController());
 
   // notifications
   // 1
   late final FirebaseMessaging _messaging;
-  String token_ = '';
-  String? udid;
 
   // 2
   void registerNotification() async {
@@ -55,12 +56,6 @@ class _HomeState extends State<Home> {
         dataBody: message.data['route'],
       );
 
-      // actions to do:
-      // print('Notif on forground');
-      // print('========================== ${notification.title}');
-      // print('========================== ${notification.body}');
-      // print('========================== ${notification.dataBody}');
-
       // show notification
       LocalNotificationService.display(message);
     });
@@ -76,12 +71,6 @@ class _HomeState extends State<Home> {
         dataBody: message.data['route'],
       );
 
-      // actions to do:
-      // print('Notif on background');
-      // print('========================== ${notification.title}');
-      // print('========================== ${notification.body}');
-      // print('========================== ${notification.dataBody}');
-      // Get.to(() => AlertPage());
       Get.toNamed(notification.dataBody ?? 'wallet');
     });
 
@@ -105,9 +94,6 @@ class _HomeState extends State<Home> {
         body: message.notification?.body,
         dataBody: message.data['route'],
       );
-      print('========================== ${notification.title}');
-      print('========================== ${notification.body}');
-      print('========================== ${notification.dataBody}');
     }
   }
 
@@ -116,12 +102,6 @@ class _HomeState extends State<Home> {
     super.initState();
     registerNotification();
     checkForInitialMessage();
-    udidController.getUdid().then((res) {
-      setState(() {
-        udid = res;
-      });
-      print('================== $udid =================');
-    });
   }
 
   @override
@@ -129,6 +109,8 @@ class _HomeState extends State<Home> {
     super.dispose();
     qrController.onClose();
     ldController.onClose();
+    udidController.onClose();
+    statisticsController.onClose();
   }
 
   @override
@@ -238,8 +220,12 @@ class _HomeState extends State<Home> {
                 space(20),
                 title('news'.tr),
                 space(15),
-                vaccinationPrc(size),
-                statistics(size),
+                Obx(() {
+                  return vaccinationPrc(size);
+                }),
+                Obx(() {
+                  return statistics(size);
+                }),
                 space(20),
                 title('contact_tracing'.tr),
                 space(25),
@@ -323,7 +309,8 @@ class _HomeState extends State<Home> {
             space(2),
             newsTitle('update'.tr, Color(0xFF4B4848), 16, FontWeight.normal),
             space(8),
-            newsTitle('89,7%', Colors.black, 48, FontWeight.w600),
+            newsTitle(statisticsController.getVaccinatedPerc, Colors.black, 48,
+                FontWeight.w600),
           ],
         ));
   }
@@ -377,7 +364,13 @@ class _HomeState extends State<Home> {
                       children: [
                         newsTitle("completed".tr, Color(0xFF6FC76D), 14,
                             FontWeight.w500),
-                        newsTitle("51,74M", Colors.black, 24, FontWeight.w700),
+                        Builder(builder: (context) {
+                          return newsTitle(
+                              "${statisticsController.getVaccinated}",
+                              Colors.black,
+                              24,
+                              FontWeight.w700);
+                        }),
                       ],
                     ),
                   ),
@@ -387,9 +380,13 @@ class _HomeState extends State<Home> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        newsTitle("new_cases".tr, Color(0xFFFF536D), 16,
+                        newsTitle(
+                            "new_cases".tr,
+                            Color(0xFFFF536D),
+                            (ldController.langue.value == 'Fr') ? 14 : 16,
                             FontWeight.w500),
-                        newsTitle("195 790", Colors.black, 24, FontWeight.w700),
+                        newsTitle("${statisticsController.getNewCases}",
+                            Colors.black, 24, FontWeight.w700),
                       ],
                     ),
                   ),
@@ -401,7 +398,8 @@ class _HomeState extends State<Home> {
                       children: [
                         newsTitle(
                             "cases".tr, Color(0xFF5364FF), 16, FontWeight.w500),
-                        newsTitle("195 720", Colors.black, 24, FontWeight.w700),
+                        newsTitle("${statisticsController.getRecovered}",
+                            Colors.black, 24, FontWeight.w700),
                       ],
                     ),
                   ),

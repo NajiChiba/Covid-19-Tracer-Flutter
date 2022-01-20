@@ -15,7 +15,6 @@ class UdidController extends GetxController {
       if (Platform.isAndroid) {
         var myDeviceInfo = await deviceInfoPlugin.androidInfo;
         myUdid(myDeviceInfo.androidId);
-        print('udid: $myUdid');
         return myUdid.value;
       } else if (Platform.isIOS) {
         var myDeviceInfo = await deviceInfoPlugin.iosInfo;
@@ -32,7 +31,8 @@ class UdidController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getUdid();
+    getUdid()
+        .then((udid) => print('================== $udid ================='));
   }
 
   @override

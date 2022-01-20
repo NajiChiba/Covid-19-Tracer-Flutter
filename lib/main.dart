@@ -6,7 +6,6 @@ import 'package:covid_19_tracer/translation/app_transtaltion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
 import 'screens/alert_page/alert_page.dart';
 
 void main() {

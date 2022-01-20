@@ -57,7 +57,7 @@ class _ScanPageState extends State<ScanPage> {
                   borderColor: Colors.greenAccent),
             ),
             Positioned(
-              top: height_ * 0.05,
+              top: height_ * 0.07,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 30),
                 width: width_,
