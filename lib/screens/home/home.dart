@@ -194,7 +194,9 @@ class _HomeState extends State<Home> {
                     size: 20,
                   ),
                 ),
-                space(10),
+                SizedBox(
+                  width: 8,
+                ),
                 newsTitle("Vaccination converage", Color(0xFF52AEBC), 20,
                     FontWeight.w600),
               ],
@@ -236,7 +238,9 @@ class _HomeState extends State<Home> {
                     size: 20,
                   ),
                 ),
-                space(8),
+                SizedBox(
+                  width: 8,
+                ),
                 newsTitle("Other key figures", Color(0xFFED7470), 20,
                     FontWeight.w600),
               ],

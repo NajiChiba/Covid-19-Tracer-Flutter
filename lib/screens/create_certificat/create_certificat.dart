@@ -275,7 +275,8 @@ class _CreateCertificatState extends State<CreateCertificat> {
         children: [
           Text(
             'Positive',
-            style: GoogleFonts.poppins(fontSize: 20),
+            style:
+                GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w500),
           ),
           SizedBox(
             width: 18,
