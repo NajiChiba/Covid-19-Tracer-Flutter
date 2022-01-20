@@ -1,15 +1,15 @@
 // ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, use_key_in_widget_constructors, unrelated_type_equality_checks, must_be_immutable
 
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
-import 'package:covid_19_tracer/screens/home/wallet/wallet.dart';
-import 'package:covid_19_tracer/screens/widgets/dialogues/langues%20dialog/langue_dialog_controller.dart';
+import 'package:covid_19_tracer/screens/wallet/wallet.dart';
+import 'package:covid_19_tracer/screens/widgets/dialogues/langues%20dialog/langues_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BackDialog extends StatelessWidget {
   QrController qrController = Get.find();
-  LangueDialogController lgctrl = Get.put(LangueDialogController());
+  LanguesController lgctrl = Get.put(LanguesController());
 
   @override
   Widget build(BuildContext context) {

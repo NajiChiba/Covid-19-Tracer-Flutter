@@ -1,12 +1,11 @@
 // ignore_for_file: prefer_const_constructors, unused_local_variable, unnecessary_cast
 
-import 'dart:convert';
 import 'dart:ui';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../capitalize.dart';
 
-class LangueDialogController extends GetxController {
+class LanguesController extends GetxController {
   final isVisible = false.obs;
   final langue = 'En'.obs;
   final locales = [

@@ -2,9 +2,9 @@
 
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/models/qr_code.dart' as myQ;
-import 'package:covid_19_tracer/screens/home/Certif%20details/certificat_details.dart';
+import 'package:covid_19_tracer/screens/certif_details/certificat_details.dart';
 import 'package:covid_19_tracer/screens/home/home.dart';
-import 'package:covid_19_tracer/screens/home/scan_page/scan_screen.dart';
+import 'package:covid_19_tracer/screens/scan_page/scan_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -26,7 +26,7 @@ class Wallet extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(ScanPage());
+          Get.to(() => ScanPage());
         },
         backgroundColor: Colors.transparent,
         elevation: 4,
