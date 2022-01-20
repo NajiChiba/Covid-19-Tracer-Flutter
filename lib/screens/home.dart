@@ -1,8 +1,10 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, unused_local_variable, prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, avoid_print
+// ignore_for_file: prefer_const_literals_to_create_immutables, unused_local_variable, prefer_const_constructors, sized_box_for_whitespace, avoid_unnecessary_containers, avoid_print, unused_import
 
 import 'package:covid_19_tracer/screens/certificat.dart';
+import 'package:covid_19_tracer/screens/scan_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Home extends StatefulWidget {
@@ -71,14 +73,17 @@ class _HomeState extends State<Home> {
     ];
 
     void navToWallete() {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Cerificat()));
+      Get.to(Cerificat());
+
+      // Navigator.of(context)
+      //     .push(MaterialPageRoute(builder: (context) => Cerificat()));
     }
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // navigat to scan page
+          // Get.to(ScanPage());
+          Get.to(() => ScanPage());
           print('Scan');
         },
         backgroundColor: Colors.transparent,
@@ -96,17 +101,16 @@ class _HomeState extends State<Home> {
                   Color(0xFF3BB2B8),
                   Color(0xFF42E695),
                 ]),
-            // image: DecorationImage(
-            //   image: AssetImage("assets/images/scan_icon.png"),
-            // )
           ),
           child: SvgPicture.asset("assets/svgs/scan.svg"),
         ),
       ),
-      backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFFAF9FF),
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
+            // header
             height: height_ * 0.5,
             child: Stack(
               children: [
@@ -164,6 +168,7 @@ class _HomeState extends State<Home> {
             ),
           ),
           Container(
+            // Body
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,6 +189,15 @@ class _HomeState extends State<Home> {
                     'wallet',
                     true,
                     navToWallete),
+                SizedBox(
+                  height: 20,
+                ),
+                title('News'),
+                SizedBox(
+                  height: 15,
+                ),
+                vaccinationPrc(size),
+                statics(size),
                 SizedBox(
                   height: 20,
                 ),
@@ -212,6 +226,151 @@ class _HomeState extends State<Home> {
         ]),
       ),
     );
+  }
+
+  Widget newsTitle(
+      String title, Color color, double fontSize, FontWeight fontWeight) {
+    return Text(
+      title,
+      style: GoogleFonts.poppins(
+          fontSize: fontSize, fontWeight: fontWeight, color: color),
+    );
+  }
+
+  Widget vaccinationPrc(Size size) {
+    return Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(11),
+            boxShadow: [
+              BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 6)
+            ]),
+        margin: EdgeInsets.only(bottom: 20),
+        width: size.width,
+        height: size.height * 0.25,
+        padding: EdgeInsets.symmetric(
+          horizontal: 20,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: Color(0xFF52AEBC)),
+                  child: Icon(
+                    Icons.flag,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                newsTitle("Vaccination converage", Color(0xFF52AEBC), 20,
+                    FontWeight.w600),
+              ],
+            ),
+            SizedBox(
+              height: 2,
+            ),
+            newsTitle('Update', Color(0xFF4B4848), 16, FontWeight.normal),
+            SizedBox(
+              height: 8,
+            ),
+            newsTitle('89,7%', Colors.black, 48, FontWeight.w600),
+          ],
+        ));
+  }
+
+  Widget statics(Size size) {
+    return Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(11),
+            boxShadow: [
+              BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 6)
+            ]),
+        margin: EdgeInsets.only(bottom: 20),
+        width: size.width,
+        height: size.height * 0.25,
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: Color(0xFFED7470)),
+                  child: Icon(
+                    Icons.flag,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                newsTitle("Other key figures", Color(0xFFED7470), 20,
+                    FontWeight.w600),
+              ],
+            ),
+            SizedBox(
+              height: 4,
+            ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        newsTitle("Completed vaccination", Color(0xFF6FC76D),
+                            14, FontWeight.w500),
+                        newsTitle("51,74M", Colors.black, 24, FontWeight.w700),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        newsTitle("New cases", Color(0xFFFF536D), 16,
+                            FontWeight.w500),
+                        newsTitle("195 790", Colors.black, 24, FontWeight.w700),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        newsTitle(
+                            "Cases", Color(0xFF5364FF), 16, FontWeight.w500),
+                        newsTitle("195 720", Colors.black, 24, FontWeight.w700),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ));
   }
 
   Widget space() {
