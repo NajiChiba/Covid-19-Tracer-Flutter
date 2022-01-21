@@ -6,6 +6,7 @@ import 'package:covid_19_tracer/screens/home/home.dart';
 import 'package:covid_19_tracer/screens/onBoarding/on_boarding.dart';
 import 'package:covid_19_tracer/screens/wallet/wallet.dart';
 import 'package:covid_19_tracer/translation/app_transtaltion.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -13,7 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await Firebase.initializeApp();
   // show onboard or no
   SharedPreferences preferences = await SharedPreferences.getInstance();
   final bool? onBoard = preferences.getBool('onBoard');

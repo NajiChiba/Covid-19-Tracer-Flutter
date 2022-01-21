@@ -563,37 +563,7 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               )),
-          // langue button
-          // Positioned(
-          //     top: height_ * 0.23,
-          //     right: width_ * 0.11,
-          //     child: GestureDetector(
-          //       onTap: () {
-          //         ldController.toggleIsVisible();
-          //       },
-          //       child: Container(
-          //         decoration: BoxDecoration(
-          //             borderRadius: BorderRadius.circular(8),
-          //             color: Colors.white),
-          //         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-          //         child: Obx(() {
-          //           return Text(
-          //             ldController.langue.value,
-          //             textAlign: TextAlign.center,
-          //             style: GoogleFonts.poppins(
-          //                 fontSize: 18,
-          //                 color: Color(0xFF6374F8),
-          //                 fontWeight: FontWeight.w500),
-          //           );
-          //         }),
-          //       ),
-          //     )),
-          // // langue dialog
-          Positioned(
-            top: (height_ < 684) ? height_ * 0.22 : height_ * 0.24,
-            right: width_ * 0.22,
-            child: LangueDialog(300),
-          ),
+
           // TODO: Settings button
           Positioned(
               top: height_ * 0.33,

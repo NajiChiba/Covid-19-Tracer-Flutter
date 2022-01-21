@@ -29,6 +29,16 @@ class AppTranslation extends Translations {
           'discard_title': 'cancel changes ?',
           'yes': 'Yes',
           'no': 'No',
+          'settings': 'Settings',
+          'account': 'Account',
+          'personal_info': 'Personal Info',
+          'languages': 'Languages',
+          'delete_all': 'Delete All Certificates',
+          'change_name': 'Change Name',
+          'new_name': 'new name',
+          'save_btn': 'Save',
+          'delete_all_title': 'Delete All ?',
+          'delete_all_sub': 'All certificates will be deleted'
         },
         'ar_MA': {
           'health_pass': 'جواز الصحة',
@@ -56,6 +66,16 @@ class AppTranslation extends Translations {
           'discard_title': 'إلغاء التغييرات ؟',
           'yes': 'نعم',
           'no': 'لا',
+          'settings': 'الإعدادات',
+          'account': 'الحساب',
+          'personal_info': 'معلومات شخصية',
+          'languages': 'اللغات',
+          'delete_all': 'حذف كافة الشهادات',
+          'change_name': 'تغيير الإسم',
+          'new_name': 'اسم جديد',
+          'save_btn': 'حفظ',
+          'delete_all_title': 'حذف الكل ؟',
+          'delete_all_sub': 'سيتم حذف جميع الشهادات'
         },
         'fr_FR': {
           'health_pass': 'Passe Vaccinal',
@@ -83,6 +103,16 @@ class AppTranslation extends Translations {
           'discard_title': 'Annuler\nles modifications ?',
           'yes': 'Oui',
           'no': 'Non',
+          'settings': 'Paramètres',
+          'account': 'Compte',
+          'personal_info': 'Informations Personnelles',
+          'languages': 'Langues',
+          'delete_all': 'Supprimer tous\nles certificats',
+          'change_name': 'Changer le nom',
+          'new_name': 'nouveau nom',
+          'save_btn': 'Enregistrer',
+          'delete_all_title': 'Supprimer tout ?',
+          'delete_all_sub': 'Tous les certificats seront supprimés'
         }
       };
 }
