@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, use_key_in_widget_constructors
 
 import 'package:covid_19_tracer/controllers/langues_controller.dart';
+import 'package:covid_19_tracer/controllers/nearbyconnection_ctrl.dart';
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/controllers/udid_controller.dart';
 import 'package:covid_19_tracer/screens/alertPage/alert_page.dart';
@@ -31,6 +32,8 @@ class MyApp extends StatelessWidget {
   final QrController qrController = Get.put(QrController());
   final LanguesController ldController = Get.put(LanguesController());
   final UdidController udidCtrl = Get.put(UdidController());
+  final NearbyConnectionsController nearbyConnectionsController =
+      Get.put(NearbyConnectionsController());
 
   // This widget is the root of your application.
   @override

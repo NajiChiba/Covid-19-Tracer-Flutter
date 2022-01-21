@@ -12,11 +12,13 @@ import 'package:http/http.dart' as http;
 
 class QrController extends GetxController {
   final _qrDataList = <QrCode>[].obs;
-  final _contactDataList = <Contact>[].obs;
+  static final _contactDataList = <Contact>[].obs;
   var qrCodeBox = null;
-  var contactBox = null;
+  static var contactBox = null;
   var store = null;
   static var userName = ''.obs;
+
+  static List<Contact> get contactDataList => _contactDataList;
 
   @override
   void onInit() {
@@ -110,7 +112,7 @@ class QrController extends GetxController {
   }
 
   // inserer un contact dans l'OB
-  void addContact(Contact myContact) {
+  static void addContact(Contact myContact) {
     // restartStore();
     try {
       if (myContact != null) {
