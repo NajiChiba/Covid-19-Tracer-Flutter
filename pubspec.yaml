@@ -54,6 +54,7 @@ dependencies:
   http: ^0.13.4
   html: ^0.15.0
   flutter_launcher_icons: ^0.9.2
+  flutter_nearby_connections: ^1.1.1
 
 flutter_icons:
   android: true

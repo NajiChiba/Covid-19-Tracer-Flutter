@@ -131,21 +131,25 @@ class QrController extends GetxController {
   // send data to the server
   Future<void> sendContactListToServer() async {
     // post _contactDataList to the server
-    final response = await http
-        .post(
-            Uri.parse(
-                "http://192.168.1.6:8000/api/v1/send-notif-after-positive"),
-            headers: {
-              HttpHeaders.contentTypeHeader: 'application/json',
-            },
-            body: jsonEncode({
-              // TODO: send _contactDataList
-              'contactList': [
-                {"udid": "5f1b34b0b5a912e8"},
-              ],
-            }))
-        .then((res) => print(
-            "=============== SEND RESPONSE STATUSCODE : ==> ${res.statusCode}"));
+    try {
+      http
+          .post(
+              Uri.parse(
+                  "http://192.168.1.6:8000/api/v1/send-notif-after-positive"),
+              headers: {
+                HttpHeaders.contentTypeHeader: 'application/json',
+              },
+              body: jsonEncode({
+                // TODO: send _contactDataList
+                'contactList': [
+                  {"udid": "5f1b34b0b5a912e8"},
+                ],
+              }))
+          .then((res) => print(
+              "=============== SEND RESPONSE STATUSCODE : ==> ${res.statusCode}"));
+    } catch (e) {
+      print(e);
+    }
   }
 
   // supprimer contact

@@ -85,21 +85,25 @@ class UdidController extends GetxController {
   }
 
   static Future<void> sendDeviceInfoToServer() async {
-    getDeviceInfo().then((_) => {
-          http
-              .post(Uri.parse('http://192.168.1.6:8000/api/v1/save-device'),
-                  headers: {
-                    HttpHeaders.contentTypeHeader: 'application/json',
-                  },
-                  body: jsonEncode(
-                      {"udid": myUdid.value, "token": myToken.value}))
-              .then((res) => print(
-                  "=============== Response STATUS CODE : ==> ${res.statusCode}")),
-          print(
-              ' ===================== from sendDevicenfo... ===================='),
-          print('================ token ${myToken.value} =============='),
-          print('================ udid ${myUdid.value} =============='),
-        });
+    try {
+      getDeviceInfo().then((_) => {
+            http
+                .post(Uri.parse('http://192.168.1.6:8000/api/v1/save-device'),
+                    headers: {
+                      HttpHeaders.contentTypeHeader: 'application/json',
+                    },
+                    body: jsonEncode(
+                        {"udid": myUdid.value, "token": myToken.value}))
+                .then((res) => print(
+                    "=============== Response STATUS CODE : ==> ${res.statusCode}")),
+            print(
+                ' ===================== from sendDevicenfo... ===================='),
+            print('================ token ${myToken.value} =============='),
+            print('================ udid ${myUdid.value} =============='),
+          });
+    } catch (e) {
+      print(e);
+    }
     // final response =
   }
 }
