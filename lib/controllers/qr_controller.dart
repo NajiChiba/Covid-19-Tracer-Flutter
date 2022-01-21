@@ -78,12 +78,12 @@ class QrController extends GetxController {
       if (qrCode != null) {
         qrCodeBox.put(qrCode);
         _qrDataList.assignAll(qrCodeBox.getAll());
-        // checkTest(qrCode);
+        checkTest(qrCode);
       } else {
         print('Null $qrCode');
       }
     } catch (e) {
-      print("================== add catch");
+      print("================== add QR catch");
     }
   }
 
@@ -109,7 +109,7 @@ class QrController extends GetxController {
         print('Null $myContact');
       }
     } catch (e) {
-      print("================== add catch");
+      print("================== add Contact catch");
     }
   }
 
@@ -121,21 +121,20 @@ class QrController extends GetxController {
   Future<void> sendContactListToServer() async {
     // post _contactDataList to the server
     final response = await http
-        .post(Uri.parse('http://192.168.1.6:8000/api/v1/test-post'),
+        .post(
+            Uri.parse(
+                "http://192.168.1.6:8000/api/v1/send-notif-after-positive"),
             headers: {
               HttpHeaders.contentTypeHeader: 'application/json',
             },
             body: jsonEncode({
               // TODO: send _contactDataList
-              'contactList': _contactDataList,
+              'contactList': [
+                {"udid": "5f1b34b0b5a912e8"},
+              ],
             }))
-        .then((res) => print("=============== SET RESPONSE : ==> ${res.body}"));
-  }
-
-  Future<void> getTest() async {
-    http
-        .get(Uri.parse('http://192.168.1.6:8000/api/v1/get-test'))
-        .then((res) => print("=============== GET RESPONSE : ==> ${res.body}"));
+        .then((res) => print(
+            "=============== SEND RESPONSE STATUSCODE : ==> ${res.statusCode}"));
   }
 
   // supprimer contact
