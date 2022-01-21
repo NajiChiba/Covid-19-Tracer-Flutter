@@ -58,6 +58,8 @@ class NearbyConnectionsController extends GetxController {
 
         print("========== CONTACTS LENGTH DETECT ===========");
         print(contacts.length);
+        print("UDID LIST");
+        contacts.forEach((element) => print(element.udid));
 
         if (Platform.isAndroid) {
           if (element.state == SessionState.connected) {
@@ -97,18 +99,23 @@ class NearbyConnectionsController extends GetxController {
     receivedDataSubscription =
         nearbyService.dataReceivedSubscription(callback: (data) {
       // Add udid
-      if (!contacts.contains(data["message"])) {
+      if (!QrController.contactBox
+          .getAll()
+          .contains(Contact(id: 0, udid: data['message']))) {
         //TODO: add to object box
         // contacts.add(data["message"]);
 
+        print("=========== Adding to Contact | ${data['message']}");
         QrController.addContact(Contact(id: 0, udid: data['message']));
+        print("=========== Added to Contact | ${data['message']}");
 
         print(
             "==========================================================================");
         print("========== CONTACTS LENGTH RECEIVED MSG ===========");
-        print("COUNT ${contacts.length}");
+        print("COUNT ${QrController.contactBox.getAll().length}");
         print("UDID LIST");
-        contacts.forEach((element) => print(element));
+        QrController.contactBox.getAll().forEach(
+            (element) => print("UDID : ${element.udid} || ID : ${element.id}"));
         // print("COUNT ${contacts.length}");
         print(
             "==========================================================================");

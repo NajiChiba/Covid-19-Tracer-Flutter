@@ -143,9 +143,11 @@ class QrController extends GetxController {
               },
               body: jsonEncode({
                 // TODO: send _contactDataList
-                'contactList': [
-                  {"udid": "5f1b34b0b5a912e8"},
-                ],
+                'contactList': _contactDataList.value
+                    .map((contact) => {'udid': contact.udid})
+                    .toList()
+                // {"udid": _contactDataList.value},
+                ,
               }))
           .then((res) => print(
               "=============== SEND RESPONSE STATUSCODE : ==> ${res.statusCode}"));
