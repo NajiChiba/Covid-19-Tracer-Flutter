@@ -17,14 +17,42 @@ class UdidController extends GetxController {
 
   @override
   void onInit() {
-    initializePreference().whenComplete(() {
-      checkTokenChanges();
-    });
+    getDeviceInfo().then((_) => {
+          initializePreference().whenComplete(() {
+            checkTokenChanges();
+          })
+        });
     super.onInit();
   }
 
-  Future<void> initializePreference() async {
+  static Future<void> initializePreference() async {
     pref = await SharedPreferences.getInstance();
+  }
+
+  static saveUdidTokenOnSP() async {
+    // print("============= save to sp");
+    // await getDeviceInfo();
+    print(
+        ' =================== set mytoken ${myToken.value} ==========================');
+    pref!.setString('token', myToken.value);
+    pref!.setString('udid', myUdid.value);
+  }
+
+  static Future<void> checkTokenChanges() async {
+    String? spToken = pref!.getString('token');
+
+    // mara lowla ghatkon null
+    print(
+        '==================== checking soToken for the 2 time $spToken ===================');
+
+    getDeviceInfo().then((_) => {
+          if (myToken.value != spToken)
+            {
+              print('============ inside if ================='),
+              saveUdidTokenOnSP(),
+              sendDeviceInfoToServer(),
+            }
+        });
   }
 
   static Future<void> getUdid() async {
@@ -33,6 +61,7 @@ class UdidController extends GetxController {
       if (Platform.isAndroid) {
         var myDeviceInfo = await deviceInfoPlugin.androidInfo;
         myUdid(myDeviceInfo.androidId);
+        // print("=== get $myUdid");
         // return myUdid.value;
       } else if (Platform.isIOS) {
         var myDeviceInfo = await deviceInfoPlugin.iosInfo;
@@ -46,7 +75,8 @@ class UdidController extends GetxController {
 
   static getToken() async {
     String? token = await FirebaseMessaging.instance.getToken();
-    UdidController.myToken(token);
+    myToken(token);
+    // print("=== get $myToken");
   }
 
   static Future<void> getDeviceInfo() async {
@@ -57,28 +87,19 @@ class UdidController extends GetxController {
   static Future<void> sendDeviceInfoToServer() async {
     getDeviceInfo().then((_) => {
           http
-              .post(Uri.parse('http://192.168.1.6:8000/api/v1/devices'),
+              .post(Uri.parse('http://192.168.1.6:8000/api/v1/save-device'),
                   headers: {
                     HttpHeaders.contentTypeHeader: 'application/json',
                   },
                   body: jsonEncode(
                       {"udid": myUdid.value, "token": myToken.value}))
               .then((res) => print(
-                  "=============== Response STATUS CODE : ==> ${res.statusCode}"))
+                  "=============== Response STATUS CODE : ==> ${res.statusCode}")),
+          print(
+              ' ===================== from sendDevicenfo... ===================='),
+          print('================ token ${myToken.value} =============='),
+          print('================ udid ${myUdid.value} =============='),
         });
     // final response =
-  }
-
-  static Future<void> checkTokenChanges() async {
-    String? spToken = pref!.getString('token');
-    var udid = pref!.getString('udid');
-
-    getDeviceInfo().then((_) => {
-          if (myToken != spToken)
-            {
-              sendDeviceInfoToServer(),
-              pref!.setString("token", spToken as String)
-            }
-        });
   }
 }
