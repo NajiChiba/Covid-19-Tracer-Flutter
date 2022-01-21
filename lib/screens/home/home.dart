@@ -6,6 +6,7 @@ import 'package:covid_19_tracer/controllers/statistics.dart';
 import 'package:covid_19_tracer/controllers/udid_controller.dart';
 import 'package:covid_19_tracer/models/push_notification.dart';
 import 'package:covid_19_tracer/screens/scanPage/scan_screen.dart';
+import 'package:covid_19_tracer/screens/settings/settings_screen.dart';
 import 'package:covid_19_tracer/screens/wallet/wallet.dart';
 import 'package:covid_19_tracer/screens/widgets/dialogues/langues%20dialog/langues_dialog.dart';
 import 'package:covid_19_tracer/services/local_notification.dart';
@@ -73,11 +74,11 @@ class _HomeState extends State<Home> {
       Get.toNamed(notification.dataBody ?? 'wallet');
     });
 
-    String? token = await FirebaseMessaging.instance.getToken();
+    // String? token = await FirebaseMessaging.instance.getToken();
     // setState(() {
     //   token_ = token!;
     // });
-    print('====================== $token ');
+    // print('====================== $token ');
   }
 
   // 4
@@ -562,37 +563,37 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               )),
-          // langue button
+
+          // TODO: Settings button
           Positioned(
-              top: height_ * 0.23,
-              right: width_ * 0.11,
+              top: height_ * 0.33,
+              right: width_ * 0.05,
               child: GestureDetector(
-                onTap: () {
-                  ldController.toggleIsVisible();
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.white),
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                  child: Obx(() {
-                    return Text(
-                      ldController.langue.value,
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          color: Color(0xFF6374F8),
-                          fontWeight: FontWeight.w500),
-                    );
-                  }),
+                onTap: () {},
+                child: GestureDetector(
+                  onTap: () {
+                    Get.to(() => SettingsScreen());
+                  },
+                  child: Container(
+                      padding: EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black54.withOpacity(0.3),
+                                offset: Offset(1, 1),
+                                blurRadius: 4)
+                          ],
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(colors: [
+                            Color(0xFFFF7A72),
+                            Color(0xFFEA5455),
+                          ])),
+                      child: Icon(
+                        Icons.settings,
+                        color: Colors.white,
+                      )),
                 ),
               )),
-          // langue dialog
-          Positioned(
-            top: (height_ < 684) ? height_ * 0.22 : height_ * 0.24,
-            right: width_ * 0.22,
-            child: LangueDialog(400),
-          )
         ],
       ),
     );

@@ -92,6 +92,17 @@ class QrController extends GetxController {
     await qrCodeBox.remove(qrCode.id);
     _qrDataList.clear();
     _qrDataList.assignAll(qrCodeBox.getAll());
+    _qrDataList.length;
+  }
+
+  //
+  void removeAll() async {
+    try {
+      await qrCodeBox.removeAll();
+      _qrDataList.clear();
+    } catch (e) {
+      print(e);
+    }
   }
 
   List<Contact> get contactList {

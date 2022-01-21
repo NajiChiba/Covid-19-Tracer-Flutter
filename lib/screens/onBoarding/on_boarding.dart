@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, unused_import
 
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/controllers/udid_controller.dart';
@@ -38,23 +38,11 @@ class _OnBoardingState extends State<OnBoarding> {
   final pages = [
     {
       "svg": "page1.svg",
-      "title": "What should\nwe call you ?",
+      "title": "p1_t".tr,
     },
-    {
-      "svg": "page2.svg",
-      "title": "Manage Wallet",
-      "subtitle": "Manage your certificates wallet"
-    },
-    {
-      "svg": "page3.svg",
-      "title": "Stay Aware",
-      "subtitle": "stay up to date with pandemic news"
-    },
-    {
-      "svg": "page4.svg",
-      "title": "Get Notified",
-      "subtitle": "Get notified if you were a contact case"
-    },
+    {"svg": "page2.svg", "title": "p2_t".tr, "subtitle": "p2_sub".tr},
+    {"svg": "page3.svg", "title": "p3_t".tr, "subtitle": "p3_sub".tr},
+    {"svg": "page4.svg", "title": "p4_t".tr, "subtitle": "p4_sub".tr},
   ];
 
   @override
@@ -89,40 +77,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     },
                     itemCount: pages.length,
                     itemBuilder: (_, index) => PageElem(pages[index], index,
-                        size, myTextField, [darkPurple, lightPurple])
-                    // Column(
-                    //       crossAxisAlignment: CrossAxisAlignment.center,
-                    //       children: [
-                    //         SvgPicture.asset(
-                    //           'assets/svgs/${pages[index]["svg"]}',
-                    //           height:
-                    //               index != 0 ? height_ * 0.32 : height_ * 0.26,
-                    //         ),
-                    //         SizedBox(
-                    //           height: height_ * 0.07,
-                    //         ),
-                    //         Text(
-                    //           pages[index]["title"] as String,
-                    //           style: GoogleFonts.poppins(
-                    //               fontSize: 28,
-                    //               fontWeight: FontWeight.w600,
-                    //               color: darkPurple),
-                    //         ),
-                    //         SizedBox(
-                    //           height: index != 0 ? 10 : 25,
-                    //         ),
-                    //         index != 0
-                    //             ? Text(
-                    //                 pages[index]["subtitle"] as String,
-                    //                 textAlign: TextAlign.center,
-                    //                 style: GoogleFonts.poppins(
-                    //                     fontSize: 22, color: lightPurple),
-                    //               )
-                    //             : myTextField(height_, width_)
-                    //       ],
-                    //     )
-
-                    ),
+                        size, myTextField, [darkPurple, lightPurple])),
               ),
               Expanded(
                 flex: 1,
@@ -158,7 +113,7 @@ class _OnBoardingState extends State<OnBoarding> {
                               duration: Duration(milliseconds: 200),
                               curve: Curves.bounceInOut);
                         },
-                        child: Text('Skip',
+                        child: Text('skip'.tr,
                             style: GoogleFonts.poppins(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w500,
@@ -167,7 +122,6 @@ class _OnBoardingState extends State<OnBoarding> {
                   onTap: () {
                     if (currentIndex == 3) {
                       updateSharedPref(nameController.text);
-                      //TODO: send udid to the server
                       UdidController.sendUdidToServer();
                       Get.offAll(Home(),
                           transition: Transition.rightToLeft,
@@ -186,7 +140,8 @@ class _OnBoardingState extends State<OnBoarding> {
                             colors: [Color(0xFF5063FF), Color(0xFF5F6EE3)]),
                         borderRadius: BorderRadius.circular(25)),
                     child: Center(
-                      child: Text((currentIndex == 3) ? 'Get Started' : 'Next',
+                      child: Text(
+                          (currentIndex == 3) ? 'get_started'.tr : 'next'.tr,
                           style: GoogleFonts.poppins(
                               fontSize: 22,
                               fontWeight: FontWeight.w500,
@@ -197,7 +152,7 @@ class _OnBoardingState extends State<OnBoarding> {
               ],
             )
           : Center(
-              child: Text("Please insert your name",
+              child: Text("insert_n".tr,
                   style: GoogleFonts.poppins(
                       fontSize: 20,
                       // fontWeight: FontWeight.w500,
@@ -230,7 +185,7 @@ class _OnBoardingState extends State<OnBoarding> {
           style: GoogleFonts.poppins(color: Color(0xFF4152F3), fontSize: 18),
           autocorrect: false,
           decoration: InputDecoration(
-              hintText: "full name",
+              hintText: "p1_fn".tr,
               border: InputBorder.none,
               hintStyle:
                   GoogleFonts.poppins(color: Color(0xFF7380FF), fontSize: 18)),

@@ -36,7 +36,7 @@ class LanguesController extends GetxController {
   void changeLang(Map<String, Object> obj) {
     langue(obj['ab'] as String);
     changeLangPref(obj['locale'] as Locale);
-    toggleIsVisible();
+    // toggleIsVisible();
   }
 
   Future<void> changeLangPref(Locale locale) async {

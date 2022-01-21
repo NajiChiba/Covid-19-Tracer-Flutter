@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, use_key_in_widget_constructors
 
+import 'package:covid_19_tracer/controllers/langues_controller.dart';
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/screens/alertPage/alert_page.dart';
 import 'package:covid_19_tracer/screens/home/home.dart';
@@ -15,7 +16,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
   // show onboard or no
   SharedPreferences preferences = await SharedPreferences.getInstance();
   final bool? onBoard = preferences.getBool('onBoard');
@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
   final Widget _screen;
   MyApp(this._screen);
   final QrController qrController = Get.put(QrController());
+  final LanguesController ldController = Get.put(LanguesController());
 
   // This widget is the root of your application.
   @override
