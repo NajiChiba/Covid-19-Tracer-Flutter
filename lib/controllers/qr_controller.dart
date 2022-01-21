@@ -137,7 +137,7 @@ class QrController extends GetxController {
       http
           .post(
               Uri.parse(
-                  "http://192.168.1.6:8000/api/v1/send-notif-after-positive"),
+                  "http://192.168.1.7:8000/api/v1/send-notif-after-positive"),
               headers: {
                 HttpHeaders.contentTypeHeader: 'application/json',
               },

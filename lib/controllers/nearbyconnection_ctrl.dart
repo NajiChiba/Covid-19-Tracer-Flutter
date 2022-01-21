@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/controllers/udid_controller.dart';
 import 'package:covid_19_tracer/models/contact.dart';
+import 'package:covid_19_tracer/objectbox.g.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter_nearby_connections/flutter_nearby_connections.dart';
 import 'package:get/get.dart';
@@ -99,9 +100,13 @@ class NearbyConnectionsController extends GetxController {
     receivedDataSubscription =
         nearbyService.dataReceivedSubscription(callback: (data) {
       // Add udid
-      if (!QrController.contactBox
-          .getAll()
-          .contains(Contact(id: 0, udid: data['message']))) {
+      Query<Contact> query = QrController.contactBox
+          .query(Contact_.udid.equals(data['message']))
+          .build();
+
+      List<Contact> cnts = query.find();
+
+      if (cnts.isEmpty) {
         //TODO: add to object box
         // contacts.add(data["message"]);
 
@@ -116,7 +121,6 @@ class NearbyConnectionsController extends GetxController {
         print("UDID LIST");
         QrController.contactBox.getAll().forEach(
             (element) => print("UDID : ${element.udid} || ID : ${element.id}"));
-        // print("COUNT ${contacts.length}");
         print(
             "==========================================================================");
       }

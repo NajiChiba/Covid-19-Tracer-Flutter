@@ -88,7 +88,7 @@ class UdidController extends GetxController {
     try {
       getDeviceInfo().then((_) => {
             http
-                .post(Uri.parse('http://192.168.1.6:8000/api/v1/save-device'),
+                .post(Uri.parse('http://192.168.1.7:8000/api/v1/save-device'),
                     headers: {
                       HttpHeaders.contentTypeHeader: 'application/json',
                     },
