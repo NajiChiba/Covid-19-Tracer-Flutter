@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, unused_import
 
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/controllers/udid_controller.dart';
@@ -168,7 +168,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     if (currentIndex == 3) {
                       updateSharedPref(nameController.text);
                       //TODO: send udid to the server
-                      UdidController.sendUdidToServer();
+                      // UdidController.sendUdidToServer();
                       Get.offAll(Home(),
                           transition: Transition.rightToLeft,
                           duration: Duration(milliseconds: 300),

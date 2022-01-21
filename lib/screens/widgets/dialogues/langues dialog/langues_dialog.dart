@@ -10,12 +10,12 @@ class LangueDialog extends StatelessWidget {
   int duration;
   LangueDialog(this.duration);
 
-  LanguesController fadeCtr = Get.find();
+  LanguesController langCtrl = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      bool visible = fadeCtr.isVisible.value;
+      bool visible = langCtrl.isVisible.value;
       return AnimatedOpacity(
         duration: Duration(milliseconds: duration),
         opacity: visible ? 1 : 0,
@@ -29,14 +29,14 @@ class LangueDialog extends StatelessWidget {
                 BoxShadow(color: Colors.grey.withOpacity(0.2), blurRadius: 8)
               ]),
           child: Column(
-            children: fadeCtr.locales
+            children: langCtrl.locales
                 .map((e) => Column(
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(6),
                           child: GestureDetector(
                             onTap: () {
-                              fadeCtr.changeLang(e);
+                              langCtrl.changeLang(e);
                             },
                             child: Text(
                               e['name'] as String,
