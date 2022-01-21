@@ -121,7 +121,7 @@ class QrController extends GetxController {
   Future<void> sendContactListToServer() async {
     // post _contactDataList to the server
     final response = await http
-        .post(Uri.parse('http://10.0.2.2:8000/api/v1/test-post'),
+        .post(Uri.parse('http://192.168.1.6:8000/api/v1/test-post'),
             headers: {
               HttpHeaders.contentTypeHeader: 'application/json',
             },
@@ -134,7 +134,7 @@ class QrController extends GetxController {
 
   Future<void> getTest() async {
     http
-        .get(Uri.parse('http://10.0.2.2:8000/api/v1/get-test'))
+        .get(Uri.parse('http://192.168.1.6:8000/api/v1/get-test'))
         .then((res) => print("=============== GET RESPONSE : ==> ${res.body}"));
   }
 

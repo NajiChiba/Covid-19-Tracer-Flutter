@@ -13,17 +13,17 @@ class UdidController extends GetxController {
   static RxString myUdid = ''.obs;
   static RxString myToken = ''.obs;
 
-  static Future<String?> getUdid() async {
+  static Future<void> getUdid() async {
     final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     try {
       if (Platform.isAndroid) {
         var myDeviceInfo = await deviceInfoPlugin.androidInfo;
         myUdid(myDeviceInfo.androidId);
-        return myUdid.value;
+        // return myUdid.value;
       } else if (Platform.isIOS) {
         var myDeviceInfo = await deviceInfoPlugin.iosInfo;
         myUdid(myDeviceInfo.identifierForVendor);
-        return myUdid.value;
+        // return myUdid.value;
       }
     } on PlatformException {
       print('Failed to get platform version');
@@ -35,16 +35,24 @@ class UdidController extends GetxController {
     UdidController.myToken(token);
   }
 
+  static Future<void> getDeviceInfo() async {
+    await getToken();
+    await getUdid();
+  }
+
   static Future<void> sendUdidToServer() async {
-    getToken();
-    getUdid();
-    final response = await http
-        .post(Uri.parse('http://10.0.2.2:8000/api/v1/svae'),
-            headers: {
-              HttpHeaders.contentTypeHeader: 'application/json',
-            },
-            body: jsonEncode({"udid": myUdid.value, "token": myToken.value}))
-        .then((res) => print("=============== SET RESPONSE : ==> ${res.body}"));
+    getDeviceInfo().then((_) => {
+          http
+              .post(Uri.parse('http://192.168.1.6:8000/api/v1/devices'),
+                  headers: {
+                    HttpHeaders.contentTypeHeader: 'application/json',
+                  },
+                  body: jsonEncode(
+                      {"udid": myUdid.value, "token": myToken.value}))
+              .then((res) => print(
+                  "=============== Response STATUS CODE : ==> ${res.statusCode}"))
+        });
+    // final response =
   }
 
   // static setGetUdIdSP() async {
@@ -52,10 +60,10 @@ class UdidController extends GetxController {
   //   pref.setBool('udid', true);
   // }
 
-  @override
-  void onInit() {
-    super.onInit();
-    getUdid()
-        .then((udid) => print('================== $udid ================='));
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   getUdid()
+  //       .then((udid) => print('================== $udid ================='));
+  // }
 }
