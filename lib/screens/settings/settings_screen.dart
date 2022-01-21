@@ -126,67 +126,72 @@ class SettingsScreen extends StatelessWidget {
 
   Widget myCard(String title, List<Color> colors, IconData icon, Function func,
       String? sub) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Row(
-          children: [
-            Container(
-              height: 55,
-              width: 55,
-              decoration:
-                  BoxDecoration(color: colors[0], shape: BoxShape.circle),
-              child: Icon(
-                icon,
-                color: colors[1],
-              ),
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  title,
-                  style: GoogleFonts.poppins(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  // overflow: TextOverflow.ellipsis,
+    return InkWell(
+      onTap: () {
+        func();
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            children: [
+              Container(
+                height: 55,
+                width: 55,
+                decoration:
+                    BoxDecoration(color: colors[0], shape: BoxShape.circle),
+                child: Icon(
+                  icon,
+                  color: colors[1],
                 ),
-                !(sub == null)
-                    ? Text(
-                        sub,
-                        style: GoogleFonts.poppins(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Color(0xFF9D9D9D),
-                        ),
-                      )
-                    : SizedBox(),
-              ],
-            ),
-          ],
-        ),
-        GestureDetector(
-          onTap: () {
-            func();
-          },
-          child: Container(
-              height: 45,
-              width: 45,
-              child: Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: Color(0xFF5063FF),
               ),
-              decoration: BoxDecoration(
-                  color: Color(0xFFECEEFF),
-                  borderRadius: BorderRadius.circular(12))),
-        )
-      ],
+              SizedBox(
+                width: 20,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    title,
+                    style: GoogleFonts.poppins(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    // overflow: TextOverflow.ellipsis,
+                  ),
+                  !(sub == null)
+                      ? Text(
+                          sub,
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xFF9D9D9D),
+                          ),
+                        )
+                      : SizedBox(),
+                ],
+              ),
+            ],
+          ),
+          GestureDetector(
+            onTap: () {
+              func();
+            },
+            child: Container(
+                height: 45,
+                width: 45,
+                child: Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: Color(0xFF5063FF),
+                ),
+                decoration: BoxDecoration(
+                    color: Color(0xFFECEEFF),
+                    borderRadius: BorderRadius.circular(12))),
+          )
+        ],
+      ),
     );
   }
 }
@@ -435,7 +440,9 @@ class ChangeNameDialog extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              updateUserName(nameController.text);
+              if (nameController.text.isNotEmpty) {
+                updateUserName(nameController.text);
+              }
               Get.back();
             },
             child: Container(

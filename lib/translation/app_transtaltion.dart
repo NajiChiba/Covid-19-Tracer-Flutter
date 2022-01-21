@@ -136,7 +136,7 @@ class AppTranslation extends Translations {
           'new_name': 'nouveau nom',
           'save_btn': 'Enregistrer',
           'delete_all_title': 'Supprimer tout ?',
-          'delete_all_sub': 'Tous les certificats seront supprimés',
+          'delete_all_sub': 'Tous les certificats\nseront supprimés',
           'p1_t': 'Comment doit-on vous appeler ?',
           'p1_fn': 'nom complet',
           'insert_n': 'Veuillez insérer votre nom',
