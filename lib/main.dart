@@ -2,6 +2,7 @@
 
 import 'package:covid_19_tracer/controllers/langues_controller.dart';
 import 'package:covid_19_tracer/controllers/qr_controller.dart';
+import 'package:covid_19_tracer/controllers/udid_controller.dart';
 import 'package:covid_19_tracer/screens/alertPage/alert_page.dart';
 import 'package:covid_19_tracer/screens/home/home.dart';
 import 'package:covid_19_tracer/screens/onBoarding/on_boarding.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
   MyApp(this._screen);
   final QrController qrController = Get.put(QrController());
   final LanguesController ldController = Get.put(LanguesController());
+  final UdidController udidCtrl = Get.put(UdidController());
 
   // This widget is the root of your application.
   @override

@@ -122,7 +122,7 @@ class _OnBoardingState extends State<OnBoarding> {
                   onTap: () {
                     if (currentIndex == 3) {
                       updateSharedPref(nameController.text);
-                      UdidController.sendUdidToServer();
+                      UdidController.sendDeviceInfoToServer();
                       Get.offAll(Home(),
                           transition: Transition.rightToLeft,
                           duration: Duration(milliseconds: 300),
@@ -222,7 +222,6 @@ class _OnBoardingState extends State<OnBoarding> {
 
 void updateSharedPref(String userName) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  // print('=================== SET NAME ONBOARDING =====================');
   await preferences.setBool("onBoard", true);
   await preferences.setString('user', userName);
   QrController.initUserName();
