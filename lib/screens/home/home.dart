@@ -5,6 +5,7 @@ import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/controllers/statistics.dart';
 import 'package:covid_19_tracer/controllers/udid_controller.dart';
 import 'package:covid_19_tracer/models/push_notification.dart';
+import 'package:covid_19_tracer/screens/alertPage/alert_page.dart';
 import 'package:covid_19_tracer/screens/scanPage/scan_screen.dart';
 import 'package:covid_19_tracer/screens/settings/settings_screen.dart';
 import 'package:covid_19_tracer/screens/wallet/wallet.dart';
@@ -572,7 +573,8 @@ class _HomeState extends State<Home> {
                 onTap: () {},
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(() => SettingsScreen());
+                    Get.to(() => AlertPage());
+                    // Get.to(() => SettingsScreen());
                   },
                   child: Container(
                       padding: EdgeInsets.all(15),
