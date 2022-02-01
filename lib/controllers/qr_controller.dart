@@ -3,9 +3,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:covid_19_tracer/controllers/udid_controller.dart';
 import 'package:covid_19_tracer/models/contact.dart';
 import 'package:covid_19_tracer/models/qr_code.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../objectbox.g.dart';
 import 'package:http/http.dart' as http;
@@ -117,12 +119,17 @@ class QrController extends GetxController {
   }
 
   void checkTest(QrCode qrCode) {
-    (qrCode.pcr as bool) ? sendContactListToServer() : null;
+    (qrCode.pcr as bool) ? sendContactListToServer(qrCode.date) : null;
   }
 
   // envoyer les donnees au serveur
-  Future<void> sendContactListToServer() async {
+  Future<void> sendContactListToServer(DateTime date_test) async {
     try {
+      print("================== UDID ================");
+      print(UdidController.myUdid.value);
+
+      print("===================== DATE TEST =============");
+      print(DateFormat('dd-MM-yyy').format(date_test));
       http
           .post(
               Uri.parse(
@@ -131,9 +138,11 @@ class QrController extends GetxController {
                 HttpHeaders.contentTypeHeader: 'application/json',
               },
               body: jsonEncode({
+                'device_udid': UdidController.myUdid.value,
                 'contactList': _contactDataList.value
                     .map((contact) => {'udid': contact.udid})
-                    .toList()
+                    .toList(),
+                'date_test': DateFormat('dd-MM-yyy').format(date_test)
               }))
           .then((res) => {
                 print("SEND RESPONSE STATUSCODE : ${res.statusCode}"),
