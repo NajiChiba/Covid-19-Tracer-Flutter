@@ -5,6 +5,7 @@ import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/controllers/statistics.dart';
 import 'package:covid_19_tracer/controllers/udid_controller.dart';
 import 'package:covid_19_tracer/models/push_notification.dart';
+import 'package:covid_19_tracer/screens/cardsRedirect/signal.dart';
 import 'package:covid_19_tracer/screens/scanPage/scan_screen.dart';
 import 'package:covid_19_tracer/screens/settings/settings_screen.dart';
 import 'package:covid_19_tracer/screens/wallet/wallet.dart';
@@ -128,7 +129,7 @@ class _HomeState extends State<Home> {
         'description': 'Be aletred in case of\nexpoure in venue',
         'svgImg': 'phone_qr',
         'reverse': false,
-        'func': func
+        'func': navToSignal
       },
       {
         'color': [
@@ -259,6 +260,14 @@ class _HomeState extends State<Home> {
 
   void navToWallete() {
     Get.off(() => Wallet(),
+        transition: Transition.rightToLeft,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeIn);
+  }
+
+  void navToSignal() {
+    print("Going to Signal");
+    Get.to(() => Signal(),
         transition: Transition.rightToLeft,
         duration: Duration(milliseconds: 300),
         curve: Curves.easeIn);
