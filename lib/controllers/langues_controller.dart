@@ -29,24 +29,26 @@ class LanguesController extends GetxController {
     super.onInit();
   }
 
-  void toggleIsVisible() {
-    isVisible(!(isVisible.value));
+  Future<void> initializePreference() async {
+    preferences = await SharedPreferences.getInstance();
   }
 
   void changeLang(Map<String, Object> obj) {
+    // Le nom de la langue
     langue(obj['ab'] as String);
+
+    // changement de la langue d'affichage
     changeLangPref(obj['locale'] as Locale);
-    // toggleIsVisible();
   }
 
   Future<void> changeLangPref(Locale locale) async {
-    preferences = await SharedPreferences.getInstance();
+    // enregistrement de la langue dans shared preferences
     await preferences?.setString('locale_language', locale.languageCode);
     await preferences?.setString(
         'locale_country', locale.countryCode as String);
+
+    // changement de la langue d'affichage
     Get.updateLocale(locale);
-    String? lc2 = locale.languageCode as String?;
-    langue(lc2.capitalize() as String);
   }
 
   Locale checkLocalLanguage() {
@@ -83,9 +85,5 @@ class LanguesController extends GetxController {
     String? country = preferences?.getString('locale_country') ??
         checkLocalLanguage().countryCode;
     return Locale(language, country);
-  }
-
-  Future<void> initializePreference() async {
-    preferences = await SharedPreferences.getInstance();
   }
 }

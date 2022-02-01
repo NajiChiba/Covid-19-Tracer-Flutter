@@ -564,7 +564,6 @@ class _HomeState extends State<Home> {
                 ],
               )),
 
-          // TODO: Settings button
           Positioned(
               top: height_ * 0.33,
               right: width_ * 0.05,

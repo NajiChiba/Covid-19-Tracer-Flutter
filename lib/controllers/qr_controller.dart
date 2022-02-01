@@ -26,13 +26,6 @@ class QrController extends GetxController {
     initializeQrOB();
   }
 
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  //   store.close();
-  //   print('============= onClose Store');
-  // }
-
   // initialiser l'object qrCodeBox
   Future<void> initializeQrOB() async {
     _qrDataList.clear();
@@ -45,11 +38,11 @@ class QrController extends GetxController {
       contactBox = store.box<Contact>();
     }
 
-    // ajouter la liste des qrcodes dans notre liste _qrDataList a partir de l'OB
+    // l'ajout la liste des qrcodes dans notre liste _qrDataList a partir de OB
     List<QrCode> qrLst = qrCodeBox.getAll();
     _qrDataList.assignAll(qrLst);
 
-    // ajouter la liste des contact dans notre liste _contactDataList a partir de l'OB
+    // l'ajout la liste des contact dans notre liste _contactDataList a partir de l'OB
     List<Contact> contactLst = contactBox.getAll();
     _contactDataList.assignAll(contactLst);
 
@@ -57,30 +50,26 @@ class QrController extends GetxController {
     initUserName();
   }
 
+  // l'enregistrement du nom d'utilisateur
   static Future<void> initUserName() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     var un = pref.getString('user');
-
-    print('=================== SET NAME ONBOARDING =====================');
-    print("=========================================");
     print(un);
-    print("=========================================");
     userName(un);
   }
 
-  // get qrDataList
+  // recuperation de la liste des qr-codes stockee dans object-box
   List<QrCode> get qrDataList {
     return _qrDataList;
   }
 
-  // inserer un qrcode dans l'OB
+  // insertion un qr-code dans Object-Box
   void addQr(QrCode qrCode) {
-    // restartStore();
+    checkTest(qrCode);
     try {
       if (qrCode != null) {
         qrCodeBox.put(qrCode);
         _qrDataList.assignAll(qrCodeBox.getAll());
-        checkTest(qrCode);
       } else {
         print('Null $qrCode');
       }
@@ -89,7 +78,7 @@ class QrController extends GetxController {
     }
   }
 
-  // supprimer qrcode
+  // suppression d'un qr-code
   void removeQr(QrCode qrCode) async {
     await qrCodeBox.remove(qrCode.id);
     _qrDataList.clear();
@@ -97,7 +86,7 @@ class QrController extends GetxController {
     _qrDataList.length;
   }
 
-  //
+  // suppression de touts les qr-code
   void removeAll() async {
     try {
       await qrCodeBox.removeAll();
@@ -107,6 +96,7 @@ class QrController extends GetxController {
     }
   }
 
+  // recuperation de la liste des contact stockee dans object-box
   List<Contact> get contactList {
     return _contactDataList;
   }
@@ -122,7 +112,7 @@ class QrController extends GetxController {
         print('Null $myContact');
       }
     } catch (e) {
-      print("================== add Contact catch");
+      print(e);
     }
   }
 
@@ -130,9 +120,8 @@ class QrController extends GetxController {
     (qrCode.pcr as bool) ? sendContactListToServer() : null;
   }
 
-  // send data to the server
+  // envoyer les donnees au serveur
   Future<void> sendContactListToServer() async {
-    // post _contactDataList to the server
     try {
       http
           .post(
@@ -142,15 +131,14 @@ class QrController extends GetxController {
                 HttpHeaders.contentTypeHeader: 'application/json',
               },
               body: jsonEncode({
-                // TODO: send _contactDataList
                 'contactList': _contactDataList.value
                     .map((contact) => {'udid': contact.udid})
                     .toList()
-                // {"udid": _contactDataList.value},
-                ,
               }))
-          .then((res) => print(
-              "=============== SEND RESPONSE STATUSCODE : ==> ${res.statusCode}"));
+          .then((res) => {
+                print("SEND RESPONSE STATUSCODE : ${res.statusCode}"),
+                removeAllContacts()
+              });
     } catch (e) {
       print(e);
     }
@@ -161,5 +149,15 @@ class QrController extends GetxController {
     await contactBox.remove(myContact.id);
     _contactDataList.clear();
     _contactDataList.assignAll(contactBox.getAll());
+  }
+
+  // vider la liste des contact
+  void removeAllContacts() async {
+    try {
+      await contactBox.removeAll();
+      _contactDataList.clear();
+    } catch (e) {
+      print(e);
+    }
   }
 }

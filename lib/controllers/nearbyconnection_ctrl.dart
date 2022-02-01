@@ -30,14 +30,17 @@ class NearbyConnectionsController extends GetxController {
     nearbyService = NearbyService();
     String devInfo = '';
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
     if (Platform.isAndroid) {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       devInfo = androidInfo.model;
     }
+
     if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
       devInfo = iosInfo.localizedModel;
     }
+
     await nearbyService.init(
         serviceType: 'mp-connection',
         deviceName: devInfo,
@@ -51,6 +54,7 @@ class NearbyConnectionsController extends GetxController {
             await nearbyService.startBrowsingForPeers();
           }
         });
+
     subscription =
         nearbyService.stateChangedSubscription(callback: (devicesList) {
       devicesList.forEach((element) {
@@ -107,9 +111,6 @@ class NearbyConnectionsController extends GetxController {
       List<Contact> cnts = query.find();
 
       if (cnts.isEmpty) {
-        //TODO: add to object box
-        // contacts.add(data["message"]);
-
         print("=========== Adding to Contact | ${data['message']}");
         QrController.addContact(Contact(id: 0, udid: data['message']));
         print("=========== Added to Contact | ${data['message']}");

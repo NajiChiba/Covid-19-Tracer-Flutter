@@ -196,6 +196,87 @@ class SettingsScreen extends StatelessWidget {
   }
 }
 
+class LanguageDialog extends StatelessWidget {
+  LanguesController langCtrl = Get.put(LanguesController());
+  LanguageDialog({Key? key}) : super(key: key);
+
+  final flagList = ['English', 'Arabic', 'Français'];
+  @override
+  Widget build(BuildContext context) {
+    final double height_ = MediaQuery.of(context).size.height;
+    final double width_ = MediaQuery.of(context).size.width;
+
+    return Center(
+      child: Container(
+        height: height_ * 0.42,
+        width: width_ * 0.8,
+        padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
+        // width: 100,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(color: Colors.grey.withOpacity(0.2), blurRadius: 8)
+            ]),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              "languages".tr,
+              style: GoogleFonts.poppins(
+                  fontSize: 24,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: langCtrl.locales
+                  .map((e) => Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: GestureDetector(
+                          onTap: () {
+                            langCtrl.changeLang(e);
+                            Get.back();
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 12, horizontal: 45),
+                            decoration: BoxDecoration(
+                                color: Color(0xFFF4F5FF),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  e['name'] as String,
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 19,
+                                    color: Color(0xFF5063FF),
+                                  ),
+                                ),
+                                // flag
+                                SizedBox(
+                                    height: 20,
+                                    child: SvgPicture.asset(
+                                        "assets/svgs/${e['name']}.svg"))
+                              ],
+                            ),
+                          ),
+                        ),
+                      ))
+                  .toList(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class DeleteAllDialog extends StatelessWidget {
   QrController qrController = Get.find();
   LanguesController lgctrl = Get.put(LanguesController());
@@ -254,8 +335,6 @@ class DeleteAllDialog extends StatelessWidget {
                               if (title == 'cancel') {
                                 Get.back();
                               } else {
-                                // delete
-                                // TODO: delete all
                                 qrController.removeAll();
                                 Get.back();
                               }
@@ -268,7 +347,7 @@ class DeleteAllDialog extends StatelessWidget {
                                         : Color(0xFFFFC8C8),
                                     borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(
-                                            (lgctrl.langue == 'Ar')
+                                            (lgctrl.langue.value == 'Ar')
                                                 ? ((title == 'delete') ? 12 : 0)
                                                 : // ar
                                                 ((title == 'delete')
@@ -277,7 +356,7 @@ class DeleteAllDialog extends StatelessWidget {
 
                                             ),
                                         bottomRight: Radius.circular(
-                                            (lgctrl.langue == 'Ar')
+                                            (lgctrl.langue.value == 'Ar')
                                                 ? ((title == 'cancel') ? 12 : 0)
                                                 : //ar
                                                 ((title == 'cancel')
@@ -302,88 +381,6 @@ class DeleteAllDialog extends StatelessWidget {
                     .toList(),
               ),
             )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class LanguageDialog extends StatelessWidget {
-  LanguesController langCtrl = Get.put(LanguesController());
-  LanguageDialog({Key? key}) : super(key: key);
-
-  final flagList = ['English', 'Arabic', 'Français'];
-  @override
-  Widget build(BuildContext context) {
-    final double height_ = MediaQuery.of(context).size.height;
-    final double width_ = MediaQuery.of(context).size.width;
-
-    return Center(
-      child: Container(
-        height: height_ * 0.42,
-        width: width_ * 0.8,
-        padding: EdgeInsets.symmetric(vertical: 35, horizontal: 35),
-        // width: 100,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(color: Colors.grey.withOpacity(0.2), blurRadius: 8)
-            ]),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "languages".tr,
-              style: GoogleFonts.poppins(
-                  fontSize: 24,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: langCtrl.locales
-                  .map((e) => Padding(
-                        padding: const EdgeInsets.all(6),
-                        child: GestureDetector(
-                          onTap: () {
-                            langCtrl.changeLang(e);
-                            Get.back();
-                            print("assets/svgs/${e['name']}.svg");
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 12, horizontal: 45),
-                            decoration: BoxDecoration(
-                                color: Color(0xFFF4F5FF),
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  e['name'] as String,
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 19,
-                                    color: Color(0xFF5063FF),
-                                  ),
-                                ),
-                                // flag
-                                SizedBox(
-                                    height: 20,
-                                    child: SvgPicture.asset(
-                                        "assets/svgs/${e['name']}.svg"))
-                              ],
-                            ),
-                          ),
-                        ),
-                      ))
-                  .toList(),
-            ),
           ],
         ),
       ),

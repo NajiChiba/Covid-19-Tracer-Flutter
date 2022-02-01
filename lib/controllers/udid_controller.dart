@@ -50,7 +50,7 @@ class UdidController extends GetxController {
             {
               print('============ inside if ================='),
               saveUdidTokenOnSP(),
-              sendDeviceInfoToServer(),
+              // sendDeviceInfoToServer(),
             }
         });
   }
