@@ -65,11 +65,11 @@ class QrController extends GetxController {
 
   // insertion un qr-code dans Object-Box
   void addQr(QrCode qrCode) {
-    checkTest(qrCode);
     try {
       if (qrCode != null) {
         qrCodeBox.put(qrCode);
         _qrDataList.assignAll(qrCodeBox.getAll());
+        checkTest(qrCode);
       } else {
         print('Null $qrCode');
       }
