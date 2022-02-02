@@ -279,8 +279,6 @@ class LanguageDialog extends StatelessWidget {
 
 class DeleteAllDialog extends StatelessWidget {
   QrController qrController = Get.find();
-  LanguesController lgctrl = Get.put(LanguesController());
-
   DeleteAllDialog({Key? key}) : super(key: key);
 
   @override
@@ -347,7 +345,8 @@ class DeleteAllDialog extends StatelessWidget {
                                         : Color(0xFFFFC8C8),
                                     borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(
-                                            (lgctrl.langue.value == 'Ar')
+                                            (LanguesController.langue.value ==
+                                                    'Ar')
                                                 ? ((title == 'delete') ? 12 : 0)
                                                 : // ar
                                                 ((title == 'delete')
@@ -356,7 +355,8 @@ class DeleteAllDialog extends StatelessWidget {
 
                                             ),
                                         bottomRight: Radius.circular(
-                                            (lgctrl.langue.value == 'Ar')
+                                            (LanguesController.langue.value ==
+                                                    'Ar')
                                                 ? ((title == 'cancel') ? 12 : 0)
                                                 : //ar
                                                 ((title == 'cancel')

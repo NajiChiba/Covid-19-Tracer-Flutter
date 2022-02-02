@@ -61,12 +61,9 @@ class UdidController extends GetxController {
       if (Platform.isAndroid) {
         var myDeviceInfo = await deviceInfoPlugin.androidInfo;
         myUdid(myDeviceInfo.androidId);
-        // print("=== get $myUdid");
-        // return myUdid.value;
       } else if (Platform.isIOS) {
         var myDeviceInfo = await deviceInfoPlugin.iosInfo;
         myUdid(myDeviceInfo.identifierForVendor);
-        // return myUdid.value;
       }
     } on PlatformException {
       print('Failed to get platform version');

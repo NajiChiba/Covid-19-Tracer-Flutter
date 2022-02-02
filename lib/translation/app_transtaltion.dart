@@ -50,7 +50,48 @@ class AppTranslation extends Translations {
           'p4_sub': 'Get notified if you were a contact case',
           'next': 'Next',
           'skip': 'Skip',
-          'get_started': 'Get Started'
+          'get_started': 'Get Started',
+          "report_tt": 'Repport test result',
+          'report_page_tt':
+              'You have tested positive for COVID-19 and you want to identify yourself in the app',
+          'report_page_bd':
+              "You should have received an email, text or letter containing a QR code sent by the platform, provided your contact details were correctly entered at the time of the test.\nYou can either access this QR code directly by clicking on the link or scanning it into the application.",
+          'report_btn': 'Enter code',
+          "sensitization_tt": 'Sensitization',
+          'sensitization_page_tt':
+              'The digital "cahier de rappel".\nEasier and anonymous.',
+          'sensitization_page_bd': ' Covid-19 Tracer Signal is the simple and'
+              'anonymous alternative to the "cahier de rappel".'
+              '\n\n👉 Why: to be alerted and alert others if you'
+              ' are exposed to COVID-19 in a place you have been to.'
+              '\n\n🔐 It\'s anonymous: no personal data is'
+              'collected either on the venue or on the people.'
+              '\n\n☺️ It\'s simple: scan the QR Code in the'
+              'places that have set up Signal. If you are'
+              'positive, do not forget to identify yourself in'
+              ' Covid-19 Tracer to anonymously inform other users',
+          'sensitization_page_tt2': 'The QR Codes',
+          'sensitization_page_bd2': 'The venues with these QR Codes have it'
+              'either at the entrance, or in more approriate'
+              'places to scan a QR Code.'
+              'If you don\'t find the QR Code, you can ask'
+              'the staff to help you.',
+          'sensitization_page_tt3': 'The alerts',
+          'sensitization_page_bd3': ' Covid-19 Tracer Signal is the simple and'
+              'If a person later tests positive, all people'
+              'will be informed that they may have been'
+              'exposed to the virus and will be invited to be tested.'
+              'If three people or more have been in the'
+              'same place and then test positive, all'
+              'the other people present in this place'
+              'will be considered as contacts (because'
+              'co-exposed) and invited to isolate'
+              'themselves, to be tested.',
+          'sensitization_btn': 'Scan a QR code',
+          'card_2_tt': 'Scan a venue QR code',
+          'card_2_bd': 'Be alerted in case of exposure in venue',
+          'card_3_tt': 'You are COVID-19\npositive?',
+          'card_3_bd': 'Tap here to scan the QR code'
         },
         'ar_MA': {
           'health_pass': 'جواز الصحة',
@@ -99,7 +140,32 @@ class AppTranslation extends Translations {
           'p4_sub': 'احصل على إشعار إذا كنت تمثل حالة اتصال',
           'next': 'التالي',
           'skip': 'تخطي',
-          'get_started': 'البدء'
+          'get_started': 'البدء',
+          "report_tt": 'تقرير نتيجة الاختبار',
+          'report_page_tt':
+              'أثبتت الاختبارات إيجابيتك لـفيروس كوفيد 19 وتريد تسجيله بنفسك في التطبيق',
+          'report_page_bd':
+              'من المفترض أن تكون قد تلقيت بريدًا إلكترونيًا أو نصًا أو خطابًا يحتوي على رمز QR أرسله النظام الأساسي ، بشرط إدخال تفاصيل الاتصال الخاصة بك بشكل صحيح في وقت الاختبار.يمكنك إما الوصول إلى رمز الاستجابة السريعة هذا مباشرة من خلال النقر على الرابط أو مسحه ضوئيًا في التطبيق.',
+          'report_btn': 'ادخل الرمز',
+          "sensitization_tt": 'توعية',
+          'sensitization_page_tt': 'دفتر التذكير الرقمي . '
+              'اسهل و يحافظ على خصوصياتك.',
+          'sensitization_page_bd':
+              'لماذا : ليتم تنبيهك وتنبيه الآخرين إذا تعرضت لفيروس كوفيد 19 في مكان كنت فيه\n\n'
+                  'مجهول الهوية: لا يتم جمع أي بيانات شخصية عن المكان أو الأشخاص.\n\n'
+                  'الأمر بسيط: امسح رمز الاستجابة السريعة ضوئيًا في الأماكن التي تم إعدادها. إذا كنت إيجابيًا ، فلا تنس تحديد هويتك في التطبيق لإبلاغ المستخدمين الآخرين دون الكشف عن هويتك\n\n',
+          'sensitization_page_tt2': 'رموز QR',
+          'sensitization_page_bd2':
+              'تحتوي الأماكن التي تحتوي على رموز QR هذه على المدخل أو في أماكن أكثر ملاءمة لمسح رمز QR ضوئيًا.',
+          'sensitization_page_tt3': 'تنبيهات',
+          'sensitization_page_bd3':
+              'إذا كانت نتيجة اختبار شخص واحد إيجابية ، فسيتم إخبار جميع الأشخاص بأنهم ربما تعرضوا للفيروس وسيُطلب منهم إجراء الاختبار.'
+                  'إذا كان ثلاثة أشخاص أو أكثر في نفس المكان ثم جاءت نتيجة الاختبار إيجابية ، فسيتم اعتبار جميع الأشخاص الآخرين الموجودين في هذا المكان حالات مخالطة (لأنهم تعرضوا للفيروس بشكل مشترك) وسيُطلب منهم عزل أنفسهم وإجراء الاختبار.',
+          'sensitization_btn': 'امسح الكود QR',
+          'card_2_tt': 'امسح رمز QR',
+          'card_2_bd': 'يتم تنبيهك في حالة التعرض في المكان',
+          'card_3_tt': 'هل أنت إيجابي لـ COVID-19؟',
+          'card_3_bd': 'انقر هنا لمسح رمز QR'
         },
         'fr_FR': {
           'health_pass': 'Passe Vaccinal',
@@ -148,39 +214,48 @@ class AppTranslation extends Translations {
           'p4_sub': 'Recevez une notification si vous étiez un cas contact',
           'next': 'Suivant',
           'skip': 'Sauter',
-          'get_started': 'Commencer'
+          'get_started': 'Commencer',
+          "report_tt": 'Signaler le résultat du test',
+          'report_page_tt':
+              'Vous avez été testé positif pour COVID-19 et vous souhaitez vous identifier dans l\'application',
+          'report_page_bd':
+              'Vous avez dû recevoir un email, SMS ou courrier contenant un QR code envoyé par la plateforme, à condition que vos coordonnées aient été correctement renseignées au moment du test.\nVous pouvez soit accéder directement à ce code QR en cliquant sur le lien, soit le scanner dans l\'application.',
+          'report_btn': 'Entrer le code',
+          "sensitization_tt": 'Sensibilisation',
+          'sensitization_page_tt': 'Le "cahier de rappel" numérique.\n'
+              'Plus facile et anonyme.',
+          'sensitization_page_bd':
+              'Covid-19 Tracer Signal est l\'alternative simple '
+                  'et anonyme au "cahier de rappel".'
+                  '\n\n👉 Pourquoi : pour être alerté et alerter '
+                  'les autres si vous êtes exposé au COVID-19 dans '
+                  'un lieu où vous êtes allé.'
+                  '\n\n🔐 C\'est anonyme : aucune donnée personnelle n\'est '
+                  'collectée ni sur le lieu ni sur les personnes.'
+                  '\n\n☺️ C\'est simple : scannez le QR Code dans les lieux '
+                  'qui ont mis en place Signal. Si vous êtes positif, '
+                  'n\'oubliez pas de vous identifier dans TousAntiCovid '
+                  'pour informer anonymement les autres utilisateurs.',
+          'sensitization_page_tt2': 'Les QR Codes',
+          'sensitization_page_bd2': 'Les lieux avec ces codes QR l\'ont '
+              'soit à l\'entrée, soit dans des lieux '
+              'plus appropriés pour scanner un code QR.',
+          'sensitization_page_tt3': 'Les alertes',
+          'sensitization_page_bd3':
+              'Si une personne est ensuite testée positive, '
+                  'toutes les personnes seront informés '
+                  'qu\'ils ont peut-être été exposés au virus '
+                  'et seront invités à être testé.'
+                  'Si trois personnes ou plus ont été dans '
+                  'le même endroit puis test positif, tous les autres '
+                  'personnes présentes dans ce lieu seront considérés '
+                  'comme des cas contacts (car co-exposé) et seront '
+                  'invités à s\'isoler et à se mettre au test.',
+          'sensitization_btn': 'Scaner le code QR',
+          'card_2_tt': 'Scannez le code QR d\'un site',
+          'card_2_bd': 'être alerté en cas d\'exposition dans le lieu',
+          'card_3_tt': 'Vous êtes positif au COVID-19 ?',
+          'card_3_bd': 'Appuyez ici pour scanner le code QR'
         }
       };
 }
-
-
-/*
-
-
-Health pass : Pass santé : تمرير الصحة
-
-open my Wallet : ouvrir mon portefeuille : افتح محفظتي
-
-your test and vaccination certificates : شهادات الاختبار والتلقيح الخاصة بك : vos tests et certificats de vaccination
-
-vaccination coverage : couverture vaccinale : تغطية التلقيح
-
-other key figures : autres chiffres clés : احصائيات الرئيسية الأخرى
-
-news : Nouveautés  : آخر الأخبار
-
-contact tracing : recherche de contacts : تتبع الاتصال
-
-wallet : محفظة : Portefeuille
-
-Display the qr code : عرض كود qr : afficher le code QR
-
-delete : effacer : حذف
-
-certificate : certificat : شهادة
-
-Save : Enregistrer : حفظ
-
-Positive : Positive : إيجابي
-
- */

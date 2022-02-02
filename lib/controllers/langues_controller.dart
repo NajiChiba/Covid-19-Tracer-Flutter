@@ -3,11 +3,10 @@
 import 'dart:ui';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import './capitalize.dart';
 
 class LanguesController extends GetxController {
   final isVisible = false.obs;
-  final langue = 'En'.obs;
+  static final langue = 'En'.obs;
   final locales = [
     {'name': 'English', 'ab': 'En', 'locale': Locale('en', 'US')},
     {'name': 'Arabic', 'ab': 'Ar', 'locale': Locale('ar', 'MA')},
@@ -28,6 +27,8 @@ class LanguesController extends GetxController {
     });
     super.onInit();
   }
+
+  static String get currLangue => langue.value;
 
   Future<void> initializePreference() async {
     preferences = await SharedPreferences.getInstance();
