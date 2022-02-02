@@ -105,7 +105,6 @@ class QrController extends GetxController {
 
   // inserer un contact dans l'OB
   static void addContact(Contact myContact) {
-    // restartStore();
     try {
       if (myContact != null) {
         contactBox.put(myContact);

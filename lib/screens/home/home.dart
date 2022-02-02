@@ -5,11 +5,12 @@ import 'package:covid_19_tracer/controllers/qr_controller.dart';
 import 'package:covid_19_tracer/controllers/statistics.dart';
 import 'package:covid_19_tracer/controllers/udid_controller.dart';
 import 'package:covid_19_tracer/models/push_notification.dart';
-import 'package:covid_19_tracer/screens/cardsRedirect/signal.dart';
+import 'package:covid_19_tracer/screens/repportTest/report_test.dart';
 import 'package:covid_19_tracer/screens/scanPage/scan_screen.dart';
 import 'package:covid_19_tracer/screens/settings/settings_screen.dart';
 import 'package:covid_19_tracer/screens/wallet/wallet.dart';
 import 'package:covid_19_tracer/screens/widgets/dialogues/langues%20dialog/langues_dialog.dart';
+import 'package:covid_19_tracer/screens/sensibilisation/sensibilisation.dart';
 import 'package:covid_19_tracer/services/local_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -122,47 +123,36 @@ class _HomeState extends State<Home> {
     List cards = [
       {
         'color': [
-          Color(0xFFFFB251),
-          Color(0xFFFFD166),
+          Color(0xFF00CDAC),
+          Color(0xFF06D6A0),
         ],
-        'title': 'Scan a venue QR code',
-        'description': 'Be aletred in case of\nexpoure in venue',
+        'title': 'card_2_tt'.tr,
+        'description': 'card_2_bd'.tr,
         'svgImg': 'phone_qr',
         'reverse': false,
-        'func': navToSignal
+        'func': navToReportTest
       },
       {
         'color': [
           Color(0xFFEF476F),
           Color(0xFFFF6086),
         ],
-        'title': 'You are COVID-19\npositive ?',
-        'description': 'Tap here to scan the QR code',
+        'title': 'card_3_tt'.tr,
+        'description': 'card_3_bd'.tr,
         'svgImg': 'test',
         'reverse': true,
-        'func': func
-      },
-      {
-        'color': [
-          Color(0xFF00CDAC),
-          Color(0xFF06D6A0),
-        ],
-        'title': 'You are COVID-19\npositive ?',
-        'description': 'Tap here to scan the QR code',
-        'svgImg': 'phone_verif',
-        'reverse': false,
-        'func': func
+        'func': navToSensibilisation
       },
       {
         'color': [
           Color(0xFF00B9F6),
           Color(0xFF40CFFF),
         ],
-        'title': 'Scan a venue QR code',
-        'description': 'Be aletred in case of\nexpoure in venue',
+        'title': 'card_2_tt'.tr,
+        'description': 'card_2_bd'.tr,
         'svgImg': 'phone_qr',
         'reverse': true,
-        'func': func
+        'func': navToSensibilisation
       }
     ];
 
@@ -254,9 +244,9 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void func(String svgName, {double height = 600}) {
-    print('height = $height');
-  }
+  // void func(String svgName, {double height = 600}) {
+  //   print('height = $height');
+  // }
 
   void navToWallete() {
     Get.off(() => Wallet(),
@@ -265,9 +255,15 @@ class _HomeState extends State<Home> {
         curve: Curves.easeIn);
   }
 
-  void navToSignal() {
-    print("Going to Signal");
-    Get.to(() => Signal(),
+  void navToReportTest() {
+    Get.off(() => ReportTest(LanguesController.langue.value),
+        transition: Transition.rightToLeft,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeIn);
+  }
+
+  void navToSensibilisation() {
+    Get.off(() => Sensitization(LanguesController.langue.value),
         transition: Transition.rightToLeft,
         duration: Duration(milliseconds: 300),
         curve: Curves.easeIn);
@@ -397,7 +393,7 @@ class _HomeState extends State<Home> {
                         newsTitle(
                             "new_cases".tr,
                             Color(0xFFFF536D),
-                            (ldController.langue.value == 'Fr') ? 14 : 16,
+                            (LanguesController.langue.value == 'Fr') ? 14 : 16,
                             FontWeight.w500),
                         newsTitle("${statisticsController.getNewCases}",
                             Colors.black, 24, FontWeight.w700),
@@ -503,7 +499,7 @@ class _HomeState extends State<Home> {
         Text(
           description,
           style: GoogleFonts.poppins(
-              color: Colors.white.withOpacity(0.65), fontSize: 16),
+              color: Colors.white.withOpacity(0.7), fontSize: 16),
         ),
       ],
     );

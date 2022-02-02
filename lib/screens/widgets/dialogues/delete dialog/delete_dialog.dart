@@ -84,7 +84,7 @@ class DeleteDialog extends StatelessWidget {
                                         : Color(0xFFFFC8C8),
                                     borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(
-                                            (lgctrl.langue == 'Ar')
+                                            (LanguesController.langue == 'Ar')
                                                 ? ((title == 'delete') ? 12 : 0)
                                                 : // ar
                                                 ((title == 'delete')
@@ -93,7 +93,7 @@ class DeleteDialog extends StatelessWidget {
 
                                             ),
                                         bottomRight: Radius.circular(
-                                            (lgctrl.langue == 'Ar')
+                                            (LanguesController.langue == 'Ar')
                                                 ? ((title == 'cancel') ? 12 : 0)
                                                 : //ar
                                                 ((title == 'cancel')

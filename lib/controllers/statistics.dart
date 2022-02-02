@@ -36,10 +36,8 @@ class StatisticsController extends GetxController {
         try {
           var strNewCases =
               document.getElementsByClassName('news_li')[0].children[0].text;
-          strNewCases = strNewCases
-              .replaceAll((RegExp(r'[^0-9 ,]')), '')
-              .trim()
-              .replaceAll(',', ' ');
+          strNewCases =
+              strNewCases.replaceAll((RegExp(r'[^0-9 ,]')), '').trim() + '';
 
           newCases(strNewCases);
 
@@ -49,7 +47,7 @@ class StatisticsController extends GetxController {
               .innerHtml
               .trim();
 
-          strRecovered = strRecovered.replaceAll(',', ' ').trim();
+          strRecovered = strRecovered.trim() + '';
           recovred(strRecovered);
         } catch (e) {
           print(e);

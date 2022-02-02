@@ -9,7 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 class BackDialog extends StatelessWidget {
   QrController qrController = Get.find();
-  LanguesController lgctrl = Get.put(LanguesController());
 
   @override
   Widget build(BuildContext context) {
@@ -71,14 +70,16 @@ class BackDialog extends StatelessWidget {
                                         : Color(0xFFFFC8C8),
                                     borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(
-                                            (lgctrl.langue == 'Ar')
+                                            (LanguesController.langue.value ==
+                                                    'Ar')
                                                 ? ((title == 'yes') ? 12 : 0)
                                                 : // ar
                                                 ((title == 'yes') ? 0 : 12) //en
 
                                             ),
                                         bottomRight: Radius.circular(
-                                            (lgctrl.langue == 'Ar')
+                                            (LanguesController.langue.value ==
+                                                    'Ar')
                                                 ? ((title == 'no') ? 12 : 0)
                                                 : //ar
                                                 ((title == 'no') ? 0 : 12) //en
